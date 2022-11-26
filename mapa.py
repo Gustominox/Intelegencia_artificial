@@ -6,6 +6,11 @@ class Mapa:
 
     def __init__(self):
         self.content = []
+        self.start = (-1,-1)
+        self.finish = []
+        self.rows = -1
+        self.lines = -1
+        
 
     def __str__(self):
         string = "[ \n"
@@ -21,6 +26,8 @@ class Mapa:
 
         matriz = []
         line = []
+        x = 0
+        y = 0
         for char in text:
             if char == 'X':
                 line.append(0)
@@ -35,16 +42,39 @@ class Mapa:
                 line.append(3)
                 # line.append('P')
             if char == '\n':
+                y += 1
+                x = 0
                 matriz.append(line)
                 line = []
-        matriz.append(line)        
+            x += 1
+        matriz.append(line) 
+        self.rows = x-1
+        self.lines = y +1 
+        
+        
         self.content = matriz
-
+        
+    def initStartFinish(self):
+        x = 0 
+        y = 0
+        for line in self.content:
+            if 3 in line:
+                for elem in line:
+                    print(elem)
+                    if elem == 3:
+                        self.start = (x,self.lines-y)
+                        break
+                    x += 1
+                break
+            y += 1
+        print (self.start)
+        return        
 
 def main():
     mapa = Mapa()
     mapa.read_file("track.txt")
     print(mapa)
+    mapa.initStartFinish()
 
     resolver = Resolver()
 
