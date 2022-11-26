@@ -54,7 +54,7 @@ def main():
     x = [val - 0.5 for val in xpath]
     ypath = [3.0, 3.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0]
     y = [val + 0.5 for val in ypath]
-    print(y)
+
     plt.plot(x,y,'b.--', linewidth=2, markersize=12)
     # plt.plot(2.5,3.5,'b|--', linewidth=2, markersize=12)
     # plt.plot(3.5,4.5,'b_--', linewidth=2, markersize=12)
