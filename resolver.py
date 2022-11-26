@@ -1,7 +1,10 @@
+from matplotlib import pyplot as plt
+from matplotlib import colors
+from mapa import Mapa
 class Resolver:
     def __init__(self):
         self.path = []
-
+        self.mapa = Mapa()
     def __str__(self):
         # string = "[ \n"
         # for line in self.content:
@@ -15,11 +18,30 @@ class Resolver:
         xpath = [x + 0.5 for (x,y) in self.path]
         ypath = [y + 0.5 for (x,y) in self.path]
         return (xpath,ypath)
-    
+    def setMap(self,mapa):
+        self.mapa = mapa
+    def showPath(self,final=False):
+        self.mapa.show()
+        x,y = self.getPltXY()
+        plt.plot(x,y,'b.--', linewidth=2, markersize=20)
+        
+        if final:
+            plt.show()
+            
+
 def main():
         
-    resv = Resolver()
-    resv.getPltXY()
+    resolver = Resolver()
+    mapa = Mapa()
+    mapa.read_file("track.txt")
+    print(mapa)
+    mapa.initStartFinish()
+    resolver.setMap(mapa)
+
+    resolver.showPath()
+    plt.show()
+
+    
     
 if __name__ == "__main__":
     main()
