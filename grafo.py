@@ -47,7 +47,7 @@ class Graph:
     # Adicionar aresta no grafo, com peso
     ####################################
 
-    def add_node(self, node1, estimativa):
+    def addNode(self, node1, estimativa):
         # cria um objeto node  com o nome passado como parametro
         n1 = Node(node1, estimativa)
 
@@ -56,8 +56,9 @@ class Graph:
             self.m_graph[node1] = set()
         return n1
 
-    def add_edge(self, node1, node2, weight):  # node1 e node2 são os 'nomes' de cada nodo
-        self.m_graph[node1].add((node2, weight))
+    def addEdge(self, node1, node2, weight):  # node1 e node2 são os 'nomes' de cada nodo
+        if not node2 in self.m_graph[node1]:
+            self.m_graph[node1].add((node2, weight))
 
         # se o grafo for nao direcionado, colocar a aresta inversa
         if not self.m_directed:

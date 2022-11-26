@@ -3,13 +3,15 @@ from matplotlib import colors
 
 class Mapa:
 
-    def __init__(self):
+    def __init__(self,trackFile):
         self.content = []
         self.start = (-1,-1)
         self.finish = []
         self.rows = -1
         self.lines = -1
         
+        self.read_file(trackFile)
+        self.initStartFinish()
 
     def __str__(self):
         string = "[ \n"
@@ -30,16 +32,16 @@ class Mapa:
         for char in text:
             if char == 'X':
                 line.append(0)
-                # line.append('X')
+
             if char == '-':
                 line.append(1)
-                # line.append('-')
+
             if char == 'F':
                 line.append(2)
-                # line.append('F')
+
             if char == 'P':
                 line.append(3)
-                # line.append('P')
+
             if char == '\n':
                 y += 1
                 x = 0
@@ -57,15 +59,18 @@ class Mapa:
         x = 0 
         y = 0
         for line in self.content:
-            if 3 in line:
+            if 3 in line or 2 in line:
+                
                 for elem in line:
-                    print(elem)
+
                     if elem == 3:
-                        self.start = (x,self.lines-y)
-                        break
+                        self.start = (x,self.lines-y-1)
+                    if elem == 2:
+                        self.finish.append((x,self.lines-y)) 
+                    
                     x += 1
-                break
             y += 1
+            x = 0
         print (self.start)
         return        
 
@@ -76,12 +81,20 @@ class Mapa:
 
         if final: 
             plt.show()
-    
+    def getCelValue(self,search):
+        (x,y) = search
+        i = 0
+        j = 0
+        for line in self.content:                
+            for elem in line:
+                if x == i and j == y:
+                    return elem
+                i += 1
+            j += 1
+            i = 0
+                
 def main():
-    mapa = Mapa()
-    mapa.read_file("track.txt")
-    print(mapa)
-    mapa.initStartFinish()
+    mapa = Mapa("track.txt")
 
     resolver = Resolver()
 
