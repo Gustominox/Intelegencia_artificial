@@ -1,6 +1,5 @@
 from matplotlib import pyplot as plt
 from matplotlib import colors
-from resolver import Resolver
 
 class Mapa:
 
@@ -70,6 +69,14 @@ class Mapa:
         print (self.start)
         return        
 
+    def show(self,final=False):
+        cmap = colors.ListedColormap(['Black', 'white','red','green'])
+        plt.figure(figsize=(10, 10))
+        plt.pcolor(self.content[::-1], cmap=cmap)# edgecolors='k', linewidths=3)
+
+        if final: 
+            plt.show()
+    
 def main():
     mapa = Mapa()
     mapa.read_file("track.txt")
