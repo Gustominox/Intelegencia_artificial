@@ -1,8 +1,8 @@
 from matplotlib import pyplot as plt
 from matplotlib import colors
+from resolver import Resolver
 
-
-class Matriz:
+class Mapa:
 
     def __init__(self):
         self.content = []
@@ -42,23 +42,18 @@ class Matriz:
 
 
 def main():
-    matriz = Matriz()
-    matriz.read_file("track.txt")
-    print(matriz)
+    mapa = Mapa()
+    mapa.read_file("track.txt")
+    print(mapa)
 
+    resolver = Resolver()
 
     cmap = colors.ListedColormap(['Black', 'white','red','green'])
     plt.figure(figsize=(10, 10))
-    plt.pcolor(matriz.content[::-1], cmap=cmap)# edgecolors='k', linewidths=3)
-    xpath = [2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]
-    x = [val - 0.5 for val in xpath]
-    ypath = [3.0, 3.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0, 4.0]
-    y = [val + 0.5 for val in ypath]
-
+    plt.pcolor(mapa.content[::-1], cmap=cmap)# edgecolors='k', linewidths=3)
+    x,y = resolver.getPltXY()
     plt.plot(x,y,'b.--', linewidth=2, markersize=12)
-    # plt.plot(2.5,3.5,'b|--', linewidth=2, markersize=12)
-    # plt.plot(3.5,4.5,'b_--', linewidth=2, markersize=12)
-
+    
     plt.show()
     
 
