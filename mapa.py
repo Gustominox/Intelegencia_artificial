@@ -1,5 +1,12 @@
 from matplotlib import pyplot as plt
 from matplotlib import colors
+from enum import Enum
+
+
+WALL = 0
+TRACK = 1
+START = 2
+FINISH = 3
 
 class Mapa:
 
@@ -31,16 +38,16 @@ class Mapa:
         y = 0
         for char in text:
             if char == 'X':
-                line.append(0)
+                line.append(WALL)
 
             if char == '-':
-                line.append(1)
+                line.append(TRACK)
 
             if char == 'F':
-                line.append(2)
+                line.append(START)
 
             if char == 'P':
-                line.append(3)
+                line.append(FINISH)
 
             if char == '\n':
                 y += 1
@@ -63,9 +70,9 @@ class Mapa:
                 
                 for elem in line:
 
-                    if elem == 3:
-                        self.start = (x,self.lines-y-1)
                     if elem == 2:
+                        self.start = (x,self.lines-y-1)
+                    if elem == 3:
                         self.finish.append((x,self.lines-y)) 
                     
                     x += 1
@@ -84,27 +91,17 @@ class Mapa:
     def getCelValue(self,search):
         (x,y) = search
         i = 0
-        j = 0
+        j = self.lines - 1
         for line in self.content:                
             for elem in line:
-                if x == i and j == y:
+                # print(f"{i,j} -> {elem}")
+
+                if (x == i) and (j == y):
                     return elem
                 i += 1
-            j += 1
+            j -= 1
             i = 0
                 
-def main():
-    mapa = Mapa("track.txt")
-
-    resolver = Resolver()
-
-    cmap = colors.ListedColormap(['Black', 'white','red','green'])
-    plt.figure(figsize=(10, 10))
-    plt.pcolor(mapa.content[::-1], cmap=cmap)# edgecolors='k', linewidths=3)
-    x,y = resolver.getPltXY()
-    plt.plot(x,y,'b.--', linewidth=2, markersize=12)
-    
-    plt.show()
     
 
 if __name__ == "__main__":
