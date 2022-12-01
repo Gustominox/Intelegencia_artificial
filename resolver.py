@@ -32,13 +32,13 @@ class Resolver:
 
         self.path = []
         self.grafo.addNode(f"{self.mapa.start}", 0)
-        self.addEdges(xstart, ystart,[])
+        self.addEdges(xstart, ystart)
         
 
         
         return
 
-    def addEdges(self,xstart,ystart,visited,depth=0):
+    def addEdges(self,xstart,ystart,visited=[],depth=0):
         nextNodes = []
         depth += 1
         if (depth == 10): return
@@ -51,19 +51,12 @@ class Resolver:
                     if search not in visited:
                         if self.mapa.getCelValue(search) == TRACK:
                             self.grafo.addNode(f"{search}", 0)
-                            self.grafo.addEdge(str((xstart, ystart)), str(search), 10)
+                            self.grafo.addEdge(str((xstart, ystart)), str(search), 1)
                             nextNodes.append(search)
                             
                         elif self.mapa.getCelValue(search) == FINISH:
                             self.grafo.addNode(f"{search}", 0)
-                            self.grafo.addEdge(str((xstart, ystart)), str(search), 10)
-                            
-                            visited.append(search)
-                            self.path.append( visited)
-                            
-                            
-                            
-                            
+                            self.grafo.addEdge(str((xstart, ystart)), str(search), 1)                            
                             
         for (x,y) in nextNodes:
             self.addEdges(x, y,visited.copy(),depth)
@@ -76,21 +69,9 @@ class Resolver:
 def main():
     
     resolver = Resolver("track.txt")
-    ### Debug
-    # print(resolver.mapa)
-    # print(resolver.mapa.start)
-    # print(resolver.mapa.finish)
-    
+
     resolver.createGraph()
     
-    
-    
-    # print(resolver.path.__len__())
-    # for path in resolver.path:
-    #     resolver.mapa.show()   
-    #     resolver.showPath(path)
-    #     plt.show()
-        
     g = resolver.grafo
         
     #cosntrução de menu
