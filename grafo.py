@@ -112,14 +112,15 @@ class Graph:
             i = i+1
         return custo
 
+    
     ################################################################################
     # Procura DFS
     ####################################################################################
     def procura_DFS(self, start, end, path=[], visited=set()):
         path.append(start)
         visited.add(start)
-        print ("Caminho: " + str(path))
-        if start == end:
+        
+        if start in end:
             # calcular o custo do caminho funçao calcula custo.
             custoT = self.calcula_custo(path)
             return (path, custoT)
@@ -130,26 +131,7 @@ class Graph:
                     return resultado
         path.pop()  # se nao encontra remover o que está no caminho......
         return None
-
          
-    #   let Q be a queue
-    #   label root as explored
-    #   Q.enqueue(root)
-    #   while Q is not empty do
-    #       v := Q.dequeue()
-    #       if v is the goal then
-    #           return v
-    #       for all edges from v to w in G.adjacentEdges(v) do
-    #           if w is not labeled as explored then
-    #               label w as explored
-    #               Q.enqueue(w)
-
-
-                
-        
-
-        
-
 
     ###########################
     # desenha grafo  modo grafico

@@ -11,15 +11,7 @@ class Resolver:
         self.path = []
         self.mapa = Mapa(trackFile)
         self.grafo = Graph()
-
-    def __str__(self):
-        # string = "[ \n"
-        # for line in self.content:
-        #     string = string + str(line) + "," + "\n"
-        # string = string + "]"
-        # return string
-        return self
-
+    
     def getPltXY(self,path):
         xpath = [x + 0.5 for (x, y) in path]
         ypath = [y + 0.5 for (x, y) in path]
@@ -38,16 +30,10 @@ class Resolver:
     def createGraph(self):
         (xstart, ystart) = self.mapa.start
 
-        # debug
         self.path = []
-        ###
-        self.mapa.show()
-        
         self.grafo.addNode(f"{self.mapa.start}", 0)
         self.addEdges(xstart, ystart,[])
-        # print(f"LINES:{self.mapa.lines} ROWS:{self.mapa.rows}")
         
-        # for node in nextNodes:
 
         
         return
@@ -57,8 +43,6 @@ class Resolver:
         depth += 1
         if (depth == 10): return
         visited.append((xstart,ystart))
-        # print(f"VISITED: {visited}")
-        # plt.show()
         
         for i in range(3):
             for j in range(3):
@@ -69,44 +53,21 @@ class Resolver:
                             self.grafo.addNode(f"{search}", 0)
                             self.grafo.addEdge(str((xstart, ystart)), str(search), 10)
                             nextNodes.append(search)
-                            # self.grafo.desenha()
                             
-                            # debug
-                            ###
                         elif self.mapa.getCelValue(search) == FINISH:
                             self.grafo.addNode(f"{search}", 0)
                             self.grafo.addEdge(str((xstart, ystart)), str(search), 10)
                             
                             visited.append(search)
                             self.path.append( visited)
-                            return
+                            
                             
                             
                             
                             
         for (x,y) in nextNodes:
-            # debug
-            # self.showPath(True)4
-            # self.mapa.show()
-            # plt.plot([xstart+0.5,x+0.5],[ystart+0.5,y+0.5] , 'b.--', linewidth=2, markersize=20)
-            
             self.addEdges(x, y,visited.copy(),depth)
         
-        def procura_DFS(self, start, end, path=[], visited=set()):
-            path.append(start)
-            visited.add(start)
-
-            if start == end:
-                # calcular o custo do caminho funçao calcula custo.
-                custoT = self.calcula_custo(path)
-                return (path, custoT)
-            for (adjacente, peso) in self.m_graph[start]:
-                if adjacente not in visited:
-                    resultado = self.procura_DFS(adjacente, end, path, visited)
-                    if resultado is not None:
-                        return resultado
-            path.pop()  # se nao encontra remover o que está no caminho......
-            return None
 
             
             
@@ -115,12 +76,14 @@ class Resolver:
 def main():
     
     resolver = Resolver("track.txt")
-    print(resolver.mapa)
-    print(resolver.mapa.start)
-    print(resolver.mapa.finish)
+    ### Debug
+    # print(resolver.mapa)
+    # print(resolver.mapa.start)
+    # print(resolver.mapa.finish)
+    
     resolver.createGraph()
-    plt.show()
-    resolver.grafo.desenha()
+    
+    
     
     # print(resolver.path.__len__())
     # for path in resolver.path:
@@ -135,9 +98,11 @@ def main():
     while saida != 0:
         print("1-Imprimir Grafo")
         print("2-Desenhar Grafo")
-        print("3-Imprimir  nodos de Grafo")
-        print("4-Imprimir arestas de Grafo")
-        print("5-DFS")
+        print("3-Desenhar Mapa")
+        print("4-Imprimir nodos de Grafo")
+        print("5-Imprimir arestas de Grafo")
+        print("6-DFS do Start ao Finish")
+        print("7-DFS com selecao de Nodos")
         print("0-Saír")
 
         saida = int(input("introduza a sua opcao-> "))
@@ -148,26 +113,47 @@ def main():
             print(g)
             l=input("prima enter para continuar")
         elif saida == 2:
-            #Desenhar o grafo de forma gráfica
             g.desenha()
+            l=input("prima enter para continuar")
         elif saida == 3:
+            #Desenhar o grafo de forma gráfica
+            resolver.mapa.show(True)
+            l=input("prima enter para continuar")
+            
+        elif saida == 4:
             #Imprimir as chaves do dicionario que representa o grafo
             print(g.m_graph.keys())
             l = input("prima enter para continuar")
-        elif saida == 4:
+        elif saida == 5:
             #imprimir todas as arestas do grafo
             print(g.imprime_aresta())
             l = input("prima enter para continuar")
-        elif saida == 5:
-            #Efetuar  pesquisa de caminho entre nodo inicial e final com DFS
-            inicio=input("Nodo inicial->")
-            fim = input("Nodo final->")
+        elif saida == 6:
+            
+            #Efetuar pesquisa de caminho entre nodo Start e Finish's com DFS
             
             inicio = "(1, 3)"
-            fim = "(9, 3)"
+            fim = ["(9, 4)", "(9, 3)", "(9, 2)"]
+            
             (path, custoT) = g.procura_DFS( inicio, fim, path=[], visited=set())
             p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
-            print (f"{p}, custo: {custoT}")
+           
+            # print (f"{p}, custo: {custoT}")
+           
+            resolver.mapa.show()   
+            resolver.showPath(p)
+            
+            plt.show()
+                    
+            l = input("prima enter para continuar")
+        elif saida == 7:
+            #Efetuar  pesquisa de caminho entre nodo inicial e final com DFS
+            inicio = input("Nodo inicial->")
+            fim = [input("Nodo final->")]
+            
+            (path, custoT) = g.procura_DFS( inicio, fim, path=[], visited=set())
+            p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
+            # print (f"{p}, custo: {custoT}")
             resolver.mapa.show()   
             resolver.showPath(p)
             
@@ -175,12 +161,6 @@ def main():
             resolver.grafo.desenha()
             plt.show()
                     
-            l = input("prima enter para continuar")
-        elif saida == 6:
-            #Efetuar  pesquisa de caminho entre nodo inicial e final com DFS
-            inicio=input("Nodo inicial->")
-            fim = input("Nodo final->")
-            print(g.procura_BFS(  fim, queue=[inicio],visited=[],path=[]))
             l = input("prima enter para continuar")
         else:
             print("Opção inválida...")
