@@ -118,7 +118,7 @@ class Graph:
     def procura_DFS(self, start, end, path=[], visited=set()):
         path.append(start)
         visited.add(start)
-
+        print ("Caminho: " + str(path))
         if start == end:
             # calcular o custo do caminho funçao calcula custo.
             custoT = self.calcula_custo(path)
@@ -131,18 +131,6 @@ class Graph:
         path.pop()  # se nao encontra remover o que está no caminho......
         return None
 
-    def procura_BFS(self, end, queue=[],visited=[],path=[]):
-        atual = queue.pop(0)
-        visited.append(atual)
-        path.append(atual)
-        if atual == end:
-            print(path)
-        for nodo in self.m_graph[atual]:
-            if nodo[0] not in visited:
-                visited.append(nodo[0])
-                queue.append(nodo[0])
-            self.procura_BFS(end,queue,visited,path)
-            
          
     #   let Q be a queue
     #   label root as explored
