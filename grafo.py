@@ -149,8 +149,9 @@ class Graph:
             vertex = path[-1]
 
             # Checks if we got to the end
-            if vertex == end:
-                return path
+            if vertex in end:
+                custoT = self.calcula_custo(path)
+                return (path, custoT)
             # We check if the current node is already in the visited nodes set in order not to recheck it
             elif vertex not in visited:
                 # enumerate all adjacent nodes, construct a new path and push it into the queue
