@@ -24,7 +24,8 @@ def main():
         print("5-Imprimir arestas de Grafo")
         print("6-DFS do Start ao Finish")
         print("7-DFS com selecao de Nodos")
-        print("0-Saír")
+        print("8-BFS do Start ao Finish")
+        print("0-Sair")
 
         saida = int(input("introduza a sua opcao-> "))
         if saida == 0:
@@ -83,6 +84,24 @@ def main():
             plt.show()
                     
             l = input("prima enter para continuar")
+        elif saida == 8:
+            
+            #Efetuar pesquisa de caminho entre nodo Start e Finish's com DFS
+            
+            inicio = "(1, 3)"
+            fim = ["(9, 4)", "(9, 3)", "(9, 2)"]
+            
+            path = g.bfs(inicio, fim)
+            p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
+           
+            # print (f"{p}, custo: {custoT}")
+           
+            resolver.mapa.show()   
+            resolver.showPath(p)
+            
+            plt.show()
+                    
+            l = input("prima enter para continuar")    
         else:
             print("Opção inválida...")
             l = input("prima enter para continuar")
