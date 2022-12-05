@@ -32,6 +32,8 @@ class Graph:
         self.m_directed = directed   # se o grafo é direcionado ou nao
         self.m_graph = {}  # dicionario para armazenar os nodos, arestas  e pesos
 
+        self.debug = []
+        
     ##############################
     # Escrever o grafo como string
     ##############################
@@ -140,25 +142,31 @@ class Graph:
     def bfs(self, start, end):
         queue = [[start]]
         visited = set()
-
+        print (self.m_graph)
         while queue:
+            # print(visited)
             # Gets the first path in the queue
             path = queue.pop(0)
+            # print(f"PATH: {path}")
 
             # Gets the last node in the path
-            vertex = path[-1]
+            vertex = path[-1] 
+            self.debug.append(vertex)
+            # print(f"VERTEX: {vertex}")
 
             # Checks if we got to the end
             if vertex in end:
                 custoT = self.calcula_custo(path)
                 return (path, custoT)
+                # return (self.debug, custoT)
             # We check if the current node is already in the visited nodes set in order not to recheck it
             elif vertex not in visited:
                 # enumerate all adjacent nodes, construct a new path and push it into the queue
-                for current_neighbour in self.m_graph.get(vertex, []):
-                    new_path = list(path)
-                    new_path.append(current_neighbour)
-                    queue.append(new_path)
+                for (current_neighbour,peso) in self.m_graph[vertex]:
+                    if current_neighbour not in visited:
+                        new_path = list(path)
+                        new_path.append(current_neighbour)
+                        queue.append(new_path)
 
                 # Mark the vertex as visited
                 visited.add(vertex)              

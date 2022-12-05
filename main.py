@@ -86,7 +86,7 @@ def main():
             l = input("prima enter para continuar")
         elif saida == 8:
             
-            #Efetuar pesquisa de caminho entre nodo Start e Finish's com DFS
+            #Efetuar pesquisa de caminho entre nodo Start e Finish's com BFS
             
             inicio = "(1, 3)"
             fim = ["(9, 4)", "(9, 3)", "(9, 2)"]
