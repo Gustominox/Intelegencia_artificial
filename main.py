@@ -91,7 +91,7 @@ def main():
             inicio = "(1, 3)"
             fim = ["(9, 4)", "(9, 3)", "(9, 2)"]
             
-            path = g.bfs(inicio, fim)
+            (path, custo) = g.bfs(inicio, fim)
             p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
            
             # print (f"{p}, custo: {custoT}")
