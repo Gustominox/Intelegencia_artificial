@@ -53,3 +53,9 @@ class Node:
     # contrário o objeto torna-se unhashable
     def __hash__(self):
         return hash(self.m_name)
+
+    # Retorna um nodo em forma de tuplo de inteiros
+    # Facilita o cálculo de distâncias cartesianas entre nodos
+    def nodetotuple(self):
+        nodo = self.m_name
+        return tuple(map(int, nodo.replace('(', '').replace(')', '').split(', ')))

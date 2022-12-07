@@ -171,6 +171,43 @@ class Graph:
                 # Mark the vertex as visited
                 visited.add(vertex)              
 
+    ################################
+    # Greedy search
+    ################################
+
+    def dist(self, x0, y0, x1, y1):
+        a = (x1 - x0)**2 + (y1 - y0)**2
+        b = math.sqrt(a)
+        return b
+
+    def distnodos(self, node1, node2):
+        tuplo1 = node1.nodetotuple()
+        tuplo2 = node2.nodetotuple()
+        r = self.dist(tuplo1(0),tuplo1(1), tuplo2(0), tuplo2(1))
+        return r
+
+    def greedy_search(self, start, end, path=[], visited=set()):
+        path.append(start)
+        visited.add(start)
+        max = (1000, start)
+        if start in end:
+            custoT = self.calcula_custo(path)
+            return (path, custoT)
+        for (adjacente, peso) in self.m_graph[start]:
+            if adjacente not in visited:
+                for node in end:
+                    a = self.distnodos(adjacente, node)
+                    if a < max(0):
+                        max = (a, adjacente)
+        self.greedy_search(max(1), end, path, visited)                            
+                        
+
+
+                
+
+                
+
+
     ###########################
     # desenha grafo  modo grafico
     #########################
