@@ -125,15 +125,14 @@ class Resolver:
         max = (1000, start)
         if start in end:
             custoT = grafo.calcula_custo(path)
-            return (path, custoT)
-        a = 1000    
+            return (path, custoT)    
         for (adjacente, peso) in grafo.m_graph[start]:
             if adjacente not in path:
                 for node in end:
-                    a = grafo.distnodos(adjacente, node)
-                    if a < max(0):
+                    a = grafo.distnodos(grafo.get_node_by_name(adjacente), grafo.get_node_by_name(node))
+                    if a < max[0]:
                         max = (a, adjacente)
-        grafo.greedy_search(max(1), end, path)
+        grafo.greedy_search(max[1], end, path)
 
 
 def main():

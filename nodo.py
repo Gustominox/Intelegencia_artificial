@@ -19,11 +19,11 @@ class Node:
 
     # Devolve a representação na forma de string do nodo por forma a ser de leitura 'amigável'
     def __str__(self):
-        return "node " + self.m_name
+        return self.m_name
 
     # Devolve representação 'oficial' do objeto, neste caso particular pode ser igual a __str__
     def __repr__(self):
-        return "node " + self.m_name
+        return self.m_name
 
     # Obter o noem de um nodo
     def getName(self):
@@ -54,7 +54,7 @@ class Node:
     def __hash__(self):
         return hash(self.m_name)
 
-    # Retorna um nodo em forma de tuplo de inteiros
+    # Retorna o nome de um nodo em forma de tuplo de inteiros
     # Facilita o cálculo de distâncias cartesianas entre nodos
     def nodetotuple(self):
         nodo = self.m_name

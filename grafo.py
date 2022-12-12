@@ -72,10 +72,12 @@ class Graph:
     def get_node_by_name(self, name):
         search_node = Node(name)
         for node in self.m_nodes:
+            print (f"is {node} == to {search_node}")
             if node == search_node:
+                print("FOUND")
                 return node
-            else:
-                return None
+        return None        
+            
 
     ###########################
     # Imprimir arestas
@@ -150,5 +152,5 @@ class Graph:
     def distnodos(self, node1, node2):
         tuplo1 = node1.nodetotuple()
         tuplo2 = node2.nodetotuple()
-        r = self.dist(tuplo1(0), tuplo1(1), tuplo2(0), tuplo2(1))
+        r = self.dist(tuplo1[0], tuplo1[1], tuplo2[0], tuplo2[1])
         return r
