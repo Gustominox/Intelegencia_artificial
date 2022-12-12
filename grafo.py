@@ -140,3 +140,15 @@ class Graph:
 
         plt.draw()
         plt.show()
+
+
+    def dist(self, x0, y0, x1, y1):
+        a = (x1 - x0)**2 + (y1 - y0)**2
+        b = math.sqrt(a)
+        return b
+
+    def distnodos(self, node1, node2):
+        tuplo1 = node1.nodetotuple()
+        tuplo2 = node2.nodetotuple()
+        r = self.dist(tuplo1(0), tuplo1(1), tuplo2(0), tuplo2(1))
+        return r
