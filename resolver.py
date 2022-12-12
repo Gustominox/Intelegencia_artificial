@@ -120,7 +120,6 @@ class Resolver:
     # Greedy search
     ################################
 
-
     def greedy_search(self, start, end, grafo, path=[]):
         path.append(start)
         max = (1000, start)
