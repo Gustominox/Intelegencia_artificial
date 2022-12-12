@@ -120,7 +120,6 @@ class Resolver:
     # Greedy search
     ################################
 
-
     def greedy_search(self, start, end, grafo, path=[], visited=set()):
         path.append(start)
         visited.add(start)
