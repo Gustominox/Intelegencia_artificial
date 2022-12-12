@@ -57,7 +57,7 @@ def main():
             inicio = "(1, 3)"
             fim = ["(9, 4)", "(9, 3)", "(9, 2)"]
             
-            (path, custoT) = g.procura_DFS( inicio, fim, path=[], visited=set())
+            (path, custoT) = resolver.dfs( inicio, fim,g, path=[], visited=set())
             p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
            
             # print (f"{p}, custo: {custoT}")
@@ -73,7 +73,7 @@ def main():
             inicio = input("Nodo inicial->")
             fim = [input("Nodo final->")]
             
-            (path, custoT) = g.procura_DFS( inicio, fim, path=[], visited=set())
+            (path, custoT) = resolver.dfs( inicio, fim,g, path=[], visited=set())
             p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
             # print (f"{p}, custo: {custoT}")
             resolver.mapa.show()   
@@ -91,7 +91,7 @@ def main():
             inicio = "(1, 3)"
             fim = ["(9, 4)", "(9, 3)", "(9, 2)"]
             
-            (path, custo) = g.bfs(inicio, fim)
+            (path, custo) = resolver.bfs(inicio, fim,g)
             p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
            
             # print (f"{p}, custo: {custoT}")
