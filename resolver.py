@@ -121,20 +121,20 @@ class Resolver:
     ################################
 
 
-    def greedy_search(self, start, end, grafo, path=[], visited=set()):
+    def greedy_search(self, start, end, grafo, path=[]):
         path.append(start)
-        visited.add(start)
         max = (1000, start)
         if start in end:
             custoT = grafo.calcula_custo(path)
             return (path, custoT)
+        a = 1000    
         for (adjacente, peso) in grafo.m_graph[start]:
-            if adjacente not in visited:
+            if adjacente not in path:
                 for node in end:
                     a = grafo.distnodos(adjacente, node)
                     if a < max(0):
                         max = (a, adjacente)
-        grafo.greedy_search(max(1), end, path, visited)
+        grafo.greedy_search(max(1), end, path)
 
 
 def main():
