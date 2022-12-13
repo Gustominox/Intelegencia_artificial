@@ -1,21 +1,16 @@
 from matplotlib import pyplot as plt
 from matplotlib import colors
-from mapa import *
 from grafo import Graph
 
 
 class Resolver:
-    def __init__(self, trackFile):
+    def __init__(self):
         self.path = []
-        self.mapa = Mapa(trackFile)
 
     def getPltXY(self, path):
         xpath = [x + 0.5 for (x, y) in path]
         ypath = [y + 0.5 for (x, y) in path]
         return (xpath, ypath)
-
-    def setMap(self, mapa):
-        self.mapa = mapa
 
     def showPath(self, path, final=False):
         x, y = self.getPltXY(path)
@@ -101,16 +96,18 @@ class Resolver:
         return (path, 0)
 
     ##################################
-    # Greedy search aceleração
+    # Greedy search jogada
     ##################################
 
-    def greedyAce(self, estado, candidatos, end):
+    def greedyJog(self, estado, candidatos, end):
         max = (1000, estado)
-        for canditato in candidatos:
+        for candidato in candidatos:
             for node in end:
-                dist = estado.distanceto(node)
+                dist = candidato.distance_to(node)
+                print(dist)
                 if dist < max[0]:
-                        max = (dist, canditato)
+                        max = (dist, candidato)
+        return max[1]
 
 def main():
     return

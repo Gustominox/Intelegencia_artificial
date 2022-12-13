@@ -2,6 +2,7 @@
 from player import Player
 from mapa import Mapa
 from vector import Vector
+from resolver import Resolver
 
 JOGADAS = [
     Vector(-1, -1),
@@ -29,16 +30,24 @@ class Jogo:
         proximasJogadas = []
 
         for jogada in JOGADAS:
-            proximasJogadas.append(player.velocidade + jogada)
+            proximasJogadas.append(player.estado + player.velocidade + jogada)
 
         return proximasJogadas
 
 
 def main():
     
+    res = Resolver()
+    
+    
     jogo = Jogo("track.txt")
     jogador = Player()
+    jogador.estado = Vector(0,0)
+    # jogador.aumentaVelocidade(Vector(1,1))
+    
     print(jogo.proximasJogadas(jogador))
+
+    print(res.greedyJog(jogador.estado, jogo.proximasJogadas(jogador), [Vector(9,3)]))
 
 if __name__ == "__main__":
     main()
