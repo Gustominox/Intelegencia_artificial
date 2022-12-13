@@ -8,7 +8,7 @@ class Vector:
 
     def __str__(self):
         """Human-readable string representation of the vector."""
-        return '{:g}i + {:g}j'.format(self.x, self.y)
+        return '{:g} x + {:g} y'.format(self.x, self.y)
 
     def __repr__(self):
         """Unambiguous string representation of the vector."""
