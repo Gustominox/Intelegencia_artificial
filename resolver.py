@@ -129,10 +129,12 @@ class Resolver:
         for (adjacente, peso) in grafo.m_graph[start]:
             if adjacente not in path:
                 for node in end:
-                    a = grafo.distnodos(grafo.get_node_by_name(adjacente), grafo.get_node_by_name(node))
-                    if a < max[0]:
-                        max = (a, adjacente)
-        grafo.greedy_search(max[1], end, path)
+                    dist = grafo.distnodos(grafo.get_node_by_name(adjacente), grafo.get_node_by_name(node))
+                    print(dist)
+                    if dist < max[0]:
+                        max = (dist, adjacente)
+        self.greedy_search(max[1], end, grafo, path)
+        return (path, 0)
 
 
 def main():

@@ -58,4 +58,4 @@ class Node:
     # Facilita o cálculo de distâncias cartesianas entre nodos
     def nodetotuple(self):
         nodo = self.m_name
-        return tuple(map(int, nodo.replace('(', '').replace(')', '').split(', ')))
+        return tuple(map(float, nodo.replace('(', '').replace(')', '').split(', ')))

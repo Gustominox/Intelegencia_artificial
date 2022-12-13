@@ -72,9 +72,7 @@ class Graph:
     def get_node_by_name(self, name):
         search_node = Node(name)
         for node in self.m_nodes:
-            print (f"is {node} == to {search_node}")
             if node == search_node:
-                print("FOUND")
                 return node
         return None        
             
