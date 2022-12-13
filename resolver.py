@@ -107,13 +107,10 @@ class Resolver:
     def greedyAce(self, estado, candidatos, end):
         max = (1000, estado)
         for canditato in candidatos:
-            canTuplo = tuple(map(float, canditato.replace('(', '').replace(')', '').split(', ')))
             for node in end:
-                nodeTuplo = tuple(map(float, node.replace('(', '').replace(')', '').split(', ')))
-                dist = grafo.dist(canTuplo, nodeTuplo)
+                dist = estado.distanceto(node)
                 if dist < max[0]:
                         max = (dist, canditato)
-
 
 def main():
     return
