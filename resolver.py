@@ -96,6 +96,16 @@ class Resolver:
         return (path, 0)
 
     ##################################
+    # Eliminar candidatos inválidos
+    ##################################
+
+    def squeezeOptions(self, estado, candidatos, refCart):
+        for candidato in candidatos:
+            
+
+
+    
+    ##################################
     # Greedy search jogada
     ##################################
 
