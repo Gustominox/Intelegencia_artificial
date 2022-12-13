@@ -7,12 +7,11 @@ from matplotlib import colors
 
 def main():
 
-    
     resolver = Resolver("track.txt")
 
-    resolver.createGraph()
-    
-    g = resolver.grafo
+    g = Graph()
+
+    g.createGraph(resolver.mapa)
         
     #construção de menu
     saida = -1
@@ -79,8 +78,6 @@ def main():
             resolver.mapa.show()   
             resolver.showPath(p)
             
-            plt.show()
-            resolver.grafo.desenha()
             plt.show()
                     
             l = input("prima enter para continuar")

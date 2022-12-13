@@ -8,7 +8,6 @@ class Resolver:
     def __init__(self, trackFile):
         self.path = []
         self.mapa = Mapa(trackFile)
-        self.grafo = Graph()
 
     def getPltXY(self, path):
         xpath = [x + 0.5 for (x, y) in path]
@@ -25,45 +24,11 @@ class Resolver:
         if final:
             plt.show()
 
-    def createGraph(self):
-        (xstart, ystart) = self.mapa.start
-
-        self.path = []
-        self.grafo.addNode(f"{self.mapa.start}", 0)
-        self.addEdges(xstart, ystart)
-
-        return
-
-    def addEdges(self, xstart, ystart, visited=[], depth=0):
-        nextNodes = []
-        depth += 1
-        if (depth == 10):
-            return
-        visited.append((xstart, ystart))
-
-        for i in range(3):
-            for j in range(3):
-                if not (i == 1 and j == 1):  # nao quero procurar na propria celula
-                    search = (i-1+xstart, j-1+ystart)
-                    if search not in visited:
-                        if self.mapa.getCelValue(search) == TRACK:
-                            self.grafo.addNode(f"{search}", 0)
-                            self.grafo.addEdge(
-                                str((xstart, ystart)), str(search), 1)
-                            nextNodes.append(search)
-
-                        elif self.mapa.getCelValue(search) == FINISH:
-                            self.grafo.addNode(f"{search}", 0)
-                            self.grafo.addEdge(
-                                str((xstart, ystart)), str(search), 1)
-
-        for (x, y) in nextNodes:
-            self.addEdges(x, y, visited.copy(), depth)
-
     ################################################################################
     # Procura DFS
     ####################################################################################
-    def dfs(self, start, end, grafo, path=[], visited=set(),):
+
+    def dfs(self, start, end, grafo, path=[], visited=set()):
 
         path.append(start)
         visited.add(start)
@@ -74,7 +39,7 @@ class Resolver:
             return (path, custoT)
         for (adjacente, peso) in grafo.m_graph[start]:
             if adjacente not in visited:
-                resultado = grafo.procura_DFS(adjacente, end, path, visited)
+                resultado = self.dfs(adjacente, end, grafo, path, visited)
                 if resultado is not None:
                     return resultado
         path.pop()  # se nao encontra remover o que está no caminho......
