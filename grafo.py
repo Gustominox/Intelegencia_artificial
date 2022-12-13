@@ -151,47 +151,5 @@ class Graph:
     def distnodos(self, node1, node2):
         tuplo1 = node1.nodetotuple()
         tuplo2 = node2.nodetotuple()
-<<<<<<< HEAD
-        r = self.dist(tuplo1(0), tuplo1(1), tuplo2(0), tuplo2(1))
-        return r
-
-    def createGraph(self, mapa):
-        (xstart, ystart) = mapa.start
-        self.addNode(f"{mapa.start}", 0)
-        self.addEdges(xstart, ystart, mapa)
-
-    def addEdges(self, xstart, ystart, mapa, visited=[], depth=0):
-
-        nextNodes = []
-        depth += 1
-        # if (depth == 10):
-        #     return
-        visited.append((xstart, ystart))
-
-        for i in range(3):
-            for j in range(3):
-                if not (i == 1 and j == 1):  # nao quero procurar na propria celula
-                    search = (i-1+xstart, j-1+ystart)
-                    
-                    if search not in visited:
-                        if mapa.getCelValue(search) == TRACK:
-                            self.addNode(f"{search}", 0)
-                            self.addEdge(str((xstart, ystart)), str(search), 1)
-                            nextNodes.append(search)
-                        
-                        if mapa.getCelValue(search) == WALL:
-                            self.addNode(f"{search}", 0)
-                            self.addEdge(str((xstart, ystart)), str(search), 25)
-
-                        elif mapa.getCelValue(search) == FINISH:
-                            self.addNode(f"{search}", 0)
-                            self.addEdge(str((xstart, ystart)), str(search), 1)
-                            
-                        
-
-        for (x, y) in nextNodes:
-            self.addEdges(x, y, mapa, visited, depth)# visited.copy(), depth)
-=======
         r = self.dist(tuplo1[0], tuplo1[1], tuplo2[0], tuplo2[1])
         return r
->>>>>>> ebd3fa90aed311dc7d53074bfebd0343b30b16f9
