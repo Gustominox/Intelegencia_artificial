@@ -85,20 +85,34 @@ class Resolver:
     # Greedy search
     ################################
 
-    def greedy_search(self, start, end, grafo, path=[], visited=set()):
+    def greedy_search(self, start, end, grafo, path=[]):
         path.append(start)
-        visited.add(start)
         max = (1000, start)
         if start in end:
             custoT = grafo.calcula_custo(path)
-            return (path, custoT)
+            return (path, custoT)    
         for (adjacente, peso) in grafo.m_graph[start]:
-            if adjacente not in visited:
+            if adjacente not in path:
                 for node in end:
-                    a = grafo.distnodos(adjacente, node)
-                    if a < max(0):
-                        max = (a, adjacente)
-        grafo.greedy_search(max(1), end, path, visited)
+                    dist = grafo.distnodos(grafo.get_node_by_name(adjacente), grafo.get_node_by_name(node))
+                    if dist < max[0]:
+                        max = (dist, adjacente)
+        self.greedy_search(max[1], end, grafo, path)
+        return (path, 0)
+
+    ##################################
+    # Greedy search aceleração
+    ##################################
+
+    def greedyAce(self, estado, candidatos, end):
+        max = (1000, estado)
+        for canditato in candidatos:
+            canTuplo = tuple(map(float, canditato.replace('(', '').replace(')', '').split(', ')))
+            for node in end:
+                nodeTuplo = tuple(map(float, node.replace('(', '').replace(')', '').split(', ')))
+                dist = grafo.dist(canTuplo, nodeTuplo)
+                if dist < max[0]:
+                        max = (dist, canditato)
 
 
 def main():

@@ -24,6 +24,7 @@ def main():
         print("6-DFS do Start ao Finish")
         print("7-DFS com selecao de Nodos")
         print("8-BFS do Start ao Finish")
+        print("9-GreedySearch do Start ao Finish")
         print("0-Sair")
 
         saida = int(input("introduza a sua opcao-> "))
@@ -98,7 +99,25 @@ def main():
             
             plt.show()
                     
-            l = input("prima enter para continuar")    
+            l = input("prima enter para continuar")
+        elif saida == 9:
+            
+            #Efetuar pesquisa de caminho entre nodo Start e Finish's com DFS
+            
+            inicio = "(1, 3)"
+            fim = ["(9, 4)", "(9, 3)", "(9, 2)"]
+            
+            (path, custoT) = resolver.greedy_search(inicio, fim,g, path=[])
+            p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
+           
+            # print (f"{p}, custo: {custoT}")
+           
+            resolver.mapa.show()   
+            resolver.showPath(p)
+            
+            plt.show()
+                    
+            l = input("prima enter para continuar")        
         else:
             print("Opção inválida...")
             l = input("prima enter para continuar")

@@ -76,8 +76,8 @@ class Graph:
         for node in self.m_nodes:
             if node == search_node:
                 return node
-            else:
-                return None
+        return None        
+            
 
     ###########################
     # Imprimir arestas
@@ -151,6 +151,7 @@ class Graph:
     def distnodos(self, node1, node2):
         tuplo1 = node1.nodetotuple()
         tuplo2 = node2.nodetotuple()
+<<<<<<< HEAD
         r = self.dist(tuplo1(0), tuplo1(1), tuplo2(0), tuplo2(1))
         return r
 
@@ -190,3 +191,7 @@ class Graph:
 
         for (x, y) in nextNodes:
             self.addEdges(x, y, mapa, visited, depth)# visited.copy(), depth)
+=======
+        r = self.dist(tuplo1[0], tuplo1[1], tuplo2[0], tuplo2[1])
+        return r
+>>>>>>> ebd3fa90aed311dc7d53074bfebd0343b30b16f9
