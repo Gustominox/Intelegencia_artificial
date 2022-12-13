@@ -76,12 +76,12 @@ class Graph:
         for node in self.m_nodes:
             if node == search_node:
                 return node
-        return None        
-            
+        return None
 
     ###########################
     # Imprimir arestas
     ###########################
+
     def imprime_aresta(self):
         listaA = ""
         for nodo in self.m_graph.keys():
@@ -153,3 +153,98 @@ class Graph:
         tuplo2 = node2.nodetotuple()
         r = self.dist(tuplo1[0], tuplo1[1], tuplo2[0], tuplo2[1])
         return r
+
+    def createGraphCartesian(self, mapa):
+        self.addNode(f"{(0, 0)}", 0)
+
+        for line in range(mapa.lines):
+            for row in range(mapa.rows):
+                print((row, line))
+                for i in range(3):
+                    for j in range(3):
+                        # nao quero procurar na propria celula
+                        if not ((i == 1 and j == 1) or
+                                (i == 0 and j == 0) or
+                                (i == 0 and j == 2) or
+                                (i == 2 and j == 0) or
+                                (i == 2 and j == 2)):
+
+                            x = i-1+row
+                            y = j-1+line
+                            search = (x, y)
+
+                            if x > -1 and x < mapa.rows and y > -1 and y < mapa.lines:
+
+                                print(f"adding {search}")
+
+                                self.addNode(str(search), 0)
+                                self.addEdge(str((row, line)),
+                                             str(search), 1)
+
+                                # if mapa.getCelValue(search) == TRACK:
+                                #     self.addNode(f"{search}", 0)
+                                #     self.addEdge(str((row, line)),
+                                #                  str(search), 1)
+
+                                # if mapa.getCelValue(search) == WALL:
+                                #     self.addNode(f"{search}", 0)
+                                #     self.addEdge(str((row, line)),
+                                #                  str(search), 25)
+
+                                # if mapa.getCelValue(search) == START:
+                                #     self.addNode(f"{search}", 0)
+                                #     self.addEdge(str((row, line)),
+                                #                  str(search), 1)
+
+                                # elif mapa.getCelValue(search) == FINISH:
+                                #     self.addNode(f"{search}", 0)
+                                #     self.addEdge(str((row, line)),
+                                #                  str(search), 1)
+    ### deprecated
+    def createGraph1(self, mapa):
+        (xstart, ystart) = mapa.start
+        self.addNode(f"{mapa.start}", 0)
+        self.addEdges(xstart, ystart, mapa)
+    
+    ### deprecated
+    def addEdges(self, xstart, ystart, mapa, visited=[], depth=0):
+
+        nextNodes = []
+        depth += 1
+        # if (depth == 10):
+        #     return
+        visited.append((xstart, ystart))
+
+        for i in range(3):
+            for j in range(3):
+                if not (i == 1 and j == 1):  # nao quero procurar na propria celula
+                    search = (i-1+xstart, j-1+ystart)
+
+                    if search not in visited:
+                        if mapa.getCelValue(search) == TRACK:
+                            self.addNode(f"{search}", 0)
+                            self.addEdge(str((xstart, ystart)), str(search), 1)
+                            nextNodes.append(search)
+
+                        if mapa.getCelValue(search) == WALL:
+                            self.addNode(f"{search}", 0)
+                            self.addEdge(str((xstart, ystart)),
+                                         str(search), 25)
+
+                        elif mapa.getCelValue(search) == FINISH:
+                            self.addNode(f"{search}", 0)
+                            self.addEdge(str((xstart, ystart)), str(search), 1)
+
+        for (x, y) in nextNodes:
+            self.addEdges(x, y, mapa, visited, depth)  # visited.copy(), depth)
+
+
+def main():
+    mapa = Mapa("trackCircle.txt")
+    g = Graph()
+    g.createGraphCartesian(mapa)
+    g.desenha()
+
+
+if __name__ == "__main__":
+    main()

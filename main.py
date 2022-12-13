@@ -1,17 +1,18 @@
 #Importar classes nodo e grafo
 from grafo import Graph
 from nodo import Node
+from mapa import Mapa
 from resolver import Resolver
 from matplotlib import pyplot as plt
 from matplotlib import colors
 
 def main():
 
-    resolver = Resolver("track.txt")
+    resolver = Resolver()
 
     g = Graph()
-
-    g.createGraph(resolver.mapa)
+    mapa = Mapa("track.txt")
+    g.createGraph(mapa)
         
     #construção de menu
     saida = -1
