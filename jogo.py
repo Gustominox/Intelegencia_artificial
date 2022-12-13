@@ -3,6 +3,7 @@ from player import Player
 from mapa import Mapa
 from vector import Vector
 from resolver import Resolver
+import time
 
 JOGADAS = [
     Vector(-1, -1),
@@ -34,20 +35,43 @@ class Jogo:
 
         return proximasJogadas
 
+    def addPlayer(self, player):
+        self.players.append(player)
+
+    def draw(self):
+        print(self.players[0])
+        print(self.mapa)
+
+    def start(self):
+        
+        res = Resolver()
+        jogador = Player(estadoInicial=Vector(0,0))
+        
+        self.addPlayer(jogador)
+        
+        on = 4
+        
+        while on:
+            time.sleep(1)
+            self.draw()
+            jogador.jogada(Vector(1,1))
+            
+            on -= 1
+            
+
+            
 
 def main():
     
-    res = Resolver()
     
     
     jogo = Jogo("track.txt")
-    jogador = Player()
-    jogador.estado = Vector(0,0)
-    # jogador.aumentaVelocidade(Vector(1,1))
     
-    print(jogo.proximasJogadas(jogador))
+    jogo.start()
+    
+    # print(jogo.proximasJogadas(jogador))
 
-    print(res.greedyJog(jogador.estado, jogo.proximasJogadas(jogador), [Vector(9,3)]))
+    # print(res.greedyJog(jogador.estado, jogo.proximasJogadas(jogador), [Vector(9,3)]))
 
 if __name__ == "__main__":
     main()
