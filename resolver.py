@@ -2,6 +2,9 @@ from matplotlib import pyplot as plt
 from matplotlib import colors
 from grafo import Graph
 from queue import Queue
+from mapa import *
+
+
 
 
 class Resolver:
@@ -106,37 +109,34 @@ class Resolver:
         visited = set()
 
         while queue:
-            # print(visited)
             # Gets the first path in the queue
             path = queue.get
-            # print(f"PATH: {path}")
 
             # Gets the last node in the path
-            vertex = path[-1]
-            # print(f"VERTEX: {vertex}")
+            node = path[-1]
 
             # Checks if we got to the end
-            if vertex in end:
+            if node in end:
                 custoT = grafo.calcula_custo(path)
                 return (path, custoT)
                 # return (grafo.debug, custoT)
             # We check if the current node is already in the visited nodes set in order not to recheck it
-            elif vertex not in visited:
+            elif node not in visited:
                 # enumerate all adjacent nodes, construct a new path and push it into the queue
-                for (current_neighbour, peso) in grafo.m_graph[vertex]:
+                for (current_neighbour, peso) in grafo.m_graph[node]:
                     if current_neighbour not in visited:
-                        if grafo.get_node_by_name(current_neighbour).getEstimativa() != WALL:
+                        if grafo.get_node_by_vector(current_neighbour).type != WALL:
                             dist = 1000
-                            for node in end:
-                                dtemp = dist = current_neighbour.distance_to(node)
+                            for meta in end:
+                                dtemp = current_neighbour.distance_to(meta)
                                 if dtemp < dist:
                                     dist = dtemp
                             new_path = list(path)
                             new_path.append(current_neighbour)
                             queue.put(dist + grafo.calcula_custo(new_path), new_path)
 
-                # Mark the vertex as visited
-                visited.add(vertex)
+                # Mark the node as visited
+                visited.add(node)
     
     ##################################
     # Greedy search jogada
