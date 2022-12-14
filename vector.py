@@ -12,7 +12,7 @@ class Vector:
 
     def __repr__(self):
         """Unambiguous string representation of the vector."""
-        return repr((self.x, self.y))
+        return '{:g} x + {:g} y'.format(self.x, self.y)
 
     def dot(self, other):
         """The scalar (dot) product of self and other. Both must be vectors."""

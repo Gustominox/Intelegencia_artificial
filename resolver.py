@@ -104,7 +104,6 @@ class Resolver:
         for candidato in candidatos:
             for node in end:
                 dist = candidato.distance_to(node)
-                print(dist)
                 if dist < max[0]:
                         max = (dist, candidato)
         return max[1]

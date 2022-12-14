@@ -27,7 +27,7 @@ class Jogo:
         self.mapa = Mapa(trackFile)
         self.fps = 10
         
-        
+      
     def proximasJogadas(self, player):
 
         proximasJogadas = []
@@ -44,6 +44,8 @@ class Jogo:
         print(self.players[0])
         print(self.mapa)
 
+    
+
     def start(self):
         
         res = Resolver()
@@ -51,14 +53,22 @@ class Jogo:
         
         self.addPlayer(jogador)
         
-        on = 5 * self.fps
+        on = 1 * self.fps
         
         while on:
             time.sleep(1 / self.fps)
-            jogador.jogada(Vector(1,1))
+            
+            jog = res.greedyJog(jogador.estado, self.proximasJogadas(jogador), [Vector(x,y) for x,y 
+                                                                                in self.mapa.finish])
+            
+            self.checkPath(jogador.estado,jog)
+            
+            jogador.jogada(jog)
             self.draw()
             
             on -= 1
+    
+        
             
         
             
@@ -67,7 +77,7 @@ def main():
     
     
     
-    jogo = Jogo("track.txt")
+    jogo = Jogo("tracks/track.txt")
     
     jogo.start()
     
