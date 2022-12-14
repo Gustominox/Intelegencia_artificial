@@ -28,12 +28,15 @@ class Vector:
         return Vector(self.x - other.x, self.y - other.y)
 
     def __eq__(self, other):
+        """Vector equality"""
         return self.x == other.x and self.y == other.y
 
     def __gt__(self, other):
+        """Vector greater than"""
         return self.x > other.x or self.y > other.y
 
     def __lt__(self, other):
+        """Vector less than"""
         return self.x < other.x and self.y < other.y
 
 
