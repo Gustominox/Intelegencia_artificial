@@ -60,6 +60,7 @@ class Jogo:
     
         g.createGraphCartesian(self.mapa)
         while on:
+            self.draw()
             time.sleep(1 / self.fps)
             
             jog = res.greedyJog(jogador.estado, self.proximasJogadas(jogador), [Vector(x,y) for x,y 
@@ -68,7 +69,7 @@ class Jogo:
             g.checkPath(jogador.estado,jog)
             
             jogador.jogada(jog)
-            self.draw()
+            
             
             on -= 1
     
