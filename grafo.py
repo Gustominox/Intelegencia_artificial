@@ -242,6 +242,11 @@ class Graph:
 
     def checkPath(self, inicio, destino):
         custo = destino-inicio
+        xAxis = custo.x
+        yAxis = custo.y
+        
+        
+        
         print(custo)
 
 
