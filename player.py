@@ -1,6 +1,8 @@
 
 from vector import Vector
 
+MAX_SPEED = 5
+
 class Player:
     
     def __init__(self,estadoInicial):
@@ -11,7 +13,11 @@ class Player:
         return f"Player: Estado -> {self.estado}\tVelocidade -> {self.velocidade}"
         
     def aumentaVelocidade(self,vector):
-        self.velocidade += vector
+        if not self.velocidade.x >= MAX_SPEED:
+            self.velocidade.x += vector.x
+        if not self.velocidade.y >= MAX_SPEED:
+            self.velocidade.y += vector.y
+
     
     def jogada(self,jogada):
         self.aumentaVelocidade(jogada)
