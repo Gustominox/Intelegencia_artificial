@@ -8,7 +8,7 @@ class Vector:
 
     def __str__(self):
         """Human-readable string representation of the vector."""
-        return '{:g} x + {:g} y'.format(self.x, self.y)
+        return '{:g}x + {:g}y'.format(self.x, self.y)
 
     def __repr__(self):
         """Unambiguous string representation of the vector."""
@@ -28,12 +28,15 @@ class Vector:
         return Vector(self.x - other.x, self.y - other.y)
 
     def __eq__(self, other):
+        """Vector equality"""
         return self.x == other.x and self.y == other.y
 
     def __gt__(self, other):
+        """Vector greater than"""
         return self.x > other.x or self.y > other.y
 
     def __lt__(self, other):
+        """Vector less than"""
         return self.x < other.x and self.y < other.y
 
 

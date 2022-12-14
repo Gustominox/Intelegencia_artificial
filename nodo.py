@@ -11,8 +11,9 @@
 # poderá posteriormente ter também informação sobre um objeto a armazenar...
 
 class Node:
-    #  construtor do nodo....."
-    def __init__(self, name, tipo):
+    """Node from a searchble Graph
+    """    
+    def __init__(self, name, tipo=-1):
         self.name = str(name)
         self.type = tipo
         # Posteriormente colocar o objeto que o nodo vai referenciar...
