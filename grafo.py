@@ -180,9 +180,11 @@ class Graph:
                                 # self.addNode(str(search), 0)
                                 # self.addEdge(str((row, line)),
                                 #              str(search), 1)
+                                
+                            
 
                                 if mapa.getCelValue(search) == TRACK:
-                                    self.addNode(str(search), TRACK)
+                                    self.addNode(str(search), TRACK )
                                     self.addEdge(str((row, line)),
                                                  str(search), 1)
 
@@ -237,6 +239,10 @@ class Graph:
 
         for (x, y) in nextNodes:
             self.addEdges(x, y, mapa, visited, depth)  # visited.copy(), depth)
+
+    def checkPath(self, inicio, destino):
+        custo = destino-inicio
+        print(custo)
 
 
 def main():

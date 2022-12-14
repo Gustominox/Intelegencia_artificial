@@ -3,7 +3,9 @@ from player import Player
 from mapa import Mapa
 from vector import Vector
 from resolver import Resolver
+from grafo import Graph
 import time
+
 
 JOGADAS = [
     Vector(-1, -1),
@@ -54,14 +56,16 @@ class Jogo:
         self.addPlayer(jogador)
         
         on = 1 * self.fps
-        
+        g = Graph()
+    
+        g.createGraphCartesian(self.mapa)
         while on:
             time.sleep(1 / self.fps)
             
             jog = res.greedyJog(jogador.estado, self.proximasJogadas(jogador), [Vector(x,y) for x,y 
                                                                                 in self.mapa.finish])
             
-            self.checkPath(jogador.estado,jog)
+            g.checkPath(jogador.estado,jog)
             
             jogador.jogada(jog)
             self.draw()
@@ -78,6 +82,7 @@ def main():
     
     
     jogo = Jogo("tracks/track.txt")
+    
     
     jogo.start()
     
