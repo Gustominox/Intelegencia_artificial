@@ -1,6 +1,7 @@
 from matplotlib import pyplot as plt
 from matplotlib import colors
 from grafo import Graph
+from queue import Queue
 
 
 class Resolver:
@@ -99,19 +100,19 @@ class Resolver:
     # A* search
     ##################################    
 
-    def A_estrela_search(self, start, end, grafo):
-        queue = [[start]]
+    def a_estrela_search(self, start, end, grafo):
+        queue = queue.PriorityQueue()
+        queue.put(0,start)
         visited = set()
 
         while queue:
             # print(visited)
             # Gets the first path in the queue
-            path = queue.pop(0)
+            path = queue.get
             # print(f"PATH: {path}")
 
             # Gets the last node in the path
             vertex = path[-1]
-            grafo.debug.append(vertex)
             # print(f"VERTEX: {vertex}")
 
             # Checks if we got to the end
@@ -124,9 +125,15 @@ class Resolver:
                 # enumerate all adjacent nodes, construct a new path and push it into the queue
                 for (current_neighbour, peso) in grafo.m_graph[vertex]:
                     if current_neighbour not in visited:
-                        new_path = list(path)
-                        new_path.append(current_neighbour)
-                        queue.append(new_path)
+                        if grafo.get_node_by_name(current_neighbour).getEstimativa() != WALL:
+                            dist = 1000
+                            for node in end:
+                                dtemp = dist = current_neighbour.distance_to(node)
+                                if dtemp < dist:
+                                    dist = dtemp
+                            new_path = list(path)
+                            new_path.append(current_neighbour)
+                            queue.put(dist + grafo.calcula_custo(new_path), new_path)
 
                 # Mark the vertex as visited
                 visited.add(vertex)
@@ -149,7 +156,13 @@ class Resolver:
     ######################################
 
     def aestrelaJog(self, estado, candidatos, end, grafo):
-        return
+        mincusto = (1000, estado)
+        for candidato in candidatos:
+            (path, custo) = self.a_estrela_search(candidato, end, grafo)
+            if custo < mincusto:
+                mincusto = (custo, candidato)
+        return mincusto[1]        
+
 
 
     def main():
