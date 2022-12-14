@@ -55,8 +55,8 @@ class Jogo:
         
         while on:
             time.sleep(1 / self.fps)
-            self.draw()
             jogador.jogada(Vector(1,1))
+            self.draw()
             
             on -= 1
             
