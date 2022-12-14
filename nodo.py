@@ -12,9 +12,10 @@
 
 class Node:
     #  construtor do nodo....."
-    def __init__(self, name,tipo):
+    def __init__(self, name, tipo, dmeta):
         self.name = str(name)
         self.type = tipo
+        self.dmeta = dmeta
         # Posteriormente colocar o objeto que o nodo vai referenciar...
 
     # Devolve a representação na forma de string do nodo por forma a ser de leitura 'amigável'
@@ -25,7 +26,7 @@ class Node:
     def __repr__(self):
         return self.name
 
-    # Obter o noem de um nodo
+    # Obter o nome de um nodo
     def getName(self):
         return self.name
 
@@ -33,13 +34,21 @@ class Node:
     def setName(self, name):
         self.name = name
 
-    # Obter o noem de um nodo
+    # Obter a o tipo de bloco
     def getEstimativa(self):
         return self.type
 
-    # Atualizar o nome de um nodo
+    # Atualizar o tipo de bloco
     def setEstimativa(self, estimativa):
         self.type = estimativa
+
+    # Obter a distância do nodo à meta
+    def getDmeta(self):
+        return self.dmeta
+
+    # Atualizar a distância do nodo à meta
+    def setDmeta(self, dmeta):
+        self.dmeta = dmeta
 
     # Método utilizado para comparar dois nodos,
     # neste caso dois nodos são iguais se os nomes forem iguais
