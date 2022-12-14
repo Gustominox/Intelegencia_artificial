@@ -25,7 +25,9 @@ class Jogo:
     def __init__(self, trackFile):
         self.players = []
         self.mapa = Mapa(trackFile)
-
+        self.fps = 10
+        
+        
     def proximasJogadas(self, player):
 
         proximasJogadas = []
@@ -49,16 +51,16 @@ class Jogo:
         
         self.addPlayer(jogador)
         
-        on = 4
+        on = 5 * self.fps
         
         while on:
-            time.sleep(1)
+            time.sleep(1 / self.fps)
             self.draw()
             jogador.jogada(Vector(1,1))
             
             on -= 1
             
-
+        
             
 
 def main():
