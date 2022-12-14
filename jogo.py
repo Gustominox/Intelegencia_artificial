@@ -61,22 +61,15 @@ class Jogo:
 
             self.draw()
             time.sleep(1 / self.fps)
-            proxJog = self.proximasJogadas(jogador)
-            jog = res.greedyJog(jogador.estado, proxJog, [Vector(x, y) for x, y
+            
+            jog = res.greedyJog(jogador, [Vector(x, y) for x, y
                                                           in self.mapa.finish])
             
-            k = 0
-            for play in proxJog:
-                if jog == play:
-                    break
-                k += 1
+            possivelPosicao = jogador.estado + jogador.velocidade + jog
+            
+            novaPosicao, stopType = g.checkPath(jogador.estado, possivelPosicao)
 
-            acao = JOGADAS[k]
-            print(f"JOGADA: {acao}")
-
-            novaPosicao, stopType = g.checkPath(jogador.estado, jog)
-
-            jogador.jogada(acao)
+            jogador.jogada(jog)
 
                 
             nodoType = g.get_node_by_vector(novaPosicao).type 

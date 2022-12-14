@@ -5,6 +5,17 @@ from queue import Queue
 from mapa import *
 
 
+JOGADAS = [
+    Vector(-1, -1),
+    Vector(-1, 0),
+    Vector(0, -1),
+    Vector(0, 0),
+    Vector(0, 1),
+    Vector(1, 0),
+    Vector(1, 1),
+    Vector(-1, 1),
+    Vector(1, -1),
+]
 
 
 class Resolver:
@@ -89,11 +100,12 @@ class Resolver:
         max = (1000, start)
         if start in end:
             custoT = grafo.calcula_custo(path)
-            return (path, custoT)    
+            return (path, custoT)
         for (adjacente, peso) in grafo.m_graph[start]:
             if adjacente not in path:
                 for node in end:
-                    dist = grafo.distnodos(grafo.get_node_by_name(adjacente), grafo.get_node_by_name(node))
+                    dist = grafo.distnodos(grafo.get_node_by_name(
+                        adjacente), grafo.get_node_by_name(node))
                     if dist < max[0]:
                         max = (dist, adjacente)
         self.greedy_search(max[1], end, grafo, path)
@@ -101,11 +113,11 @@ class Resolver:
 
     ##################################
     # A* search
-    ##################################    
+    ##################################
 
     def a_estrela_search(self, start, end, grafo):
         queue = queue.PriorityQueue()
-        queue.put(0,start)
+        queue.put(0, start)
         visited = set()
 
         while queue:
@@ -133,22 +145,34 @@ class Resolver:
                                     dist = dtemp
                             new_path = list(path)
                             new_path.append(current_neighbour)
-                            queue.put(dist + grafo.calcula_custo(new_path), new_path)
+                            queue.put(
+                                dist + grafo.calcula_custo(new_path), new_path)
 
                 # Mark the node as visited
                 visited.add(node)
-    
+
     ##################################
     # Greedy search jogada
     ##################################
+    def proximasJogadas(self, player):
+        """Cria tds as posiveis proximas coordenadas a partir do estado e velocidade do jogador"""
+        proximasJogadas = []
 
-    def greedyJog(self, estado, candidatos, end):
+        for jogada in JOGADAS:
+            proximasJogadas.append(player.estado + player.velocidade + jogada)
+
+        return proximasJogadas
+
+    def greedyJog(self,player, end):
+        estado = player.estado
+
         max = (1000, estado)
-        for candidato in candidatos:
+        for jogada in JOGADAS:
+            candidato = player.estado + player.velocidade + jogada
             for node in end:
                 dist = candidato.distance_to(node)
                 if dist < max[0]:
-                        max = (dist, candidato)
+                    max = (dist, jogada)
         return max[1]
 
     ######################################
@@ -161,13 +185,10 @@ class Resolver:
             (path, custo) = self.a_estrela_search(candidato, end, grafo)
             if custo < mincusto:
                 mincusto = (custo, candidato)
-        return mincusto[1]        
-
-
+        return mincusto[1]
 
     def main():
         return
-
 
     if __name__ == "__main__":
         main()
