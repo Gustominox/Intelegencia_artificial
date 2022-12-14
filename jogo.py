@@ -32,7 +32,7 @@ class Jogo:
 
         Returns:
             Player: Jogador sbr o qual se vai criar as coordenadas
-        """        
+        """
         proximasJogadas = []
 
         for jogada in JOGADAS:
@@ -60,18 +60,18 @@ class Jogo:
         g = Graph()
 
         g.createGraphCartesian(self.mapa)
-        
+
         while on:
 
             self.draw()
             time.sleep(1 / self.fps)
 
             # jog = res.greedyJog(jogador, [Vector(x, y) for x, y
-                                        #  in self.mapa.finish])
+            #  in self.mapa.finish])
 
             jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
-                                          in self.mapa.finish],g)
-            
+                                            in self.mapa.finish], g)
+
             possivelPosicao = jogador.estado + jogador.velocidade + jog
 
             novaPosicao, stopType = g.checkPath(
@@ -92,10 +92,10 @@ class Jogo:
             if on != 0:
                 on -= 1
 
-            path.append((novaPosicao.x,novaPosicao.y))
+            path.append((novaPosicao.x, novaPosicao.y))
             res.getPltXY(path)
             self.mapa.show()
-            res.showPath(path,True)
+            res.showPath(path, True)
 
             time.sleep(1)
 
@@ -103,59 +103,72 @@ class Jogo:
         running = True
 
         mapa = Mapa("tracks/track.txt")
-        jogador = Player(Vector(1,3))
+        jogador = Player(Vector(1, 3))
         game_menu = "main_menu"
+        COLOR_BLACK = (0, 0, 0)
+        COLOR_WHITE = (255, 255, 255)
 
+        WIDTH = monitor_size.current_w
+        HEIGHT = monitor_size.current_h
+
+        MENU_BUTTON_X = WIDTH/20
+        MENU_BUTTON_Y = HEIGHT/4
 
         while running:
 
             # Background colour
-            screen.fill((50, 50, 50))
+            # screen.fill((50, 50, 50))
+            screen.blit(icon,(0,0))
 
-            #CHECK MENU
+            # CHECK MENU
 
-            if game_menu == "maps":
-                pygame.draw.rect(screen, (0,0,0), pygame.Rect((monitor_size.current_w/3) -10, (monitor_size.current_h/5) - 2, 105    , 30 ))
-                drawText("Mapa1", pygame.font.SysFont("arielblack", 40), (255,255,255), monitor_size.current_w/3, monitor_size.current_h/5)
-
+            if game_menu == 'maps':
+                pygame.draw.rect(screen, COLOR_BLACK, pygame.Rect(
+                    (WIDTH/3) - 10, (HEIGHT/5) - 2, 105, 30))
+                drawText("Mapa1", pygame.font.SysFont("arielblack", 40), (255,
+                         255, 255), WIDTH/3, HEIGHT/5)
 
             if game_menu == 'main_menu':
-                start = pygame.draw.rect(screen, (0,0,0), pygame.Rect((monitor_size.current_w/2.5) -10, (monitor_size.current_h/4) - 2, 210    , 30 ))
-                drawText("1.Choose Map", pygame.font.SysFont("arielblack", 40), (255,255,255), monitor_size.current_w/2.5, monitor_size.current_h/4)
+                start = pygame.draw.rect(screen, COLOR_BLACK,
+                                         pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y, 400, 50))
 
-                quit_game = pygame.draw.rect(screen, (0,0,0), pygame.Rect((monitor_size.current_w/2.5) -10, (monitor_size.current_h/4) + 50, 210    , 30 ))
-                drawText("Quit", pygame.font.SysFont("arielblack", 40), (255,255,255), monitor_size.current_w/2.5, monitor_size.current_h/4 + 50)
+                drawText("Choose Map", pygame.font.SysFont("arielblack", 40),
+                         COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + 10)
+
+                quit_game = pygame.draw.rect(screen, COLOR_BLACK, pygame.Rect(
+                    MENU_BUTTON_X, MENU_BUTTON_Y + 60, 400, 50))
+
+                drawText("Quit", pygame.font.SysFont("arielblack", 40),
+                         COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + 60 + 10)
 
             elif game_menu == 'pista':
-                
+
                 jogo = Jogo("tracks/track.txt")
 
                 # jogo.start()
 
-                drawMap(screen,mapa)
-                player(jogador)
-                drawText("ESC to return", pygame.font.SysFont("arielblack", 40), (255,255,255), 0, 0)
+                drawMap(screen, mapa)
+                drawPlayer(jogador)
+                drawText("ESC to return", pygame.font.SysFont(
+                    "arielblack", 40), COLOR_WHITE, 0, 0)
 
             for event in pygame.event.get():
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESCAPE:
-                            game_menu = 'main_menu'
-                        if event.key == pygame.K_1:
-                            game_menu = 'pista'
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        game_menu = 'main_menu'
+                    if event.key == pygame.K_1:
+                        game_menu = 'pista'
 
-                    if event.type == pygame.MOUSEBUTTONDOWN:
-                        if start.collidepoint(pygame.mouse.get_pos()):
-                            game_menu = "pista"
-                        if quit_game.collidepoint(pygame.mouse.get_pos()):
-                            running = False
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if start.collidepoint(pygame.mouse.get_pos()):
+                        game_menu = "pista"
+                    if quit_game.collidepoint(pygame.mouse.get_pos()):
+                        running = False
 
-
-                    if event.type == pygame.QUIT:
-                        running = False 
+                if event.type == pygame.QUIT:
+                    running = False
 
             pygame.display.update()
-
-
 
 
 def main():
