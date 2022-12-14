@@ -94,16 +94,6 @@ class Resolver:
                         max = (dist, adjacente)
         self.greedy_search(max[1], end, grafo, path)
         return (path, 0)
-
-    ##################################
-    # Eliminar candidatos inválidos
-    ##################################
-
-    def squeezeOptions(self, estado, candidatos, refCart):
-        for candidato in candidatos:
-            
-
-
     
     ##################################
     # Greedy search jogada
