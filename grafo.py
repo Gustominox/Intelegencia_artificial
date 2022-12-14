@@ -18,7 +18,7 @@ import math
 # Importar a classe nodo
 from nodo import Node
 from mapa import *
-
+from vector import Vector
 
 # Definição da classe grafo:
 # Um grafo tem uma lista de nodos,
@@ -77,6 +77,19 @@ class Graph:
             if node == search_node:
                 return node
         return None
+
+
+    def get_node_by_vector(self, vector):
+        
+        name = str((vector.x,vector.y))
+        print(name)
+        search_node = Node(name)
+        for node in self.m_nodes:
+            if node == search_node:
+                return node
+        return None
+
+
 
     ###########################
     # Imprimir arestas
@@ -180,11 +193,9 @@ class Graph:
                                 # self.addNode(str(search), 0)
                                 # self.addEdge(str((row, line)),
                                 #              str(search), 1)
-                                
-                            
 
                                 if mapa.getCelValue(search) == TRACK:
-                                    self.addNode(str(search), TRACK )
+                                    self.addNode(str(search), TRACK)
                                     self.addEdge(str((row, line)),
                                                  str(search), 1)
 
@@ -202,13 +213,14 @@ class Graph:
                                     self.addNode(str(search), FINISH)
                                     self.addEdge(str((row, line)),
                                                  str(search), 1)
-    ### deprecated
+    # deprecated
+
     def createGraph1(self, mapa):
         (xstart, ystart) = mapa.start
         self.addNode(f"{mapa.start}", 0)
         self.addEdges(xstart, ystart, mapa)
-    
-    ### deprecated
+
+    # deprecated
     def addEdges(self, xstart, ystart, mapa, visited=[], depth=0):
 
         nextNodes = []
@@ -242,12 +254,55 @@ class Graph:
 
     def checkPath(self, inicio, destino):
         custo = destino-inicio
-        xAxis = custo.x
-        yAxis = custo.y
+        print(f"{inicio} -> {destino}")
+        x = custo.x
+        y = custo.y
+        currentPosition = inicio
         
-        
-        
-        print(custo)
+        while x != 0 or y != 0:
+            lastPosition = currentPosition
+            
+            nodeType = self.get_node_by_vector(currentPosition).type
+            
+            if  nodeType == FINISH:
+                print("FINISH")
+                return currentPosition, FINISH
+            if  nodeType == WALL:
+                print("WALL")
+                return lastPosition, WALL
+            
+            
+            
+            
+            if x > 0:
+                x = x-1
+                currentPosition += Vector(1,0)
+            elif x < 0:
+                x = x+1
+                currentPosition += Vector(-1,0)
+                
+                
+            if y > 0:
+                y = y-1
+                currentPosition += Vector(0,1)
+            elif y < 0:
+                y = y+1
+                currentPosition += Vector(0,-1)
+            
+            nodeType = self.get_node_by_vector(currentPosition).type
+            
+            if  nodeType == FINISH:
+                print("FINISH")
+                return currentPosition, FINISH
+            if  nodeType == WALL:
+                print("WALL")
+                return lastPosition, WALL
+            
+            print(f"CURRENT POSITION :{currentPosition} NODETYPE :{nodeType}")
+
+        return currentPosition, TRACK
+    
+        print(f"{currentPosition} == {destino}")
 
 
 def main():
