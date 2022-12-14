@@ -7,7 +7,7 @@ class Player:
     
     def __init__(self,estadoInicial):
         self.estado = estadoInicial
-        self.velocidade = Vector(0,0)        
+        self.velocidade = Vector(1,1)        
     
     def __str__(self):
         return f"Player: Estado -> {self.estado}\tVelocidade -> {self.velocidade}"
