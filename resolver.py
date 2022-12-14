@@ -60,6 +60,13 @@ class Resolver:
     ################################################
 
     def bfs(self, start, end, grafo):
+        """Breath frist search
+
+        Args:
+            start (Vector): Node to start searching from
+            end (List): Objective of search
+            grafo (Graph): Graph to search answer
+        """        
         queue = [[start]]
         visited = set()
 

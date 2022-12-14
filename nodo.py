@@ -11,7 +11,8 @@
 # poderá posteriormente ter também informação sobre um objeto a armazenar...
 
 class Node:
-    #  construtor do nodo....."
+    """Node from a searchble Graph
+    """    
     def __init__(self, name, tipo=-1):
         self.name = str(name)
         self.type = tipo
