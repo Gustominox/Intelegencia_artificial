@@ -12,7 +12,7 @@
 
 class Node:
     #  construtor do nodo....."
-    def __init__(self, name, tipo):
+    def __init__(self, name, tipo=-1):
         self.name = str(name)
         self.type = tipo
         # Posteriormente colocar o objeto que o nodo vai referenciar...
