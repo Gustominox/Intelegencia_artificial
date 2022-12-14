@@ -20,7 +20,7 @@ SCALEY=109.71428571428571
 
 # Title and icon
 pygame.display.set_caption("VectorRace")
-icon = pygame.image.load('imgs/icon.png')
+icon = pygame.image.load('imgs/icon.jpg')
 pygame.display.set_icon(icon)
 
 # Game States
@@ -42,7 +42,7 @@ playerImg = pygame.transform.scale(playerImg, (SCALEX,SCALEY))
 # Desenha o Mapa
 def drawMap(screen,mapa):
 
-    MAP_SCALE_X =monitor_size.current_w/mapa.rows
+    MAP_SCALE_X = monitor_size.current_w/mapa.rows
     MAP_SCALE_Y = monitor_size.current_h/mapa.lines
     #MAP_SCALE = 128
 
@@ -54,7 +54,7 @@ def drawMap(screen,mapa):
 
             
             
-def player(player):
+def drawPlayer(player):
     x = player.estado.x * SCALEX
     y = player.estado.y * SCALEY
     #declive = Vector.to_polar(player.velociade)
