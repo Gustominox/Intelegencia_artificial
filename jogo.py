@@ -28,7 +28,11 @@ class Jogo:
         self.fps = 10
 
     def proximasJogadas(self, player):
-        """Cria tds as posiveis proximas coordenadas a partir do estado e velocidade do jogador"""
+        """Cria tds as possiveis proximas coordenadas a partir do estado e velocidade do jogador
+
+        Returns:
+            Player: Jogador sbr o qual se vai criar as coordenadas
+        """        
         proximasJogadas = []
 
         for jogada in JOGADAS:
