@@ -24,7 +24,7 @@ icon = pygame.image.load('imgs/icon.png')
 pygame.display.set_icon(icon)
 
 # Game States
-game_menu = "main"
+game_menu = "main_menu"
 
 # Introduz texto para o menu
 def drawText (text, font, text_col, x, y):
@@ -87,7 +87,7 @@ while running:
 
         
 
-    if game_menu == 'main':
+    if game_menu == 'main_menu':
         start = pygame.draw.rect(screen, (0,0,0), pygame.Rect((monitor_size.current_w/2.5) -10, (monitor_size.current_h/4) - 2, 210    , 30 ))
         drawText("1.Choose Map", pygame.font.SysFont("arielblack", 40), (255,255,255), monitor_size.current_w/2.5, monitor_size.current_h/4)
 
@@ -114,7 +114,7 @@ while running:
     for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_ESCAPE:
-                    game_menu = 'main'
+                    game_menu = 'main_menu'
                 if event.key == pygame.K_1:
                     game_menu = 'pista'
 
