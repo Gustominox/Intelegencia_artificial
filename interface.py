@@ -18,9 +18,20 @@ SCALE = 100
 SCALEX=136.6
 SCALEY=109.71428571428571
 
+
+# Player
+playerImgRaw = pygame.image.load('imgs/racecar.png')
+playerImg = pygame.transform.rotate(playerImgRaw, 270)
+# playerImg = pygame.transform.scale(playerImg, (SCALEX,SCALEY))
+
+winImg = pygame.image.load('imgs/winner.png')
+winImg = pygame.transform.scale(winImg, size)
+
 # Title and icon
 pygame.display.set_caption("VectorRace")
 icon = pygame.image.load('imgs/icon.jpg')
+icon_dimmed = pygame.image.load('imgs/icon_dimmed2.jpg')
+icon_dimmed = pygame.transform.scale(icon_dimmed, size)
 pygame.display.set_icon(icon)
 
 # Game States
@@ -31,16 +42,12 @@ def drawText (text, font, text_col, x, y):
     texto = font.render(text, True, text_col)
     screen.blit(texto, (x, y))
 
-# Player
-playerImg = pygame.image.load('imgs/racecar.png')
-playerImg = pygame.transform.rotate(playerImg, 270)
-playerImg = pygame.transform.scale(playerImg, (SCALEX,SCALEY))
 
 
 
 
 # Desenha o Mapa
-def drawMap(screen,mapa):
+def drawMap(screen,mapa,player):
 
     MAP_SCALE_X = monitor_size.current_w/mapa.rows
     MAP_SCALE_Y = monitor_size.current_h/mapa.lines
@@ -52,14 +59,13 @@ def drawMap(screen,mapa):
         for row in range(mapa.rows):
             pygame.draw.rect(screen, colors[content[line][row]], pygame.Rect(row*MAP_SCALE_X, line*MAP_SCALE_Y, MAP_SCALE_X, MAP_SCALE_Y))
 
+    x = player.estado.x * MAP_SCALE_X
+    y = player.estado.y * MAP_SCALE_Y 
+    playerImgFinal = pygame.transform.scale(playerImg, (MAP_SCALE_X,MAP_SCALE_Y))
+    screen.blit(playerImgFinal,(x,y))
+    
             
             
-def drawPlayer(player):
-    x = player.estado.x * SCALEX
-    y = player.estado.y * SCALEY
-    #declive = Vector.to_polar(player.velociade)
-    #playerImg = pygame.transform.rotate(playerImg, declive)
-    screen.blit(playerImg,(x,y))
     
 
 #def movePlayer(Player):
