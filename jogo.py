@@ -49,7 +49,7 @@ class Jogo:
         path = []
 
         res = Resolver()
-        jogador = Player(estadoInicial=Vector(1, 4))
+        jogador = Player(estadoInicial=self.mapa.start)
 
         self.addPlayer(jogador)
 
