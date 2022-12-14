@@ -12,10 +12,9 @@
 
 class Node:
     #  construtor do nodo....."
-    def __init__(self, name, tipo, dmeta):
+    def __init__(self, name, tipo):
         self.name = str(name)
         self.type = tipo
-        self.dmeta = dmeta
         # Posteriormente colocar o objeto que o nodo vai referenciar...
 
     # Devolve a representação na forma de string do nodo por forma a ser de leitura 'amigável'
@@ -41,14 +40,6 @@ class Node:
     # Atualizar o tipo de bloco
     def setEstimativa(self, estimativa):
         self.type = estimativa
-
-    # Obter a distância do nodo à meta
-    def getDmeta(self):
-        return self.dmeta
-
-    # Atualizar a distância do nodo à meta
-    def setDmeta(self, dmeta):
-        self.dmeta = dmeta
 
     # Método utilizado para comparar dois nodos,
     # neste caso dois nodos são iguais se os nomes forem iguais
