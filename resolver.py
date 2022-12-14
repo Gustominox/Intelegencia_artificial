@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 from matplotlib import colors
 from grafo import Graph
-from queue import Queue
+from queue import PriorityQueue
 from mapa import *
 
 
@@ -156,19 +156,21 @@ class Resolver:
     ##################################
 
     def a_estrela_search(self, start, end, grafo):
-        queue = queue.PriorityQueue()
-        queue.put(0, start)
+        q = PriorityQueue()
+        q.put((0, [start]))
         visited = set()
 
-        while queue:
+        while q:
             # Gets the first path in the queue
-            path = queue.get
+            nextItem = q.get()
+            print(nextItem)
+            path = nextItem[1]
 
             # Gets the last node in the path
             node = path[-1]
 
             # Checks if we got to the end
-            if node in end:
+            if grafo.get_node_by_vector(node).type == FINISH:
                 custoT = grafo.calcula_custo(path)
                 return (path, custoT)
                 # return (grafo.debug, custoT)
@@ -185,8 +187,7 @@ class Resolver:
                                     dist = dtemp
                             new_path = list(path)
                             new_path.append(current_neighbour)
-                            queue.put(
-                                dist + grafo.calcula_custo(new_path), new_path)
+                            q.put(dist + grafo.calcula_custo(new_path), new_path)
 
                 # Mark the node as visited
                 visited.add(node)
@@ -233,12 +234,14 @@ class Resolver:
     # A* jogada
     ######################################
 
-    def aestrelaJog(self, estado, candidatos, end, grafo):
+    def aestrelaJog(self, player, end, grafo):
+        estado = player.estado
         mincusto = (1000, estado)
-        for candidato in candidatos:
+        for jogada in JOGADAS:
+            candidato = player.estado + player.velocidade + jogada
             (path, custo) = self.a_estrela_search(candidato, end, grafo)
             if custo < mincusto:
-                mincusto = (custo, candidato)
+                mincusto = (custo, jogada)
         return mincusto[1]
 
     def main():

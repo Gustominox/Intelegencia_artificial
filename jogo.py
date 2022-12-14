@@ -62,9 +62,11 @@ class Jogo:
             self.draw()
             time.sleep(1 / self.fps)
 
-            jog = res.greedyJog(jogador, [Vector(x, y) for x, y
-                                          in self.mapa.finish])
+            #jog = res.greedyJog(jogador, [Vector(x, y) for x, y
+            #                              in self.mapa.finish])
 
+            jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
+                                          in self.mapa.finish],g)
             possivelPosicao = jogador.estado + jogador.velocidade + jog
 
             novaPosicao, stopType = g.checkPath(
