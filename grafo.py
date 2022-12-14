@@ -168,53 +168,56 @@ class Graph:
         return r
 
     def createGraphCartesian(self, mapa):
-        self.addNode(f"{(0, 0)}", 0)
 
+        # comeca por criar o nodo para a posicao (0,0)        
+        self.addNode(str((0,0)), 0)
+
+        # para cada celula do mapa vamos: 
         for line in range(mapa.lines):
             for row in range(mapa.rows):
-                print((row, line))
+                
+                # checar todas as celulas a volta
                 for i in range(3):
                     for j in range(3):
-                        # nao quero procurar na propria celula
-                        if not ((i == 1 and j == 1) or
-                                (i == 0 and j == 0) or
+                        
+                        if not ((i == 1 and j == 1) or # nao criar aresta para a propria celula
+                                (i == 0 and j == 0) or # nem nas celulas diagonais
                                 (i == 0 and j == 2) or
                                 (i == 2 and j == 0) or
                                 (i == 2 and j == 2)):
 
-                            x = i-1+row
-                            y = j-1+line
+                            x = i-1+row  # coordenada x do nodo a tentar criar
+                            y = j-1+line # coordenada y do nodo a tentar criar
+                            
                             search = (x, y)
-
+                            
+                            # se o nodo estiver dentro dos limites do mapa
                             if x > -1 and x < mapa.rows and y > -1 and y < mapa.lines:
-
-                                print(f"adding {search}")
-
-                                # self.addNode(str(search), 0)
-                                # self.addEdge(str((row, line)),
-                                #              str(search), 1)
-
+                                
+                                # se o valor relativo ao nodo no mapa for TRACK
                                 if mapa.getCelValue(search) == TRACK:
                                     self.addNode(str(search), TRACK)
                                     self.addEdge(str((row, line)),
                                                  str(search), 1)
-
+                                    
+                                # se o valor relativo ao nodo no mapa for WALL
                                 if mapa.getCelValue(search) == WALL:
                                     self.addNode(str(search), WALL)
                                     self.addEdge(str((row, line)),
-                                                 str(search), 25)
-
+                                                 str(search), 1)
+                                    
+                                # se o valor relativo ao nodo no mapa for START
                                 if mapa.getCelValue(search) == START:
                                     self.addNode(str(search), START)
                                     self.addEdge(str((row, line)),
                                                  str(search), 1)
 
+                                # se o valor relativo ao nodo no mapa for FINISH
                                 elif mapa.getCelValue(search) == FINISH:
                                     self.addNode(str(search), FINISH)
                                     self.addEdge(str((row, line)),
                                                  str(search), 1)
     # deprecated
-
     def createGraph1(self, mapa):
         (xstart, ystart) = mapa.start
         self.addNode(f"{mapa.start}", 0)
@@ -225,8 +228,7 @@ class Graph:
 
         nextNodes = []
         depth += 1
-        # if (depth == 10):
-        #     return
+        
         visited.append((xstart, ystart))
 
         for i in range(3):
@@ -271,16 +273,12 @@ class Graph:
                 print("WALL")
                 return lastPosition, WALL
             
-            
-            
-            
             if x > 0:
                 x = x-1
                 currentPosition += Vector(1,0)
             elif x < 0:
                 x = x+1
                 currentPosition += Vector(-1,0)
-                
                 
             if y > 0:
                 y = y-1
