@@ -94,6 +94,42 @@ class Resolver:
                         max = (dist, adjacente)
         self.greedy_search(max[1], end, grafo, path)
         return (path, 0)
+
+    ##################################
+    # A* search
+    ##################################    
+
+    def A_estrela_search(self, start, end, grafo):
+        queue = [[start]]
+        visited = set()
+
+        while queue:
+            # print(visited)
+            # Gets the first path in the queue
+            path = queue.pop(0)
+            # print(f"PATH: {path}")
+
+            # Gets the last node in the path
+            vertex = path[-1]
+            grafo.debug.append(vertex)
+            # print(f"VERTEX: {vertex}")
+
+            # Checks if we got to the end
+            if vertex in end:
+                custoT = grafo.calcula_custo(path)
+                return (path, custoT)
+                # return (grafo.debug, custoT)
+            # We check if the current node is already in the visited nodes set in order not to recheck it
+            elif vertex not in visited:
+                # enumerate all adjacent nodes, construct a new path and push it into the queue
+                for (current_neighbour, peso) in grafo.m_graph[vertex]:
+                    if current_neighbour not in visited:
+                        new_path = list(path)
+                        new_path.append(current_neighbour)
+                        queue.append(new_path)
+
+                # Mark the vertex as visited
+                visited.add(vertex)
     
     ##################################
     # Greedy search jogada
@@ -108,9 +144,17 @@ class Resolver:
                         max = (dist, candidato)
         return max[1]
 
-def main():
-    return
+    ######################################
+    # A* jogada
+    ######################################
+
+    def aestrelaJog(self, estado, candidatos, end, grafo):
+        return
 
 
-if __name__ == "__main__":
-    main()
+    def main():
+        return
+
+
+    if __name__ == "__main__":
+        main()
