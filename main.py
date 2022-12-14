@@ -11,8 +11,8 @@ def main():
     resolver = Resolver()
 
     g = Graph()
-    mapa = Mapa("track.txt")
-    g.createGraph(mapa)
+    mapa = Mapa("tracks/track.txt")
+    g.createGraphCartesian(mapa)
         
     #construção de menu
     saida = -1
@@ -40,7 +40,7 @@ def main():
             l=input("prima enter para continuar")
         elif saida == 3:
             #Desenhar o grafo de forma gráfica
-            resolver.mapa.show(True)
+            mapa.show(True)
             l=input("prima enter para continuar")
             
         elif saida == 4:
@@ -63,7 +63,7 @@ def main():
            
             # print (f"{p}, custo: {custoT}")
            
-            resolver.mapa.show()   
+            mapa.show()   
             resolver.showPath(p)
             
             plt.show()
@@ -77,7 +77,7 @@ def main():
             (path, custoT) = resolver.dfs( inicio, fim,g, path=[], visited=set())
             p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
             # print (f"{p}, custo: {custoT}")
-            resolver.mapa.show()   
+            mapa.show()   
             resolver.showPath(p)
             
             plt.show()
@@ -95,7 +95,7 @@ def main():
            
             # print (f"{p}, custo: {custoT}")
            
-            resolver.mapa.show()   
+            mapa.show()   
             resolver.showPath(p)
             
             plt.show()
@@ -113,7 +113,7 @@ def main():
            
             # print (f"{p}, custo: {custoT}")
            
-            resolver.mapa.show()   
+            mapa.show()   
             resolver.showPath(p)
             
             plt.show()
