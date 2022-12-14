@@ -133,6 +133,8 @@ class Graph:
     # desenha grafo  modo grafico
     #########################
     def desenha(self):
+        """Desenha grafo modo grafico"""
+
         # criar lista de vertices
         lista_v = self.m_nodes
         lista_a = []
