@@ -119,8 +119,11 @@ class Graph:
     # Dado um caminho calcula o seu custo
     #####################################
 
+    
+    
     def calcula_custo(self, caminho):
-        # caminho é uma lista de nomes de nodos
+        """Dado um caminho calcula o seu custo
+        Um caminho é uma lista de nomes de nodos"""
         teste = caminho
         custo = 0
         i = 0
@@ -129,9 +132,6 @@ class Graph:
             i = i+1
         return custo
 
-    ###########################
-    # desenha grafo  modo grafico
-    #########################
     def desenha(self):
         """Desenha grafo modo grafico"""
 

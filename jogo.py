@@ -41,7 +41,6 @@ class Jogo:
 
     def draw(self):
         print(self.mapa)
-        
 
     def start(self):
 
@@ -57,46 +56,41 @@ class Jogo:
         g = Graph()
 
         g.createGraphCartesian(self.mapa)
+        
         while on:
 
             self.draw()
             time.sleep(1 / self.fps)
-            
+
             jog = res.greedyJog(jogador, [Vector(x, y) for x, y
-                                                          in self.mapa.finish])
-            
+                                          in self.mapa.finish])
+
             possivelPosicao = jogador.estado + jogador.velocidade + jog
-            
-            novaPosicao, stopType = g.checkPath(jogador.estado, possivelPosicao)
+
+            novaPosicao, stopType = g.checkPath(
+                jogador.estado, possivelPosicao)
 
             jogador.jogada(jog)
 
-                
-            nodoType = g.get_node_by_vector(novaPosicao).type 
-            
-            
+            nodoType = g.get_node_by_vector(novaPosicao).type
+
             if stopType == WALL:
                 jogador.estado = novaPosicao
-                jogador.velocidade = Vector(0,0) 
+                jogador.velocidade = Vector(0, 0)
             elif stopType == FINISH:
                 jogador.estado = novaPosicao
-                jogador.velocidade = Vector(0,0)
+                jogador.velocidade = Vector(0, 0)
                 on = 1
-            
-                
-                
-                
+
             if on != 0:
                 on -= 1
-             
-            
-            # path.append((novaPosicao.x,novaPosicao.y))
-            # res.getPltXY(path)
-            # self.mapa.show()
-            # res.showPath(path,True)
-            
+
+            path.append((novaPosicao.x,novaPosicao.y))
+            res.getPltXY(path)
+            self.mapa.show()
+            res.showPath(path,True)
+
             time.sleep(1)
-        
 
 
 def main():
