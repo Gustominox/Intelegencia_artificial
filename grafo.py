@@ -177,29 +177,29 @@ class Graph:
 
                                 print(f"adding {search}")
 
-                                self.addNode(str(search), 0)
-                                self.addEdge(str((row, line)),
-                                             str(search), 1)
+                                # self.addNode(str(search), 0)
+                                # self.addEdge(str((row, line)),
+                                #              str(search), 1)
 
-                                # if mapa.getCelValue(search) == TRACK:
-                                #     self.addNode(f"{search}", 0)
-                                #     self.addEdge(str((row, line)),
-                                #                  str(search), 1)
+                                if mapa.getCelValue(search) == TRACK:
+                                    self.addNode(str(search), TRACK)
+                                    self.addEdge(str((row, line)),
+                                                 str(search), 1)
 
-                                # if mapa.getCelValue(search) == WALL:
-                                #     self.addNode(f"{search}", 0)
-                                #     self.addEdge(str((row, line)),
-                                #                  str(search), 25)
+                                if mapa.getCelValue(search) == WALL:
+                                    self.addNode(str(search), WALL)
+                                    self.addEdge(str((row, line)),
+                                                 str(search), 25)
 
-                                # if mapa.getCelValue(search) == START:
-                                #     self.addNode(f"{search}", 0)
-                                #     self.addEdge(str((row, line)),
-                                #                  str(search), 1)
+                                if mapa.getCelValue(search) == START:
+                                    self.addNode(str(search), START)
+                                    self.addEdge(str((row, line)),
+                                                 str(search), 1)
 
-                                # elif mapa.getCelValue(search) == FINISH:
-                                #     self.addNode(f"{search}", 0)
-                                #     self.addEdge(str((row, line)),
-                                #                  str(search), 1)
+                                elif mapa.getCelValue(search) == FINISH:
+                                    self.addNode(str(search), FINISH)
+                                    self.addEdge(str((row, line)),
+                                                 str(search), 1)
     ### deprecated
     def createGraph1(self, mapa):
         (xstart, ystart) = mapa.start
@@ -222,17 +222,17 @@ class Graph:
 
                     if search not in visited:
                         if mapa.getCelValue(search) == TRACK:
-                            self.addNode(f"{search}", 0)
+                            self.addNode(str(search), 0)
                             self.addEdge(str((xstart, ystart)), str(search), 1)
                             nextNodes.append(search)
 
                         if mapa.getCelValue(search) == WALL:
-                            self.addNode(f"{search}", 0)
+                            self.addNode(str(search), 0)
                             self.addEdge(str((xstart, ystart)),
                                          str(search), 25)
 
                         elif mapa.getCelValue(search) == FINISH:
-                            self.addNode(f"{search}", 0)
+                            self.addNode(str(search), 0)
                             self.addEdge(str((xstart, ystart)), str(search), 1)
 
         for (x, y) in nextNodes:
