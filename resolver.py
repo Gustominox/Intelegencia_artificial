@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 from matplotlib import colors
 from grafo import Graph
-from queue import Queue
+from queue import PriorityQueue
 from mapa import *
 
 
@@ -23,11 +23,26 @@ class Resolver:
         self.path = []
 
     def getPltXY(self, path):
+        """Retorna o caminho PLT
+
+        Args:
+            path (List): Lista com nodos do caminho
+
+        Returns:
+            Tuple: Tuplo de uma Lista de todos os x's e outra de todos os y's para serem desenhados
+        """        
         xpath = [x + 0.5 for (x, y) in path]
         ypath = [y + 0.5 for (x, y) in path]
         return (xpath, ypath)
 
     def showPath(self, path, final=False):
+        """Mostra o caminho PLT
+
+        Args:
+            path (List): Lista com todos os nodos do caminho
+            final (bool, optional): Quando é TRUE, demonstra o mapa. Quando é FALSE, guarda em cache e 
+            mostra mais tarde com o plt.show()
+        """        
         x, y = self.getPltXY(path)
         plt.plot(x, y, 'b.--', linewidth=2, markersize=20)
 
@@ -39,6 +54,18 @@ class Resolver:
     ####################################################################################
 
     def dfs(self, start, end, grafo, path=[], visited=set()):
+        """Algortimo de Procura "Depth First Search"
+
+        Args:
+            start (Vector): Vector (Ponto) onde começa a Procura
+            end (List): Objetivo de Procura
+            grafo (Graph): Grafo onde é feita a Procura 
+            path (List, Vector): Lista de Vectores (Pontos). 
+            visited (List, Vector): Lista dos Vectores (pontos) já visitados.
+
+        Returns:
+            None
+        """        
 
         path.append(start)
         visited.add(start)
@@ -60,12 +87,12 @@ class Resolver:
     ################################################
 
     def bfs(self, start, end, grafo):
-        """Breath frist search
+        """Algortimo de Procura "Breadth First Search"
 
         Args:
-            start (Vector): Node to start searching from
-            end (List): Objective of search
-            grafo (Graph): Graph to search answer
+            start (Vector): Vector (Ponto) onde começa a procura
+            end (List): Objetivo de Procura
+            grafo (Graph): Grafo onde é feita a Procura
         """        
         queue = [[start]]
         visited = set()
@@ -103,6 +130,12 @@ class Resolver:
     ################################
 
     def greedy_search(self, start, end, grafo, path=[]):
+
+        """Algortimo Guloso de Procura
+
+        Returns:
+            List: Lista de Vectores (Pontos) de objetivo à Procura
+        """        
         path.append(start)
         max = (1000, start)
         if start in end:
@@ -123,19 +156,21 @@ class Resolver:
     ##################################
 
     def a_estrela_search(self, start, end, grafo):
-        queue = queue.PriorityQueue()
-        queue.put(0, start)
+        q = PriorityQueue()
+        q.put((0, [start]))
         visited = set()
 
-        while queue:
+        while q:
             # Gets the first path in the queue
-            path = queue.get
+            nextItem = q.get()
+            print(nextItem)
+            path = nextItem[1]
 
             # Gets the last node in the path
             node = path[-1]
 
             # Checks if we got to the end
-            if node in end:
+            if grafo.get_node_by_vector(node).type == FINISH:
                 custoT = grafo.calcula_custo(path)
                 return (path, custoT)
                 # return (grafo.debug, custoT)
@@ -152,8 +187,7 @@ class Resolver:
                                     dist = dtemp
                             new_path = list(path)
                             new_path.append(current_neighbour)
-                            queue.put(
-                                dist + grafo.calcula_custo(new_path), new_path)
+                            q.put(dist + grafo.calcula_custo(new_path), new_path)
 
                 # Mark the node as visited
                 visited.add(node)
@@ -162,7 +196,15 @@ class Resolver:
     # Greedy search jogada
     ##################################
     def proximasJogadas(self, player):
-        """Cria tds as posiveis proximas coordenadas a partir do estado e velocidade do jogador"""
+        """Jogadas seguintes no Algortimo Guloso de Procura
+
+        Args:
+            player (Player): Jogador a efetuar as Jogadas
+
+        Returns:
+            List: Lista com  todas as possíveis proximas coordenadas a partir do estado e velocidade do jogador
+            """
+
         proximasJogadas = []
 
         for jogada in JOGADAS:
@@ -171,6 +213,12 @@ class Resolver:
         return proximasJogadas
 
     def greedyJog(self,player, end):
+
+        """Apenas uma Jogada Greedy
+
+        Returns:
+            Tuple: Tuplo onde está inserida a melhor
+        """        
         estado = player.estado
 
         max = (1000, estado)
@@ -186,12 +234,14 @@ class Resolver:
     # A* jogada
     ######################################
 
-    def aestrelaJog(self, estado, candidatos, end, grafo):
+    def aestrelaJog(self, player, end, grafo):
+        estado = player.estado
         mincusto = (1000, estado)
-        for candidato in candidatos:
+        for jogada in JOGADAS:
+            candidato = player.estado + player.velocidade + jogada
             (path, custo) = self.a_estrela_search(candidato, end, grafo)
             if custo < mincusto:
-                mincusto = (custo, candidato)
+                mincusto = (custo, jogada)
         return mincusto[1]
 
     def main():
