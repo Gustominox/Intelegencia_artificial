@@ -5,6 +5,7 @@ from mapa import Mapa
 from resolver import Resolver
 from matplotlib import pyplot as plt
 from matplotlib import colors
+from vector import Vector
 
 def main():
 
@@ -55,11 +56,11 @@ def main():
             
             #Efetuar pesquisa de caminho entre nodo Start e Finish's com DFS
             
-            inicio = "(1, 3)"
-            fim = ["(9, 4)", "(9, 3)", "(9, 2)"]
+            inicio = Vector(1, 3)
+            fim = [Vector(9, 4), Vector(9, 3), Vector(9, 2)]
             
             (path, custoT) = resolver.dfs( inicio, fim,g, path=[], visited=set())
-            p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
+            p = [(vector.x,vector.y)for vector in path]
            
             # print (f"{p}, custo: {custoT}")
            
@@ -87,11 +88,11 @@ def main():
             
             #Efetuar pesquisa de caminho entre nodo Start e Finish's com BFS
             
-            inicio = "(1, 3)"
-            fim = ["(9, 4)", "(9, 3)", "(9, 2)"]
+            inicio = Vector(1, 3)
+            fim = [Vector(9, 4), Vector(9, 3), Vector(9, 2)]
             
             (path, custo) = resolver.bfs(inicio, fim,g)
-            p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
+            p = [(vector.x,vector.y)for vector in path]
            
             # print (f"{p}, custo: {custoT}")
            

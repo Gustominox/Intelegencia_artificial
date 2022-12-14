@@ -51,13 +51,13 @@ class Graph:
     # Adicionar aresta no grafo, com peso
     ####################################
 
-    def addNode(self, node1, estimativa):
+    def addNode(self, node1,vector, tipo):
         # cria um objeto node  com o nome passado como parametro
-        n1 = Node(node1, estimativa)
+        n1 = Node(node1,vector, tipo)
 
         if (n1 not in self.m_nodes):
             self.m_nodes.append(n1)
-            self.m_graph[node1] = set()
+            self.m_graph[vector] = set()
         return n1
 
     def addEdge(self, node1, node2, weight):  # node1 e node2 são os 'nomes' de cada nodo
@@ -143,11 +143,11 @@ class Graph:
         # Converter para o formato usado pela biblioteca networkx
         for nodo in lista_v:
             n = nodo.getName()
-            g.add_node(n)
-            for (adjacente, peso) in self.m_graph[n]:
-                lista = (n, adjacente)
+            g.add_node(nodo.vector)
+            for (adjacente, peso) in self.m_graph[nodo.vector]:
+                lista = (nodo.vector, adjacente)
                 # lista_a.append(lista)
-                g.add_edge(n, adjacente, weight=peso)
+                g.add_edge(nodo.vector, adjacente, weight=peso)
 
         # desenhar o grafo
         pos = nx.spring_layout(g)
@@ -172,7 +172,7 @@ class Graph:
     def createGraphCartesian(self, mapa):
 
         # comeca por criar o nodo para a posicao (0,0)        
-        self.addNode(str((0,0)), 0)
+        self.addNode(str((0,0)),Vector(0,0), 0)
 
         # para cada celula do mapa vamos: 
         for line in range(mapa.lines):
@@ -195,66 +195,61 @@ class Graph:
                             
                             # se o nodo estiver dentro dos limites do mapa
                             if x > -1 and x < mapa.rows and y > -1 and y < mapa.lines:
-                                
+                                celValue = mapa.getCelValue(search)
                                 # se o valor relativo ao nodo no mapa for TRACK
-                                if mapa.getCelValue(search) == TRACK:
-                                    self.addNode(str(search), TRACK)
-                                    self.addEdge(str((row, line)),
-                                                 str(search), 1)
+                                if celValue == TRACK:
+                                    self.addNode(str(search), Vector(x, y),TRACK)
                                     
                                 # se o valor relativo ao nodo no mapa for WALL
-                                if mapa.getCelValue(search) == WALL:
-                                    self.addNode(str(search), WALL)
-                                    self.addEdge(str((row, line)),
-                                                 str(search), 1)
+                                if celValue == WALL:
+                                    self.addNode(str(search), Vector(x, y) ,WALL)
                                     
                                 # se o valor relativo ao nodo no mapa for START
-                                if mapa.getCelValue(search) == START:
-                                    self.addNode(str(search), START)
-                                    self.addEdge(str((row, line)),
-                                                 str(search), 1)
-
+                                if celValue == START:
+                                    self.addNode(str(search), Vector(x, y),START)
+                                    
                                 # se o valor relativo ao nodo no mapa for FINISH
-                                elif mapa.getCelValue(search) == FINISH:
-                                    self.addNode(str(search), FINISH)
-                                    self.addEdge(str((row, line)),
-                                                 str(search), 1)
+                                if celValue == FINISH:
+                                    self.addNode(str(search), Vector(x, y),FINISH)
+                                    
+                                #DEPRECATED self.addEdge(str((row, line)),str(search), 1)
+                                self.addEdge(Vector(row, line), Vector(x, y), 1)
     # deprecated
-    def createGraph1(self, mapa):
-        (xstart, ystart) = mapa.start
-        self.addNode(f"{mapa.start}", 0)
-        self.addEdges(xstart, ystart, mapa)
-
-    # deprecated
-    def addEdges(self, xstart, ystart, mapa, visited=[], depth=0):
-
-        nextNodes = []
-        depth += 1
-        
-        visited.append((xstart, ystart))
-
-        for i in range(3):
-            for j in range(3):
-                if not (i == 1 and j == 1):  # nao quero procurar na propria celula
-                    search = (i-1+xstart, j-1+ystart)
-
-                    if search not in visited:
-                        if mapa.getCelValue(search) == TRACK:
-                            self.addNode(str(search), 0)
-                            self.addEdge(str((xstart, ystart)), str(search), 1)
-                            nextNodes.append(search)
-
-                        if mapa.getCelValue(search) == WALL:
-                            self.addNode(str(search), 0)
-                            self.addEdge(str((xstart, ystart)),
-                                         str(search), 25)
-
-                        elif mapa.getCelValue(search) == FINISH:
-                            self.addNode(str(search), 0)
-                            self.addEdge(str((xstart, ystart)), str(search), 1)
-
-        for (x, y) in nextNodes:
-            self.addEdges(x, y, mapa, visited, depth)  # visited.copy(), depth)
+    # def createGraph1(self, mapa):
+    #     (xstart, ystart) = mapa.start
+    #     self.addNode(f"{mapa.start}", 0)
+    #     self.addEdges(xstart, ystart, mapa)
+# 
+    # # deprecated
+    # def addEdges(self, xstart, ystart, mapa, visited=[], depth=0):
+# 
+    #     nextNodes = []
+    #     depth += 1
+    #     
+    #     visited.append((xstart, ystart))
+# 
+    #     for i in range(3):
+    #         for j in range(3):
+    #             if not (i == 1 and j == 1):  # nao quero procurar na propria celula
+    #                 search = (i-1+xstart, j-1+ystart)
+# 
+    #                 if search not in visited:
+    #                     if mapa.getCelValue(search) == TRACK:
+    #                         self.addNode(str(search), 0)
+    #                         self.addEdge(str((xstart, ystart)), str(search), 1)
+    #                         nextNodes.append(search)
+# 
+    #                     if mapa.getCelValue(search) == WALL:
+    #                         self.addNode(str(search), 0)
+    #                         self.addEdge(str((xstart, ystart)),
+    #                                      str(search), 25)
+# 
+    #                     elif mapa.getCelValue(search) == FINISH:
+    #                         self.addNode(str(search), 0)
+    #                         self.addEdge(str((xstart, ystart)), str(search), 1)
+# 
+    #     for (x, y) in nextNodes:
+    #         self.addEdges(x, y, mapa, visited, depth)  # visited.copy(), depth)
 
     def checkPath(self, inicio, destino):
         custo = destino-inicio

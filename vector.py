@@ -12,7 +12,7 @@ class Vector:
 
     def __repr__(self):
         """Unambiguous string representation of the vector."""
-        return '{:g} x + {:g} y'.format(self.x, self.y)
+        return '{:g}x + {:g}y'.format(self.x, self.y)
 
     def dot(self, other):
         """The scalar (dot) product of self and other. Both must be vectors."""
@@ -79,6 +79,9 @@ class Vector:
         """Return the vector's components in polar coordinates."""
         return self.__abs__(), math.atan2(self.y, self.x)
 
+    def __hash__(self):
+        """Return the vector's hash value."""
+        return hash((self.y, self.x))
 
 if __name__ == '__main__':
     v1 = Vector(2, 5/3)

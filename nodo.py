@@ -10,11 +10,14 @@
 # Cada nodo tem um nome
 # poderá posteriormente ter também informação sobre um objeto a armazenar...
 
+from vector import Vector
+
 class Node:
     """Node from a searchble Graph
     """    
-    def __init__(self, name, tipo=-1):
+    def __init__(self, name, vector=Vector(-1,-1),tipo=-1):
         self.name = str(name)
+        self.vector = vector
         self.type = tipo
         # Posteriormente colocar o objeto que o nodo vai referenciar...
 
