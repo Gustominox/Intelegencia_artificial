@@ -5,7 +5,7 @@ from vector import Vector
 from resolver import Resolver
 from grafo import Graph
 import time
-
+from interface import *
 
 JOGADAS = [
     Vector(-1, -1),
@@ -66,11 +66,11 @@ class Jogo:
             self.draw()
             time.sleep(1 / self.fps)
 
-            jog = res.greedyJog(jogador, [Vector(x, y) for x, y
-                                         in self.mapa.finish])
+            # jog = res.greedyJog(jogador, [Vector(x, y) for x, y
+                                        #  in self.mapa.finish])
 
-            # jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
-                                        #   in self.mapa.finish],g)
+            jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
+                                          in self.mapa.finish],g)
             
             possivelPosicao = jogador.estado + jogador.velocidade + jog
 
@@ -99,12 +99,70 @@ class Jogo:
 
             time.sleep(1)
 
+    def startPYGame(self):
+        running = True
+
+        mapa = Mapa("tracks/track.txt")
+        jogador = Player(Vector(1,3))
+        game_menu = "main_menu"
+
+
+        while running:
+
+            # Background colour
+            screen.fill((50, 50, 50))
+
+            #CHECK MENU
+
+            if game_menu == "maps":
+                pygame.draw.rect(screen, (0,0,0), pygame.Rect((monitor_size.current_w/3) -10, (monitor_size.current_h/5) - 2, 105    , 30 ))
+                drawText("Mapa1", pygame.font.SysFont("arielblack", 40), (255,255,255), monitor_size.current_w/3, monitor_size.current_h/5)
+
+
+            if game_menu == 'main_menu':
+                start = pygame.draw.rect(screen, (0,0,0), pygame.Rect((monitor_size.current_w/2.5) -10, (monitor_size.current_h/4) - 2, 210    , 30 ))
+                drawText("1.Choose Map", pygame.font.SysFont("arielblack", 40), (255,255,255), monitor_size.current_w/2.5, monitor_size.current_h/4)
+
+                quit_game = pygame.draw.rect(screen, (0,0,0), pygame.Rect((monitor_size.current_w/2.5) -10, (monitor_size.current_h/4) + 50, 210    , 30 ))
+                drawText("Quit", pygame.font.SysFont("arielblack", 40), (255,255,255), monitor_size.current_w/2.5, monitor_size.current_h/4 + 50)
+
+            elif game_menu == 'pista':
+                
+                jogo = Jogo("tracks/track.txt")
+
+                # jogo.start()
+
+                drawMap(screen,mapa)
+                player(jogador)
+                drawText("ESC to return", pygame.font.SysFont("arielblack", 40), (255,255,255), 0, 0)
+
+            for event in pygame.event.get():
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            game_menu = 'main_menu'
+                        if event.key == pygame.K_1:
+                            game_menu = 'pista'
+
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        if start.collidepoint(pygame.mouse.get_pos()):
+                            game_menu = "pista"
+                        if quit_game.collidepoint(pygame.mouse.get_pos()):
+                            running = False
+
+
+                    if event.type == pygame.QUIT:
+                        running = False 
+
+            pygame.display.update()
+
+
+
 
 def main():
 
     jogo = Jogo("tracks/track.txt")
 
-    jogo.start()
+    jogo.startPYGame()
 
     # print(jogo.proximasJogadas(jogador))
 
