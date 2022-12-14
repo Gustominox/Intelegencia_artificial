@@ -28,7 +28,7 @@ class Jogo:
         self.fps = 10
 
     def proximasJogadas(self, player):
-
+        """Cria tds as posiveis proximas coordenadas a partir do estado e velocidade do jogador"""
         proximasJogadas = []
 
         for jogada in JOGADAS:
@@ -40,7 +40,6 @@ class Jogo:
         self.players.append(player)
 
     def draw(self):
-        # print(self.players[0])
         print(self.mapa)
         
 
@@ -65,6 +64,7 @@ class Jogo:
             proxJog = self.proximasJogadas(jogador)
             jog = res.greedyJog(jogador.estado, proxJog, [Vector(x, y) for x, y
                                                           in self.mapa.finish])
+            
             k = 0
             for play in proxJog:
                 if jog == play:
