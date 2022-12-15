@@ -49,8 +49,8 @@ def drawText (text, font, text_col, x, y):
 # Desenha o Mapa
 def drawMap(screen,mapa,player):
 
-    MAP_SCALE_X = monitor_size.current_w/mapa.rows
-    MAP_SCALE_Y = monitor_size.current_h/mapa.lines
+    MAP_SCALE_X = round(monitor_size.current_w/mapa.rows)
+    MAP_SCALE_Y = round(monitor_size.current_h/mapa.lines)
     #MAP_SCALE = 128
 
     content = mapa.content
