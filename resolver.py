@@ -159,7 +159,7 @@ class Resolver:
         q.put((0, [start]))
         visited = set()
 
-        while q:
+        while not q.empty():
             # Gets the first path in the queue
             nextItem = q.get()
             print(nextItem)
@@ -186,7 +186,7 @@ class Resolver:
                                     dist = dtemp
                             new_path = list(path)
                             new_path.append(current_neighbour)
-                            q.put(dist + grafo.calcula_custo(new_path), new_path)
+                            q.put((dist + grafo.calcula_custo(new_path), new_path))
 
                 # Mark the node as visited
                 visited.add(node)
@@ -236,12 +236,20 @@ class Resolver:
     def aestrelaJog(self, player, end, grafo):
         estado = player.estado
         mincusto = (1000, estado)
+        counter_validos = 0
         for jogada in JOGADAS:
             candidato = player.estado + player.velocidade + jogada
-            (path, custo) = self.a_estrela_search(candidato, end, grafo)
-            if custo < mincusto[0]:
-                mincusto = (custo, jogada)
-        return mincusto[1]
+            nodo = grafo.get_node_by_vector(candidato)
+            ##if nodo != None:
+            nodoType = nodo.type
+            if nodoType != WALL:
+                counter_validos = counter_validos + 1
+                (path, custo) = self.a_estrela_search(candidato, end, grafo)
+                if custo < mincusto[0]:
+                    mincusto = (custo, jogada)
+        if counter_validos != 0:                
+            return mincusto[1]
+        return JOGADAS[3]
 
     def main():
         return
