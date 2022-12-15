@@ -88,6 +88,15 @@ class Graph:
             if node == search_node:
                 return node
         return None
+    
+    def vector_exists(self, vector):
+
+        name = str((vector.x,vector.y))
+        search_node = Node(name)
+        for node in self.m_nodes:
+            if node == search_node:
+                return 1
+        return 0
 
 
 

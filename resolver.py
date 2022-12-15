@@ -239,14 +239,14 @@ class Resolver:
         counter_validos = 0
         for jogada in JOGADAS:
             candidato = player.estado + player.velocidade + jogada
-            nodo = grafo.get_node_by_vector(candidato)
-            ##if nodo != None:
-            nodoType = nodo.type
-            if nodoType != WALL:
-                counter_validos = counter_validos + 1
-                (path, custo) = self.a_estrela_search(candidato, end, grafo)
-                if custo < mincusto[0]:
-                    mincusto = (custo, jogada)
+            if grafo.vector_exists(candidato):
+                nodo = grafo.get_node_by_vector(candidato)
+                nodoType = nodo.type
+                if nodoType != WALL:
+                    counter_validos = counter_validos + 1
+                    (path, custo) = self.a_estrela_search(candidato, end, grafo)
+                    if custo < mincusto[0]:
+                        mincusto = (custo, jogada)
         if counter_validos != 0:                
             return mincusto[1]
         return JOGADAS[3]
