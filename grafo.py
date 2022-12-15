@@ -82,7 +82,6 @@ class Graph:
     def get_node_by_vector(self, vector):
         
         name = str((vector.x,vector.y))
-        print(name)
         search_node = Node(name)
         for node in self.m_nodes:
             if node == search_node:
@@ -253,7 +252,7 @@ class Graph:
 
     def checkPath(self, inicio, destino):
         custo = destino-inicio
-        print(f"{inicio} -> {destino}")
+        #print(f"{inicio} -> {destino}")
         x = custo.x
         y = custo.y
         currentPosition = inicio
@@ -262,12 +261,12 @@ class Graph:
             lastPosition = currentPosition
             
             nodeType = self.get_node_by_vector(currentPosition).type
-            
+            print(nodeType)
             if  nodeType == FINISH:
-                print("FINISH")
+                # print("FINISH")
                 return currentPosition, FINISH
             if  nodeType == WALL:
-                print("WALL")
+                # print("WALL")
                 return lastPosition, WALL
             
             if x > 0:
@@ -276,28 +275,28 @@ class Graph:
             elif x < 0:
                 x = x+1
                 currentPosition += Vector(-1,0)
-                
             if y > 0:
                 y = y-1
                 currentPosition += Vector(0,1)
             elif y < 0:
                 y = y+1
                 currentPosition += Vector(0,-1)
-            
             nodeType = self.get_node_by_vector(currentPosition).type
             
+            print(nodeType)
+            
             if  nodeType == FINISH:
-                print("FINISH")
+                # print("FINISH")
                 return currentPosition, FINISH
             if  nodeType == WALL:
-                print("WALL")
+                # print("WALL")
                 return lastPosition, WALL
             
-            print(f"CURRENT POSITION :{currentPosition} NODETYPE :{nodeType}")
+            #print(f"CURRENT POSITION :{currentPosition} NODETYPE :{nodeType}")
 
         return currentPosition, TRACK
     
-        print(f"{currentPosition} == {destino}")
+        #print(f"{currentPosition} == {destino}")
 
 
 def main():

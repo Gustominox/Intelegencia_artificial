@@ -60,7 +60,7 @@ def drawMap(screen,mapa,player):
             pygame.draw.rect(screen, colors[content[line][row]], pygame.Rect(row*MAP_SCALE_X, line*MAP_SCALE_Y, MAP_SCALE_X, MAP_SCALE_Y))
 
     x = player.estado.x * MAP_SCALE_X
-    y = player.estado.y * MAP_SCALE_Y 
+    y = (mapa.lines-player.estado.y-1) * MAP_SCALE_Y 
     playerImgFinal = pygame.transform.scale(playerImg, (MAP_SCALE_X,MAP_SCALE_Y))
     screen.blit(playerImgFinal,(x,y))
     

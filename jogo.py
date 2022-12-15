@@ -101,20 +101,24 @@ class Jogo:
             # time.sleep(1)
 
     def startPYGame(self):
+        
+        
         running = True
 
-        jogo = Jogo("tracks/track.txt")
+        jogo = Jogo("tracks/trackCircle.txt")
+        jogo.draw()
+        mapa = jogo.mapa
         res = Resolver()
-        jogador = Player(estadoInicial=self.mapa.start)
+        jogador = Player(estadoInicial=mapa.start)
         self.addPlayer(jogador)
 
         g = Graph()
 
-        g.createGraphCartesian(self.mapa)
+        g.createGraphCartesian(mapa)
 
 
-        mapa = Mapa("tracks/track.txt")
         game_menu = "main_menu"
+        
         COLOR_BLACK = (0, 0, 0)
         COLOR_WHITE = (255, 255, 255)
         COLOR_RED = (255, 0, 0)
@@ -142,7 +146,7 @@ class Jogo:
 
             if game_menu == 'main_menu':
                 
-                jogador = Player(estadoInicial=self.mapa.start)
+                jogador = Player(estadoInicial=mapa.start)
                 jogo.run = True
 
                 
@@ -168,10 +172,10 @@ class Jogo:
                 time.sleep(1)
                 if jogo.run:
                     jog = res.greedyJog(jogador, [Vector(x, y) for x, y
-                                                in self.mapa.finish])
+                                                in mapa.finish])
 
                     # jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
-                    # in self.mapa.finish], g)
+                    # in mapa.finish], g)
 
                     possivelPosicao = jogador.estado + jogador.velocidade + jog
 
@@ -194,6 +198,7 @@ class Jogo:
                     "arielblack", 40), COLOR_WHITE, 0, 0)
                 if stopType == FINISH:
                     screen.blit(winImg, (0,0))
+                    
                     jogo.run = False
                     
             for event in pygame.event.get():
@@ -222,7 +227,7 @@ class Jogo:
 
 def main():
 
-    jogo = Jogo("tracks/track.txt")
+    jogo = Jogo("tracks/trackCircle.txt")
 
     jogo.startPYGame()
 
