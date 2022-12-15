@@ -239,7 +239,7 @@ class Resolver:
         for jogada in JOGADAS:
             candidato = player.estado + player.velocidade + jogada
             (path, custo) = self.a_estrela_search(candidato, end, grafo)
-            if custo < mincusto:
+            if custo < mincusto[0]:
                 mincusto = (custo, jogada)
         return mincusto[1]
 
