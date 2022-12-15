@@ -139,10 +139,25 @@ class Jogo:
             # CHECK MENU
 
             if game_menu == 'maps':
-                pygame.draw.rect(screen, COLOR_BLACK, pygame.Rect(
-                    (WIDTH/3) - 10, (HEIGHT/5) - 2, 105, 30))
-                drawText("Mapa1", pygame.font.SysFont("arielblack", 40), (255,
-                         255, 255), WIDTH/3, HEIGHT/5)
+               
+                map1 = pygame.draw.rect(screen, COLOR_BLACK,
+                                         pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y, 400, 50))
+
+                drawText("Map1", pygame.font.SysFont("arielblack", 40),
+                         COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + 10)
+
+                map2 = pygame.draw.rect(screen, COLOR_BLACK, 
+                                         pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y + SPACE_BETWEEN, 400, 50))
+
+                drawText("Map2", pygame.font.SysFont("arielblack", 40),
+                         COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + SPACE_BETWEEN + 10)
+                
+                map3 = pygame.draw.rect(screen, COLOR_BLACK, pygame.Rect(
+                    MENU_BUTTON_X, MENU_BUTTON_Y + SPACE_BETWEEN, 400, 50))
+
+                drawText("Map3", pygame.font.SysFont("arielblack", 40),
+                         COLOR_WHITE, MENU_BUTTON_X + 20, MENU_BUTTON_Y + SPACE_BETWEEN + 20)
+
 
             if game_menu == 'main_menu':
                 
@@ -151,7 +166,8 @@ class Jogo:
 
                 
                 screen.blit(icon_dimmed, (0, 0))
-
+                
+                
                 start = pygame.draw.rect(screen, COLOR_BLACK,
                                          pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y, 400, 50))
 
@@ -164,18 +180,20 @@ class Jogo:
                 drawText("Quit", pygame.font.SysFont("arielblack", 40),
                          COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + SPACE_BETWEEN + 10)
 
-            elif game_menu == 'pista' :
 
+
+
+            if game_menu == 'pista' :
                 
                 ########################################################################
 
                 time.sleep(1)
                 if jogo.run:
-                    jog = res.greedyJog(jogador, [Vector(x, y) for x, y
-                                                in mapa.finish])
+                    #jog = res.greedyJog(jogador, [Vector(x, y) for x, y
+                    #                            in self.mapa.finish])
 
-                    # jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
-                    # in mapa.finish], g)
+                    jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
+                                                    in self.mapa.finish], g)
 
                     possivelPosicao = jogador.estado + jogador.velocidade + jog
 
@@ -202,12 +220,13 @@ class Jogo:
                     jogo.run = False
                     
             for event in pygame.event.get():
+                #event keys
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         game_menu = 'main_menu'
                     if event.key == pygame.K_1:
                         game_menu = 'pista'
-
+                #event mouse
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if start.collidepoint(pygame.mouse.get_pos()):
                         game_menu = "pista"
@@ -219,8 +238,16 @@ class Jogo:
                     if quit_game.collidepoint(pygame.mouse.get_pos()):
                         running = False
 
+                    #if map1.collidepoint(pygame.mouse.get_pos()):
+                     #   game_menu = 'pista'
+                    
+                    
+
                 if event.type == pygame.QUIT:
                     running = False
+
+            
+
 
             pygame.display.update()
 
