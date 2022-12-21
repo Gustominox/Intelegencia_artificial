@@ -150,6 +150,47 @@ class Resolver:
         self.greedy_search(max[1], end, grafo, path)
         return (path, 0)
 
+    ####################################
+    # Greedy Best-First Search
+    ####################################
+    
+    def greedy_bf_search(self, start, end, grafo):
+        q = PriorityQueue()
+        q.put((0, [start]))
+        visited = set()
+
+        while not q.empty():
+            # Gets the first path in the queue
+            nextItem = q.get()
+            print(nextItem)
+            path = nextItem[1]
+
+            # Gets the last node in the path
+            node = path[-1]
+
+            # Checks if we got to the end
+            if grafo.get_node_by_vector(node).type == FINISH:
+                custoT = grafo.calcula_custo(path)
+                return (path, custoT)
+                # return (grafo.debug, custoT)
+            # We check if the current node is already in the visited nodes set in order not to recheck it
+            elif node not in visited:
+                # enumerate all adjacent nodes, construct a new path and push it into the queue
+                for (current_neighbour, peso) in grafo.m_graph[node]:
+                    if current_neighbour not in visited:
+                        if grafo.get_node_by_vector(current_neighbour).type != WALL:
+                            dist = 1000
+                            for meta in end:
+                                dtemp = current_neighbour.distance_to(meta)
+                                if dtemp < dist:
+                                    dist = dtemp
+                            new_path = list(path)
+                            new_path.append(current_neighbour)
+                            q.put((dist, new_path))
+
+                # Mark the node as visited
+                visited.add(node)
+    
     ##################################
     # A* search
     ##################################
@@ -229,6 +270,28 @@ class Resolver:
                     max = (dist, jogada)
         return max[1]
 
+    ######################################
+    # Greedy Best-First Jogada
+    ######################################
+    
+    def gbfJog(self, player, end, grafo):
+        estado = player.estado
+        mincusto = (1000, estado)
+        counter_validos = 0
+        for jogada in JOGADAS:
+            candidato = player.estado + player.velocidade + jogada
+            if grafo.vector_exists(candidato):
+                nodo = grafo.get_node_by_vector(candidato)
+                nodoType = nodo.type
+                if nodoType != WALL:
+                    counter_validos = counter_validos + 1
+                    (path, custo) = self.greedy_bf_search(candidato, end, grafo)
+                    if custo < mincusto[0]:
+                        mincusto = (custo, jogada)
+        if counter_validos != 0:                
+            return mincusto[1]
+        return JOGADAS[3]
+    
     ######################################
     # A* jogada
     ######################################
