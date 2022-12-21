@@ -91,6 +91,29 @@ def createButton(text, number,color):
     
     return map1
 
+def drawMapsMenu(selected):
+    screen.fill((50, 50, 50))
+    
+    map1 = createButton("Mapa Default", 0,COLOR_BLACK)
+    map2 = createButton("Mapa Circle", 1,COLOR_BLACK)
+    map3 = createButton("Mapa Simple", 2,COLOR_BLACK)
+    leave = createButton("Leave", 3,COLOR_BLACK)
+    
+    
+    if selected == 0:                        
+        map1 = createButton("Mapa Default", 0,COLOR_RED)
+    elif selected == 1:
+        map2 = createButton("Mapa Circle", 1,COLOR_RED)
+    elif selected == 2:
+        map3 = createButton("Mapa Simple", 2,COLOR_RED)
+    elif selected == 3:
+        leave = createButton("Leave", 3,COLOR_RED)
+    else:
+        pass
+        
+        
+    return map1, map2, map3, leave
+
 # drawMap(screen, Mapa("tracks/track.txt"), Player(Vector(0,0)))
 
 
