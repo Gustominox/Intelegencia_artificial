@@ -123,6 +123,8 @@ class Jogo:
         COLOR_WHITE = (255, 255, 255)
         COLOR_RED = (255, 0, 0)
 
+        FONT = pygame.font.SysFont("arielblack", 40)
+
         WIDTH = monitor_size.current_w
         HEIGHT = monitor_size.current_h
 
@@ -143,19 +145,19 @@ class Jogo:
                 map1 = pygame.draw.rect(screen, COLOR_BLACK,
                                          pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y, 400, 50))
 
-                drawText("Map1", pygame.font.SysFont("arielblack", 40),
+                drawText("Map1", FONT,
                          COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + 10)
 
                 map2 = pygame.draw.rect(screen, COLOR_BLACK, 
                                          pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y + SPACE_BETWEEN, 400, 50))
 
-                drawText("Map2", pygame.font.SysFont("arielblack", 40),
+                drawText("Map2", FONT,
                          COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + SPACE_BETWEEN + 10)
                 
                 map3 = pygame.draw.rect(screen, COLOR_BLACK, pygame.Rect(
                     MENU_BUTTON_X, MENU_BUTTON_Y + SPACE_BETWEEN, 400, 50))
 
-                drawText("Map3", pygame.font.SysFont("arielblack", 40),
+                drawText("Map3", FONT,
                          COLOR_WHITE, MENU_BUTTON_X + 20, MENU_BUTTON_Y + SPACE_BETWEEN + 20)
 
 
@@ -171,13 +173,13 @@ class Jogo:
                 start = pygame.draw.rect(screen, COLOR_BLACK,
                                          pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y, 400, 50))
 
-                drawText("Choose Map", pygame.font.SysFont("arielblack", 40),
+                drawText("Choose Map", FONT,
                          COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + 10)
 
                 quit_game = pygame.draw.rect(screen, COLOR_BLACK, pygame.Rect(
                     MENU_BUTTON_X, MENU_BUTTON_Y + SPACE_BETWEEN, 400, 50))
 
-                drawText("Quit", pygame.font.SysFont("arielblack", 40),
+                drawText("Quit", FONT,
                          COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + SPACE_BETWEEN + 10)
 
 
