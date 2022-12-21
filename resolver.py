@@ -384,6 +384,7 @@ class Resolver:
         estado = player.estado
         mincusto = (1000, estado)
         counter_validos = 0
+        print("Calculando caminho...")
         for jogada in JOGADAS:
             candidato = player.estado + player.velocidade + jogada
             if grafo.vector_exists(candidato):
@@ -394,6 +395,7 @@ class Resolver:
                     (path, custo) = self.a_estrela_search(candidato, end, grafo)
                     if custo < mincusto[0]:
                         mincusto = (custo, jogada)
+        print("Caminho calculado :)")
         if counter_validos != 0:                
             return mincusto[1]
         return JOGADAS[3]
