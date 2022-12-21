@@ -3,7 +3,7 @@ import pygame.locals
 from mapa import Mapa
 from player import Player
 from vector import Vector
-
+import time
 
 #  Initialize th pygame
 pygame.init()
@@ -15,8 +15,8 @@ screen = pygame.display.set_mode(size)
 
 # Scale usada dependendo do tamanho do ecra
 SCALE = 100
-SCALEX=136.6
-SCALEY=109.71428571428571
+SCALEX = 136.6
+SCALEY = 109.71428571428571
 
 
 # Player
@@ -38,39 +38,64 @@ pygame.display.set_icon(icon)
 game_menu = "main_menu"
 
 # Introduz texto para o menu
-def drawText (text, font, text_col, x, y):
+
+
+def drawText(text, font, text_col, x, y):
     texto = font.render(text, True, text_col)
     screen.blit(texto, (x, y))
 
 
-
-
-
 # Desenha o Mapa
-def drawMap(screen,mapa,player):
+def drawMap(screen, mapa, player):
 
     MAP_SCALE_X = round(monitor_size.current_w/mapa.rows)
     MAP_SCALE_Y = round(monitor_size.current_h/mapa.lines)
     #MAP_SCALE = 128
 
     content = mapa.content
-    colors = [pygame.Color("black"), pygame.Color("grey"), pygame.Color("green"), pygame.Color("red")]
+    colors = [pygame.Color("black"), pygame.Color(
+        "grey"), pygame.Color("green"), pygame.Color("red")]
     for line in range(mapa.lines):
         for row in range(mapa.rows):
-            pygame.draw.rect(screen, colors[content[line][row]], pygame.Rect(row*MAP_SCALE_X, line*MAP_SCALE_Y, MAP_SCALE_X, MAP_SCALE_Y))
+            pygame.draw.rect(screen, colors[content[line][row]], pygame.Rect(
+                row*MAP_SCALE_X, line*MAP_SCALE_Y, MAP_SCALE_X, MAP_SCALE_Y))
 
     x = player.estado.x * MAP_SCALE_X
-    y = (mapa.lines-player.estado.y-1) * MAP_SCALE_Y 
-    playerImgFinal = pygame.transform.scale(playerImg, (MAP_SCALE_X,MAP_SCALE_Y))
-    screen.blit(playerImgFinal,(x,y))
-    
-            
-            
-    
+    y = (mapa.lines-player.estado.y-1) * MAP_SCALE_Y
+    playerImgFinal = pygame.transform.scale(
+        playerImg, (MAP_SCALE_X, MAP_SCALE_Y))
+    screen.blit(playerImgFinal, (x, y))
 
-#def movePlayer(Player):
+    time.sleep(5)
+
+COLOR_BLACK = (0, 0, 0)
+COLOR_WHITE = (255, 255, 255)
+COLOR_RED = (255, 0, 0)
+
+FONT = pygame.font.SysFont("arielblack", 40)
+
+WIDTH = monitor_size.current_w
+HEIGHT = monitor_size.current_h
+
+MENU_BUTTON_X = WIDTH/20
+MENU_BUTTON_Y = HEIGHT/4
+
+SPACE_BETWEEN = 60
+
+def createButton(buttonText, buttonNumber):
     
+    map1 = pygame.draw.rect(screen, COLOR_BLACK,
+                            pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y + buttonNumber * SPACE_BETWEEN , 400, 50))
+
+    drawText(buttonText, FONT,
+             COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + buttonNumber * SPACE_BETWEEN + 10)
     
+    return map1
+
+# drawMap(screen, Mapa("tracks/track.txt"), Player(Vector(0,0)))
+
+
+# def movePlayer(Player):
 
 
 # Game Loop
@@ -91,7 +116,6 @@ def drawMap(screen,mapa,player):
 #         pygame.draw.rect(screen, (0,0,0), pygame.Rect((monitor_size.current_w/3) -10, (monitor_size.current_h/5) - 2, 105    , 30 ))
 #         drawText("Mapa1", pygame.font.SysFont("arielblack", 40), (255,255,255), monitor_size.current_w/3, monitor_size.current_h/5)
 
-        
 
 #     if game_menu == 'main_menu':
 #         start = pygame.draw.rect(screen, (0,0,0), pygame.Rect((monitor_size.current_w/2.5) -10, (monitor_size.current_h/4) - 2, 210    , 30 ))
@@ -100,10 +124,9 @@ def drawMap(screen,mapa,player):
 #         quit_game = pygame.draw.rect(screen, (0,0,0), pygame.Rect((monitor_size.current_w/2.5) -10, (monitor_size.current_h/4) + 50, 210    , 30 ))
 #         drawText("Quit", pygame.font.SysFont("arielblack", 40), (255,255,255), monitor_size.current_w/2.5, monitor_size.current_h/4 + 50)
 
-    
 
 #     elif game_menu == 'pista':
-        
+
 #         jogo = Jogo("tracks/track.txt")
 
 #         jogo.start()
@@ -111,15 +134,6 @@ def drawMap(screen,mapa,player):
 #         drawMap(screen,mapa)
 #         player(jogador)
 #         drawText("ESC to return", pygame.font.SysFont("arielblack", 40), (255,255,255), 0, 0)
-
-    
-
-
-
-
-
-
-
 
 
 #     for event in pygame.event.get():
@@ -137,34 +151,21 @@ def drawMap(screen,mapa,player):
 
 
 #             if event.type == pygame.QUIT:
-#                 running = False 
-    
-    
+#                 running = False
 
-    
-
-    
-
-
-    
 
 #     pygame.display.update()
 
 
-
-
-#todo
+# todo
 # comecar a criacao de menu (ver main)
 # implementar escolha de 1 ou 2 jogadores
 # escolher que algoritmo usar para cada jogador
 # implementar escolha do mapa
 
 
-#start 
-    #varios maps: (opcao de escolher ver o grafo)
-        #1 ou 2 jogadores ou 
-            #algoritmo jogador1  #algoritmo jogador2
-#quit
-
-
-
+# start
+    # varios maps: (opcao de escolher ver o grafo)
+    # 1 ou 2 jogadores ou
+    # algoritmo jogador1  #algoritmo jogador2
+# quit
