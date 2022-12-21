@@ -376,11 +376,13 @@ class Resolver:
     ######################################
 
     def aestrelaJog(self, player, end, grafo):
-         """Jogadas seguintes no "A* Search"
+        
+        """
+        Jogadas seguintes no "A* Search"
 
         Returns:
             List: Lista com  todas as possíveis proximas coordenadas a partir do estado e velocidade do jogador
-            """
+        """
         estado = player.estado
         mincusto = (1000, estado)
         counter_validos = 0
@@ -400,8 +402,8 @@ class Resolver:
             return mincusto[1]
         return JOGADAS[3]
 
-    def main():
+def main():
         return
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
