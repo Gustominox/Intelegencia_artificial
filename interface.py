@@ -66,7 +66,6 @@ def drawMap(screen, mapa, player):
         playerImg, (MAP_SCALE_X, MAP_SCALE_Y))
     screen.blit(playerImgFinal, (x, y))
 
-    time.sleep(5)
 
 COLOR_BLACK = (0, 0, 0)
 COLOR_WHITE = (255, 255, 255)
@@ -82,13 +81,13 @@ MENU_BUTTON_Y = HEIGHT/4
 
 SPACE_BETWEEN = 60
 
-def createButton(buttonText, buttonNumber):
+def createButton(text, number,color):
     
-    map1 = pygame.draw.rect(screen, COLOR_BLACK,
-                            pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y + buttonNumber * SPACE_BETWEEN , 400, 50))
+    map1 = pygame.draw.rect(screen, color,
+                            pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y + number * SPACE_BETWEEN , 400, 50))
 
-    drawText(buttonText, FONT,
-             COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + buttonNumber * SPACE_BETWEEN + 10)
+    drawText(text, FONT,
+             COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + number * SPACE_BETWEEN + 10)
     
     return map1
 

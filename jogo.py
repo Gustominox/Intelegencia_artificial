@@ -44,61 +44,6 @@ class Jogo:
     def addPlayer(self, player):
         self.players.append(player)
 
-    def draw(self):
-        print(self.mapa)
-
-    def start(self):
-
-        path = []
-
-        res = Resolver()
-        jogador = Player(estadoInicial=self.mapa.start)
-
-        self.addPlayer(jogador)
-
-        on = 10 * self.fps
-        ctn = True
-        g = Graph()
-
-        g.createGraphCartesian(self.mapa)
-
-        while on:
-
-            self.draw()
-            time.sleep(1 / self.fps)
-
-            # jog = res.greedyJog(jogador, [Vector(x, y) for x, y
-            #  in self.mapa.finish])
-
-            jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
-                                            in self.mapa.finish], g)
-
-            possivelPosicao = jogador.estado + jogador.velocidade + jog
-
-            novaPosicao, stopType = g.checkPath(
-                jogador.estado, possivelPosicao)
-
-            jogador.jogada(jog)
-
-            nodoType = g.get_node_by_vector(novaPosicao).type
-
-            if stopType == WALL:
-                jogador.estado = novaPosicao
-                jogador.velocidade = Vector(0, 0)
-            elif stopType == FINISH:
-                jogador.estado = novaPosicao
-                jogador.velocidade = Vector(0, 0)
-                on = 1
-
-            if on != 0:
-                on -= 1
-
-            # path.append((novaPosicao.x, novaPosicao.y))
-            # res.getPltXY(path)
-            # self.mapa.show()
-            # res.showPath(path, True)
-
-            # time.sleep(1)
 
     def startPYGame(self):
 
@@ -128,49 +73,26 @@ class Jogo:
         while running:
 
             # Background colour
-            screen.fill((50, 50, 50))
 
             # CHECK MENU
 
             if game_menu == 'maps':
 
-                map1 = createButton("MAPA DEFAULT", 0)
+               
+                pass
                 
-                map2 = pygame.draw.rect(screen, COLOR_BLACK,
-                                        pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y + SPACE_BETWEEN, 400, 50))
-
-                drawText("Map2", FONT,
-                         COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + SPACE_BETWEEN + 10)
-
-                map3 = pygame.draw.rect(screen, COLOR_BLACK, pygame.Rect(
-                    MENU_BUTTON_X, MENU_BUTTON_Y + 2 * SPACE_BETWEEN, 400, 50))
-
-                drawText("Map3", FONT,
-                         COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + 2 * SPACE_BETWEEN + 10)
 
             if game_menu == 'main_menu':
+                screen.fill((50, 50, 50))
 
                 jogo.run = True
 
                 screen.blit(icon_dimmed, (0, 0))
 
-                start = pygame.draw.rect(screen, COLOR_BLACK,
-                                         pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y, 400, 50))
+                start = createButton("Start", 0,COLOR_BLACK)
+                maps = createButton("Choose Map", 1,COLOR_BLACK)
+                quit_game = createButton("Quit", 2,COLOR_BLACK)
 
-                drawText("Start", FONT,
-                         COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + 10)
-
-                maps = pygame.draw.rect(screen, COLOR_BLACK,
-                                        pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y + SPACE_BETWEEN, 400, 50))
-
-                drawText("Choose Map", FONT,
-                         COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + SPACE_BETWEEN + 10)
-
-                quit_game = pygame.draw.rect(screen, COLOR_BLACK, pygame.Rect(
-                    MENU_BUTTON_X, MENU_BUTTON_Y + 2 *SPACE_BETWEEN, 400, 50))
-
-                drawText("Quit", FONT,
-                         COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + 2 * SPACE_BETWEEN + 10)
 
             if game_menu == 'pista':
                 ########################################################################
@@ -209,6 +131,9 @@ class Jogo:
 
                 if game_menu == "maps":
                     # event keys
+                    
+                    
+                    
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
                             game_menu = 'main_menu'
@@ -216,27 +141,45 @@ class Jogo:
                     # event mouse
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if map1.collidepoint(pygame.mouse.get_pos()):
-                            print("MAPA1")
                             mapa = Mapa("tracks/track.txt")
                             jogador = Player(estadoInicial=mapa.start)
                             self.addPlayer(jogador)
 
                             g.createGraphCartesian(mapa)
+                            
+                            map1 = createButton("Mapa Default", 0,COLOR_RED)
+                            map2 = createButton("Mapa Circle", 1,COLOR_BLACK)
+                            map3 = createButton("Mapa Simple", 2,COLOR_BLACK)
+                            leave = createButton("Leave", 3,COLOR_BLACK)
+                            
                 
                         if map2.collidepoint(pygame.mouse.get_pos()):
-                            print("MAPA2")
                             mapa = Mapa("tracks/trackCircle.txt")
                             jogador = Player(estadoInicial=mapa.start)
                             self.addPlayer(jogador)
 
                             g.createGraphCartesian(mapa)
+                            
+                            map1 = createButton("Mapa Default", 0,COLOR_BLACK)
+                            map2 = createButton("Mapa Circle", 1,COLOR_RED)
+                            map3 = createButton("Mapa Simple", 2,COLOR_BLACK)
+                            leave = createButton("Leave", 3,COLOR_BLACK)
+                            
                         if map3.collidepoint(pygame.mouse.get_pos()):
                             mapa = Mapa("tracks/trackSimple.txt")
                             jogador = Player(estadoInicial=mapa.start)
                             self.addPlayer(jogador)
 
                             g.createGraphCartesian(mapa)
-                            print("MAPA3")
+                            
+                            map1 = createButton("Mapa Default", 0,COLOR_BLACK)
+                            map2 = createButton("Mapa Circle", 1,COLOR_BLACK)
+                            map3 = createButton("Mapa Simple", 2,COLOR_RED)
+                            leave = createButton("Leave", 3,COLOR_BLACK)
+                            
+                            
+                        if leave.collidepoint(pygame.mouse.get_pos()):
+                            game_menu = 'main_menu'
                             
 
 
@@ -263,6 +206,15 @@ class Jogo:
                         if maps.collidepoint(pygame.mouse.get_pos()):
 
                             game_menu = "maps"
+                            screen.fill((50, 50, 50))
+                            
+                            map1 = createButton("Mapa Default", 0,COLOR_BLACK)
+                            map2 = createButton("Mapa Circle", 1,COLOR_BLACK)
+                            map3 = createButton("Mapa Simple", 2,COLOR_BLACK)
+                            leave = createButton("Leave", 3,COLOR_BLACK)
+                            
+                            
+                            
 
                         if quit_game.collidepoint(pygame.mouse.get_pos()):
                             running = False
