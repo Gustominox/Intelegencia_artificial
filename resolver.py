@@ -153,6 +153,16 @@ class Resolver:
     ####################################
     
     def greedy_bf_search(self, start, end, grafo):
+        """Algoritmo GUloso de Melhor Procura
+
+        Args:
+            start (Vector): Vector (Ponto) onde começa a procura
+            end (List): Objetivo de Procura
+            grafo (Graph): Grafo onde é feita a Procura
+
+        Returns:
+            List: Lista de Vectores (Pontos) de objetivo à Procura
+        """        
         
         # Inicialização da Priority Queue
         q = PriorityQueue()
@@ -195,6 +205,12 @@ class Resolver:
     ##################################
 
     def a_estrela_search(self, start, end, grafo):
+
+        """Algortimo de Procura A*
+
+        Returns:
+            List: Lista de Vectores (Pontos) de objetivo à Procura
+        """        
         # Inicialização da Priority Queue
         q = PriorityQueue()
         q.put((0, [start]))
@@ -274,6 +290,13 @@ class Resolver:
     ######################################
     
     def dfsJog(self, player, end, grafo):
+
+        """Jogadas seguintes no "Depth First Search"
+
+        Returns:
+            List: Lista com  todas as possíveis proximas coordenadas a partir do estado e velocidade do jogador
+            """    
+
         estado = player.estado
         mincusto = (1000, estado)
         counter_validos = 0
@@ -296,6 +319,12 @@ class Resolver:
     ######################################
     
     def bfsJog(self, player, end, grafo):
+
+        """Jogadas seguintes no "Breadth First Search"
+
+        Returns:
+            List: Lista com  todas as possíveis proximas coordenadas a partir do estado e velocidade do jogador
+            """  
         estado = player.estado
         mincusto = (1000, estado)
         counter_validos = 0
@@ -319,6 +348,12 @@ class Resolver:
     ######################################
     
     def gbfJog(self, player, end, grafo):
+
+        """Jogadas seguintes no "Greedy Best-First Search"
+
+        Returns:
+            List: Lista com  todas as possíveis proximas coordenadas a partir do estado e velocidade do jogador
+            """  
         estado = player.estado
         mincusto = (1000, estado)
         counter_validos = 0
@@ -341,6 +376,11 @@ class Resolver:
     ######################################
 
     def aestrelaJog(self, player, end, grafo):
+         """Jogadas seguintes no "A* Search"
+
+        Returns:
+            List: Lista com  todas as possíveis proximas coordenadas a partir do estado e velocidade do jogador
+            """
         estado = player.estado
         mincusto = (1000, estado)
         counter_validos = 0
