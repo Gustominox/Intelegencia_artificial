@@ -94,36 +94,32 @@ class Resolver:
             end (List): Objetivo de Procura
             grafo (Graph): Grafo onde é feita a Procura
         """        
+        # Inicialização da queue
         queue = [[start]]
         visited = set()
 
         while queue:
-            # print(visited)
-            # Gets the first path in the queue
+            # Retira-se o próximo caminho da queue
             path = queue.pop(0)
-            # print(f"PATH: {path}")
 
-            # Gets the last node in the path
-            vertex = path[-1]
-            grafo.debug.append(vertex)
-            # print(f"VERTEX: {vertex}")
+            # Obtém-se o últmio nodo do caminho em questão
+            node = path[-1]
 
-            # Checks if we got to the end
-            if vertex in end:
+            # Verifica-se se atingimos uma das casas de chegada
+            if node in end:
                 custoT = grafo.calcula_custo(path)
                 return (path, custoT)
-                # return (grafo.debug, custoT)
-            # We check if the current node is already in the visited nodes set in order not to recheck it
-            elif vertex not in visited:
-                # enumerate all adjacent nodes, construct a new path and push it into the queue
-                for (current_neighbour, peso) in grafo.m_graph[vertex]:
+            # Verifica-se se o nodo em questão não havia sido visitado anteriormente
+            elif node not in visited:
+                # Enumeram-se todos os adjacentes do nodo em análise, colocando todos os possíveis caminhos na queue
+                for (current_neighbour, peso) in grafo.m_graph[node]:
                     if current_neighbour not in visited:
                         new_path = list(path)
                         new_path.append(current_neighbour)
                         queue.append(new_path)
 
-                # Mark the vertex as visited
-                visited.add(vertex)
+                # Marca-se o nodo analisado como visitado
+                visited.add(node)
 
     ################################
     # Greedy search
@@ -136,6 +132,7 @@ class Resolver:
         Returns:
             List: Lista de Vectores (Pontos) de objetivo à Procura
         """        
+        # Perante o nodo em análise, é sempre escolhido o adjacente com melhor distância estimada à meta
         path.append(start)
         max = (1000, start)
         if start in end:
@@ -147,35 +144,36 @@ class Resolver:
                     dist = adjacente.distance_to(node)
                     if dist < max[0]:
                         max = (dist, adjacente)
+        # De seguida, repete-se o processo no adjacente escolhido até eventualmente chegar à meta                
         self.greedy_search(max[1], end, grafo, path)
         return (path, 0)
 
-    ##################################
-    # A* search
-    ##################################
-
-    def a_estrela_search(self, start, end, grafo):
+    ####################################
+    # Greedy Best-First Search
+    ####################################
+    
+    def greedy_bf_search(self, start, end, grafo):
+        
+        # Inicialização da Priority Queue
         q = PriorityQueue()
         q.put((0, [start]))
         visited = set()
 
         while not q.empty():
-            # Gets the first path in the queue
+            # Retira-se o caminho com maior prioridade da queue
             nextItem = q.get()
-            print(nextItem)
             path = nextItem[1]
 
-            # Gets the last node in the path
+            # Obtém-se o últmio nodo do caminho em questão
             node = path[-1]
 
-            # Checks if we got to the end
+            # Verifica-se se atingimos uma das casas de chegada
             if grafo.get_node_by_vector(node).type == FINISH:
                 custoT = grafo.calcula_custo(path)
                 return (path, custoT)
-                # return (grafo.debug, custoT)
-            # We check if the current node is already in the visited nodes set in order not to recheck it
+            # Verifica-se se o nodo em questão não havia sido visitado anteriormente
             elif node not in visited:
-                # enumerate all adjacent nodes, construct a new path and push it into the queue
+                # Enumeram-se todos os adjacentes do nodo em análise, colocando todos os possíveis caminhos na queue
                 for (current_neighbour, peso) in grafo.m_graph[node]:
                     if current_neighbour not in visited:
                         if grafo.get_node_by_vector(current_neighbour).type != WALL:
@@ -186,9 +184,51 @@ class Resolver:
                                     dist = dtemp
                             new_path = list(path)
                             new_path.append(current_neighbour)
+                            # O caminho é adicionado na queue com prioridade igual à sua distância estimada à meta
+                            q.put((dist, new_path))
+
+                # Marca-se o nodo analisado como visitado
+                visited.add(node)
+    
+    ##################################
+    # A* search
+    ##################################
+
+    def a_estrela_search(self, start, end, grafo):
+        # Inicialização da Priority Queue
+        q = PriorityQueue()
+        q.put((0, [start]))
+        visited = set()
+
+        while not q.empty():
+            # Retira-se o caminho com maior prioridade da queue
+            nextItem = q.get()
+            path = nextItem[1]
+
+            # Obtém-se o últmio nodo do caminho em questão
+            node = path[-1]
+
+            # Verifica-se se atingimos uma das casas de chegada
+            if grafo.get_node_by_vector(node).type == FINISH:
+                custoT = grafo.calcula_custo(path)
+                return (path, custoT)
+            # Verifica-se se o nodo em questão não havia sido visitado anteriormente
+            elif node not in visited:
+                # Enumeram-se todos os adjacentes do nodo em análise, colocando todos os possíveis caminhos na queue
+                for (current_neighbour, peso) in grafo.m_graph[node]:
+                    if current_neighbour not in visited:
+                        if grafo.get_node_by_vector(current_neighbour).type != WALL:
+                            dist = 1000
+                            for meta in end:
+                                dtemp = current_neighbour.distance_to(meta)
+                                if dtemp < dist:
+                                    dist = dtemp
+                            new_path = list(path)
+                            new_path.append(current_neighbour)
+                            # O caminho é adicionado na queue com prioridade igual à soma da sua distância estimada à meta com o custo do caminho até então
                             q.put((dist + grafo.calcula_custo(new_path), new_path))
 
-                # Mark the node as visited
+                # Marca-se o nodo analisado como visitado
                 visited.add(node)
 
     ##################################
@@ -229,6 +269,73 @@ class Resolver:
                     max = (dist, jogada)
         return max[1]
 
+    ######################################
+    # DFS Jogada
+    ######################################
+    
+    def dfsJog(self, player, end, grafo):
+        estado = player.estado
+        mincusto = (1000, estado)
+        counter_validos = 0
+        for jogada in JOGADAS:
+            candidato = player.estado + player.velocidade + jogada
+            if grafo.vector_exists(candidato):
+                nodo = grafo.get_node_by_vector(candidato)
+                nodoType = nodo.type
+                if nodoType != WALL:
+                    counter_validos = counter_validos + 1
+                    (path, custo) = self.dfs(candidato, end, grafo, path=[], visited=set())
+                    if custo < mincusto[0]:
+                        mincusto = (custo, jogada)
+        if counter_validos != 0:                
+            return mincusto[1]
+        return JOGADAS[3]
+    
+    ######################################
+    # BFS Jogada
+    ######################################
+    
+    def bfsJog(self, player, end, grafo):
+        estado = player.estado
+        mincusto = (1000, estado)
+        counter_validos = 0
+        for jogada in JOGADAS:
+            candidato = player.estado + player.velocidade + jogada
+            if grafo.vector_exists(candidato):
+                nodo = grafo.get_node_by_vector(candidato)
+                nodoType = nodo.type
+                if nodoType != WALL:
+                    counter_validos = counter_validos + 1
+                    (path, custo) = self.bfs(candidato, end, grafo)
+                    if custo < mincusto[0]:
+                        mincusto = (custo, jogada)
+        if counter_validos != 0:                
+            return mincusto[1]
+        return JOGADAS[3]
+    
+    
+    ######################################
+    # Greedy Best-First Jogada
+    ######################################
+    
+    def gbfJog(self, player, end, grafo):
+        estado = player.estado
+        mincusto = (1000, estado)
+        counter_validos = 0
+        for jogada in JOGADAS:
+            candidato = player.estado + player.velocidade + jogada
+            if grafo.vector_exists(candidato):
+                nodo = grafo.get_node_by_vector(candidato)
+                nodoType = nodo.type
+                if nodoType != WALL:
+                    counter_validos = counter_validos + 1
+                    (path, custo) = self.greedy_bf_search(candidato, end, grafo)
+                    if custo < mincusto[0]:
+                        mincusto = (custo, jogada)
+        if counter_validos != 0:                
+            return mincusto[1]
+        return JOGADAS[3]
+    
     ######################################
     # A* jogada
     ######################################
