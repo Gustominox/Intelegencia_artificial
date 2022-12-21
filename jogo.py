@@ -126,13 +126,6 @@ class Jogo:
             for event in pygame.event.get():
 
                 if game_menu == "maps":
-                    # event keys
-                    
-                    
-                    
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESCAPE:
-                            game_menu = 'main_menu'
 
                     # event mouse
                     if event.type == pygame.MOUSEBUTTONDOWN:
