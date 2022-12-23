@@ -70,7 +70,7 @@ class Resolver:
         path.append(start)
         visited.add(start)
 
-        if start in end:
+        if grafo.get_node_by_vector(start).type == FINISH:
             # calcular o custo do caminho funçao calcula custo.
             custoT = grafo.calcula_custo(path)
             return (path, custoT)
@@ -106,7 +106,7 @@ class Resolver:
             node = path[-1]
 
             # Verifica-se se atingimos uma das casas de chegada
-            if node in end:
+            if grafo.get_node_by_vector(node).type == FINISH:
                 custoT = grafo.calcula_custo(path)
                 return (path, custoT)
             # Verifica-se se o nodo em questão não havia sido visitado anteriormente
