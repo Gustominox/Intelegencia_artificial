@@ -75,10 +75,11 @@ class Resolver:
             custoT = grafo.calcula_custo(path)
             return (path, custoT)
         for (adjacente, peso) in grafo.m_graph[start]:
-            if adjacente not in visited:
-                resultado = self.dfs(adjacente, end, grafo, path, visited)
-                if resultado is not None:
-                    return resultado
+            if grafo.get_node_by_vector(adjacente).type != WALL:
+                if adjacente not in visited:
+                    resultado = self.dfs(adjacente, end, grafo, path, visited)
+                    if resultado is not None:
+                        return resultado
         path.pop()  # se nao encontra remover o que está no caminho......
         return None
 
