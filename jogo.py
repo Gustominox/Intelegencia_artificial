@@ -97,9 +97,31 @@ class Jogo:
 
                 time.sleep(1)
                 if jogo.run:
+
+                    if alg_selected == 0:
+                        jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
+                                                        in self.mapa.finish], g)
+
+                    if alg_selected == 1:
+                        jog = res.gbfJog(jogador, [Vector(x, y) for x, y
+                                                        in self.mapa.finish], g)
+
+                    if alg_selected == 2:
+                        jog = res.greedyJog(jogador, [Vector(x, y) for x, y
+                                                        in self.mapa.finish])
+
+                    if alg_selected == 3:
+                        jog = res.bfsJog(jogador, [Vector(x, y) for x, y
+                                                        in self.mapa.finish], g)
+
+                    if alg_selected == 4:
+                        jog = res.dfsJog(jogador, [Vector(x, y) for x, y
+                                                        in self.mapa.finish], g)
+
+
                 
-                    jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
-                                                    in self.mapa.finish], g)
+                    #jog = res.aestrelaJog(jogador, [Vector(x, y) for x, y
+                    #                                in self.mapa.finish], g)
 
                     possivelPosicao = jogador.estado + jogador.velocidade + jog
 
@@ -159,7 +181,7 @@ class Jogo:
                             
                             
                         elif leave.collidepoint(pygame.mouse.get_pos()):
-                           game_menu = 'main_menu'
+                             game_menu = 'main_menu'
                         else:
                             pass   
                         g = Graph()
@@ -212,6 +234,12 @@ class Jogo:
                         else:
                             pass       
                     
+
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            game_menu = 'main_menu'
+
+                if game_menu == "pista":
 
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
