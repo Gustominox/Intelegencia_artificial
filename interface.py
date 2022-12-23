@@ -114,6 +114,37 @@ def drawMapsMenu(selected):
         
     return map1, map2, map3, leave
 
+
+def drawAlgoritmosMenu(selected):
+    screen.fill((50, 50, 50))
+    
+    a_estrela = createButton("A*", 0,COLOR_BLACK)
+    greedybf = createButton("GreedyBF", 1,COLOR_BLACK)
+    greedy = createButton("Greedy", 2,COLOR_BLACK)
+    bfs = createButton("BFS", 3,COLOR_BLACK)
+    dfs = createButton("DFS", 4,COLOR_BLACK)
+    leave_alg = createButton("Leave", 5,COLOR_BLACK)
+
+    
+    
+    if selected == 0:                        
+        a_estrela = createButton("A*", 0,COLOR_RED)
+    elif selected == 1:
+        greedybf = createButton("GreedyBF", 1,COLOR_RED)
+    elif selected == 2:
+         greedy = createButton("Greedy", 2,COLOR_RED)
+    elif selected == 3:
+        bfs = createButton("BFS", 3,COLOR_RED)
+    elif selected == 4:
+        dfs = createButton("DFS", 4,COLOR_RED)
+    elif selected == 5:
+        leave_alg = createButton("Leave", 5,COLOR_RED)
+    else:
+        pass
+        
+        
+    return a_estrela, greedybf, greedy, bfs, dfs, leave_alg
+
 # drawMap(screen, Mapa("tracks/track.txt"), Player(Vector(0,0)))
 
 

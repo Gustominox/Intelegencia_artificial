@@ -54,6 +54,7 @@ class Jogo:
         g = Graph()
         
         map_selected = None
+        alg_selected = None
 
         game_menu = "main_menu"
 
@@ -87,7 +88,8 @@ class Jogo:
 
                 start = createButton("Start", 0,COLOR_BLACK)
                 maps = createButton("Choose Map", 1,COLOR_BLACK)
-                quit_game = createButton("Quit", 2,COLOR_BLACK)
+                algoritmos = createButton("Choose Algorithm(s)",2,COLOR_BLACK)
+                quit_game = createButton("Quit", 3,COLOR_BLACK)
 
 
             if game_menu == 'pista':
@@ -157,7 +159,7 @@ class Jogo:
                             
                             
                         elif leave.collidepoint(pygame.mouse.get_pos()):
-                            game_menu = 'main_menu'
+                           game_menu = 'main_menu'
                         else:
                             pass   
                         g = Graph()
@@ -167,6 +169,56 @@ class Jogo:
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
                             game_menu = 'main_menu'
+
+
+
+                if game_menu == "algoritmos":
+
+                    # event mouse
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        
+                        if a_estrela.collidepoint(pygame.mouse.get_pos()):
+
+
+                            alg_selected = 0
+                            a_estrela, greedybf, greedy, bfs, dfs, leave_alg = drawAlgoritmosMenu(alg_selected)
+                            
+                
+                        elif greedybf.collidepoint(pygame.mouse.get_pos()):
+                        
+                            alg_selected = 1
+                            a_estrela, greedybf, greedy, bfs, dfs, leave_alg = drawAlgoritmosMenu(alg_selected)
+                            
+                        elif greedy.collidepoint(pygame.mouse.get_pos()):
+                        
+                            alg_selected = 2
+                            a_estrela, greedybf, greedy, bfs, dfs, leave_alg = drawAlgoritmosMenu(alg_selected)
+                            
+                            
+                        elif bfs.collidepoint(pygame.mouse.get_pos()):
+                        
+                            alg_selected = 3
+                            a_estrela, greedybf, greedy, bfs, dfs, leave_alg = drawAlgoritmosMenu(alg_selected)
+                        
+
+                        elif dfs.collidepoint(pygame.mouse.get_pos()):
+                        
+                            alg_selected = 4
+                            a_estrela, greedybf, greedy, bfs, dfs, leave_alg = drawAlgoritmosMenu(alg_selected)
+
+                        
+                        elif leave_alg.collidepoint(pygame.mouse.get_pos()):
+                           game_menu = 'main_menu'
+                        else:
+                            pass       
+                    
+
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_ESCAPE:
+                            game_menu = 'main_menu'
+
+
+
 
                 if game_menu == "main_menu":
                     # event keys
@@ -189,11 +241,17 @@ class Jogo:
                             screen.fill((50, 50, 50))
                             
                             map1, map2, map3, leave = drawMapsMenu(map_selected)
+
+                        if algoritmos.collidepoint(pygame.mouse.get_pos()):
+                            game_menu = "algoritmos"
+                            screen.fill((50, 50, 50))
+
+                            a_estrela, greedybf, greedy, bfs, dfs, leave_alg = drawAlgoritmosMenu(alg_selected)
                             
 
                         if quit_game.collidepoint(pygame.mouse.get_pos()):
                             running = False
-                if game_menu == "pista":
+
                     if event.type == pygame.KEYDOWN:
                         if event.key == pygame.K_ESCAPE:
                             game_menu = 'main_menu'
