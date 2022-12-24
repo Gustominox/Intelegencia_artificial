@@ -6,6 +6,7 @@ from resolver import Resolver
 from matplotlib import pyplot as plt
 from matplotlib import colors
 from vector import Vector
+from jogo import Jogo
 
 def main():
 
@@ -23,8 +24,8 @@ def main():
         print("3-Desenhar Mapa")
         print("4-Imprimir nodos de Grafo")
         print("5-Imprimir arestas de Grafo")
-        print("6-DFS do Start ao Finish")
-        print("7-DFS com selecao de Nodos")
+        print("6-Start Game")
+        print("7-DFS do Start ao Finish")
         print("8-BFS do Start ao Finish")
         print("9-GreedySearch do Start ao Finish")
         print("0-Sair")
@@ -51,8 +52,16 @@ def main():
         elif saida == 5:
             #imprimir todas as arestas do grafo
             print(g.imprime_aresta())
-            l = input("prima enter para continuar")
+            l = input("prima enter para continuar") 
         elif saida == 6:
+            #imprimir todas as arestas do grafo
+            
+            jogo = Jogo()
+
+            jogo.startPYGame()
+            
+            l = input("prima enter para continuar")
+        elif saida == 7:
             
             #Efetuar pesquisa de caminho entre nodo Start e Finish's com DFS
             
@@ -70,20 +79,7 @@ def main():
             plt.show()
                     
             l = input("prima enter para continuar")
-        elif saida == 7:
-            #Efetuar  pesquisa de caminho entre nodo inicial e final com DFS
-            inicio = input("Nodo inicial->")
-            fim = [input("Nodo final->")]
-            
-            (path, custoT) = resolver.dfs( inicio, fim,g, path=[], visited=set())
-            p = [tuple(map(int, nodo.replace('(', '').replace(')', '').split(', '))) for nodo in path]
-            # print (f"{p}, custo: {custoT}")
-            mapa.show()   
-            resolver.showPath(p)
-            
-            plt.show()
-                    
-            l = input("prima enter para continuar")
+       
         elif saida == 8:
             
             #Efetuar pesquisa de caminho entre nodo Start e Finish's com BFS
