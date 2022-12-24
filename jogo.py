@@ -4,8 +4,9 @@ from mapa import *
 from vector import Vector
 from resolver import Resolver
 from grafo import Graph
-import time
 from interface import *
+
+import time
 
 JOGADAS = [
     Vector(-1, -1),
@@ -22,10 +23,9 @@ JOGADAS = [
 
 class Jogo:
 
-    def __init__(self, trackFile="tracks/trackSimple.txt"):
+    def __init__(self):
         self.players = []
         self.n_players = 0
-        self.mapa = Mapa(trackFile)
         self.fps = 10
         self.run = True
 
@@ -55,6 +55,8 @@ class Jogo:
             player.velocidade = Vector(0, 0)
 
     def startPYGame(self):
+
+
 
         running = True
 
@@ -305,7 +307,7 @@ class Jogo:
 
 def main():
 
-    jogo = Jogo("tracks/trackCircle.txt")
+    jogo = Jogo()
 
     jogo.startPYGame()
 
