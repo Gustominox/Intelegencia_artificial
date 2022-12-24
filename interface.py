@@ -13,16 +13,10 @@ monitor_size = pygame.display.Info()
 size = monitor_size.current_w, monitor_size.current_h
 screen = pygame.display.set_mode(size)
 
-# Scale usada dependendo do tamanho do ecra
-SCALE = 100
-SCALEX = 136.6
-SCALEY = 109.71428571428571
-
 
 # Player
 playerImgRaw = pygame.image.load('imgs/racecar.png')
 playerImg = pygame.transform.rotate(playerImgRaw, 270)
-# playerImg = pygame.transform.scale(playerImg, (SCALEX,SCALEY))
 
 winImg = pygame.image.load('imgs/winner.png')
 winImg = pygame.transform.scale(winImg, size)
