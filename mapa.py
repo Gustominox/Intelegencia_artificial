@@ -84,7 +84,6 @@ class Mapa:
     def show(self, final=False):
         cmap = colors.ListedColormap(['Black', 'white', 'green', 'red'])
         plt.figure(figsize=(10, 10))
-        # edgecolors='k', linewidths=3)
         plt.pcolor(self.content[::-1], cmap=cmap)
 
         if final:
