@@ -1,7 +1,7 @@
 # Importar classes nodo e grafo
 from grafo import Graph
 from nodo import Node
-from mapa import Mapa
+from mapa import *
 from resolver import Resolver
 from matplotlib import pyplot as plt
 from matplotlib import colors
@@ -54,7 +54,7 @@ def main():
             maps = createButton("Choose Map", 1, COLOR_BLACK)
             algoritmos = createButton("Choose Algorithm(s)", 2, COLOR_BLACK)
             players = createButton("Choose Number of players", 3, COLOR_BLACK)
-            calcPath = createButton("Calculate best path", 4, COLOR_BLACK)
+            calcPath = createButton("Calculate Best Path", 4, COLOR_BLACK)
             quit_game = createButton("Quit", 6, COLOR_BLACK)
 
         if game_menu == 'pista':
@@ -84,7 +84,6 @@ def main():
                         break
 
             drawMap(screen, mapa, jogo.getPlayers())
-            drawText("ESC to return", FONT, COLOR_WHITE, 50, 50)
 
             if stopType == FINISH:
                 screen.blit(winImg, (0, 0))
@@ -234,7 +233,6 @@ def main():
                     if start.collidepoint(mousePos):
                         game_menu = "pista"
                         drawMap(screen, mapa, jogo.getPlayers())
-                        drawText("ESC to return", FONT, COLOR_WHITE, 50, 50)
 
                     if maps.collidepoint(mousePos):
                         game_menu = "maps"

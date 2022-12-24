@@ -306,14 +306,3 @@ class Graph:
         return currentPosition, TRACK
     
         #print(f"{currentPosition} == {destino}")
-
-
-def main():
-    mapa = Mapa("trackCircle.txt")
-    g = Graph()
-    g.createGraphCartesian(mapa)
-    g.desenha()
-
-
-if __name__ == "__main__":
-    main()
