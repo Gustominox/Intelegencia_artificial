@@ -7,116 +7,274 @@ from matplotlib import pyplot as plt
 from matplotlib import colors
 from vector import Vector
 from jogo import Jogo
+from interface import *
+
 
 def main():
 
+
+    running = True
+
+    jogo = Jogo()
     resolver = Resolver()
+    grafo = Graph()
 
-    g = Graph()
+    map_selected = 0
     mapa = Mapa("tracks/track.txt")
-    g.createGraphCartesian(mapa)
-        
-    #construção de menu
-    saida = -1
-    while saida != 0:
-        print("1-Imprimir Grafo")
-        print("2-Desenhar Grafo")
-        print("3-Desenhar Mapa")
-        print("4-Imprimir nodos de Grafo")
-        print("5-Imprimir arestas de Grafo")
-        print("6-Start Game")
-        print("7-DFS do Start ao Finish")
-        print("8-BFS do Start ao Finish")
-        print("9-GreedySearch do Start ao Finish")
-        print("0-Sair")
 
-        saida = int(input("introduza a sua opcao-> "))
-        if saida == 0:
-            print("saindo.......")
-        elif saida == 1:
-            #Escrever o grafo como string
-            print(g)
-            l=input("prima enter para continuar")
-        elif saida == 2:
-            g.desenha()
-            l=input("prima enter para continuar")
-        elif saida == 3:
-            #Desenhar o grafo de forma gráfica
-            mapa.show(True)
-            l=input("prima enter para continuar")
-            
-        elif saida == 4:
-            #Imprimir as chaves do dicionario que representa o grafo
-            print(g.m_graph.keys())
-            l = input("prima enter para continuar")
-        elif saida == 5:
-            #imprimir todas as arestas do grafo
-            print(g.imprime_aresta())
-            l = input("prima enter para continuar") 
-        elif saida == 6:
-            #imprimir todas as arestas do grafo
-            
-            jogo = Jogo()
+    jogador1 = Player(Vector(0, 0))
+    jogador2 = Player(Vector(0, 0))
 
-            jogo.startPYGame()
-            
-            l = input("prima enter para continuar")
-        elif saida == 7:
-            
-            #Efetuar pesquisa de caminho entre nodo Start e Finish's com DFS
-            
-            inicio = Vector(1, 3)
-            fim = [Vector(9, 4), Vector(9, 3), Vector(9, 2)]
-            
-            (path, custoT) = resolver.dfs( inicio, fim,g, path=[], visited=set())
-            p = [(vector.x,vector.y)for vector in path]
-           
-            # print (f"{p}, custo: {custoT}")
-           
-            mapa.show()   
-            resolver.showPath(p)
-            
-            plt.show()
+    jogo.addPlayer(jogador1)
+    jogo.addPlayer(jogador2)
+
+    jogo.resetPlayers(mapa)
+
+    grafo.createGraphCartesian(mapa)
+
+    alg_selected = 0
+
+    players_selected = 0
+
+    game_menu = "main_menu"
+
+    while running:
+
+        # CHECK MENU
+
+        if game_menu == 'main_menu':
+
+            # Background colour
+            screen.fill((50, 50, 50))
+
+            jogo.run = True
+
+            screen.blit(icon_dimmed, (0, 0))
+
+            start = createButton("Start", 0, COLOR_BLACK)
+            maps = createButton("Choose Map", 1, COLOR_BLACK)
+            algoritmos = createButton(
+                "Choose Algorithm(s)", 2, COLOR_BLACK)
+            players = createButton(
+                "Choose Number of players", 3, COLOR_BLACK)
+            calcPath = createButton("Calculate best path", 4, COLOR_BLACK)
+            quit_game = createButton("Quit", 6, COLOR_BLACK)
+
+        if game_menu == 'pista':
+
+            time.sleep(1)
+            if jogo.run:
+                for jogador in jogo.getPlayers():
+
+                    alg_selected = jogador.alg_selected
+
+                    jog = resolver.getJog(alg_selected,jogador, mapa.finish, grafo)
+
+                    possivelPosicao = jogador.estado + jogador.velocidade + jog
+
+                    novaPosicao, stopType = grafo.checkPath(
+                        jogador.estado, possivelPosicao)
+
+                    jogador.jogada(jog)
+
+                    if stopType == WALL:
+                        jogador.estado = novaPosicao
+                        jogador.velocidade = Vector(0, 0)
+                    elif stopType == FINISH:
+                        jogador.estado = novaPosicao
+                        jogador.velocidade = Vector(0, 0)
+                        break
                     
-            l = input("prima enter para continuar")
-       
-        elif saida == 8:
-            
-            #Efetuar pesquisa de caminho entre nodo Start e Finish's com BFS
-            
-            
-            (path, custo) = resolver.bfs(inicio, fim,g)
-            p = [(vector.x,vector.y)for vector in path]
-           
-           
-            mapa.show()   
-            resolver.showPath(p)
-            
-            plt.show()
+            drawMap(screen, mapa, jogo.getPlayers())
+            drawText("ESC to return", FONT, COLOR_WHITE, 50, 50)
+
+            if stopType == FINISH:
+                screen.blit(winImg, (0, 0))
+                jogo.run = False
+
+        for event in pygame.event.get():
+            mousePos = pygame.mouse.get_pos()
+
+            if game_menu == "maps":
+                # event mouse
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    option = buttonIndex([map1, map2, map3],mousePos)
                     
-            l = input("prima enter para continuar")
-        elif saida == 9:
-            
-            #Efetuar pesquisa de caminho entre nodo Start e Finish's com DFS
-            
-            inicio = Vector(1, 3)
-            fim = [Vector(9, 4), Vector(9, 3), Vector(9, 2)]
-           
-            (path, custoT) = resolver.greedy_search(inicio, fim,g, path=[])
-            p = [(vector.x,vector.y)for vector in path]
-           
-            # print (f"{p}, custo: {custoT}")
-           
-            mapa.show()   
-            resolver.showPath(p)
-            
-            plt.show()
+                    print(f"OPTION {map_selected}")
+
+                    if option == 0:
+                        mapa = Mapa("tracks/track.txt")
+                        map_selected = 0
+                        
+                    elif option == 1:
+                        mapa = Mapa("tracks/trackCircle.txt")
+                        map_selected = 1
+                    elif option == 2:
+                        mapa = Mapa("tracks/trackSimple.txt")
+                        map_selected = 2
+
+                    elif leave.collidepoint(mousePos):
+                        game_menu = 'main_menu'
+                    else:
+                        pass
                     
-            l = input("prima enter para continuar")        
-        else:
-            print("Opção inválida...")
-            l = input("prima enter para continuar")
+                    map1, map2, map3, leave = drawMapsMenu(
+                            map_selected)
+                    
+                    grafo = Graph()
+                    grafo.createGraphCartesian(mapa)
+
+                # if event.type == pygame.KEYDOWN:
+                #     if event.key == pygame.K_ESCAPE:
+                #         game_menu = 'main_menu'
+
+            elif game_menu == "algoritmos":
+                # event mouse
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    option = buttonIndex([a_estrela, greedybf, greedy, bfs, dfs, a_estrela2,
+                                        greedybf2, greedy2, bfs2, dfs2, leave_alg], mousePos)
+                
+                
+                    if option > 0 and option < 5:
+
+                        jogo.players[0].alg_selected = option
+
+                    elif option > 4 and option < 10:
+
+                        jogo.players[1].alg_selected = option-5
+
+                    elif leave_alg.collidepoint(mousePos):
+                        game_menu = 'main_menu'
+                    else:
+                        pass
+                a_estrela, greedybf, greedy, bfs, dfs, a_estrela2, greedybf2, greedy2, bfs2, dfs2, leave_alg = drawAlgoritmosMenu(
+                    alg_selected, jogo.players)
+                
+            elif game_menu == "calcPath":
+                # event mouse
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    option = buttonIndex([a_estrela, greedybf, greedy, bfs, dfs, leave], mousePos)
+                    
+                    inicio = mapa.start
+                    fim = mapa.finish 
+                
+                    if option == 0 :
+                        
+                                        
+                        pass
+                    elif option == 1 :
+                        pass
+                    elif option == 2 :
+                    
+                        (path, custoT) = resolver.greedy_search(inicio, fim,grafo, path=[])
+                        p = [(vector.x,vector.y)for vector in path]
+                    
+                    
+                        mapa.show()   
+                        showPath(p)
+                        plt.show()
+                        
+                    elif option == 3 :
+                        
+                        (path, custo) = resolver.bfs(inicio, fim,grafo)
+                        p = [(vector.x,vector.y)for vector in path]
+                        
+                        mapa.show()   
+                        showPath(p)
+                        plt.show()
+                        
+                    elif option == 4 :
+                            
+                        (path, custoT) = resolver.dfs( inicio, fim,grafo, path=[], visited=set())
+                        p = [(vector.x,vector.y)for vector in path]
+                    
+                        mapa.show()   
+                        showPath(p)
+                        plt.show()
 
 
+                    elif leave.collidepoint(mousePos):
+                        game_menu = 'main_menu'
+                    else:
+                        pass
+                    
+                a_estrela, greedybf, greedy, bfs, dfs, leave = drawPathMenu()
+                    
+            elif game_menu == "players":
+
+                # event mouse
+                if event.type == pygame.MOUSEBUTTONDOWN:
+
+                    if one.collidepoint(mousePos):
+
+                        jogo.resetPlayers(mapa)
+
+                        jogo.n_players = 1
+                        players_selected = 0
+
+                        one, two, leave = drawJogMenu(
+                            players_selected)
+                    elif two.collidepoint(mousePos):
+
+                        jogo.resetPlayers(mapa)
+
+                        jogo.n_players = 2
+                        players_selected = 1
+
+                        one, two, leave = drawJogMenu(
+                            players_selected)
+                    elif leave.collidepoint(mousePos):
+                        game_menu = 'main_menu'
+                    else:
+                        pass
+
+            elif game_menu == "pista":
+
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_ESCAPE:
+                        game_menu = 'main_menu'
+
+            elif game_menu == "main_menu":
+                jogo.resetPlayers(mapa)
+                # event mouse
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    screen.fill((50, 50, 50))
+
+                    if start.collidepoint(mousePos):
+                        game_menu = "pista"
+                        drawMap(screen, mapa, jogo.getPlayers())
+                        drawText("ESC to return", FONT, COLOR_WHITE, 50, 50)
+
+                    if maps.collidepoint(mousePos):
+                        game_menu = "maps"
+
+                        map1, map2, map3, leave = drawMapsMenu(
+                            map_selected)
+
+                    if algoritmos.collidepoint(mousePos):
+                        game_menu = "algoritmos"
+
+                        a_estrela, greedybf, greedy, bfs, dfs, a_estrela2, greedybf2, greedy2, bfs2, dfs2, leave_alg = drawAlgoritmosMenu(
+                            alg_selected, jogo.players)
+
+                    if players.collidepoint(mousePos):
+                        game_menu = "players"
+
+                        one, two, leave = drawJogMenu(
+                            players_selected)
+                        
+                    if calcPath.collidepoint(mousePos):
+                        game_menu = "calcPath"
+
+                        a_estrela_path, greedybf_path, greedy_path, bfs_path, dfs_path,leave = drawPathMenu()
+
+                    if quit_game.collidepoint(mousePos):
+                        running = False
+
+            if event.type == pygame.QUIT:
+                running = False
+
+        pygame.display.update()
+            
 if __name__ == "__main__":
     main()
