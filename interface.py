@@ -46,7 +46,7 @@ def drawText(text, font, text_col, x, y):
 
 
 # Desenha o Mapa
-def drawMap(screen, mapa, player):
+def drawMap(screen, mapa, players):
 
     MAP_SCALE_X = round(monitor_size.current_w/mapa.rows)
     MAP_SCALE_Y = round(monitor_size.current_h/mapa.lines)
@@ -59,12 +59,13 @@ def drawMap(screen, mapa, player):
         for row in range(mapa.rows):
             pygame.draw.rect(screen, colors[content[line][row]], pygame.Rect(
                 row*MAP_SCALE_X, line*MAP_SCALE_Y, MAP_SCALE_X, MAP_SCALE_Y))
-
-    x = player.estado.x * MAP_SCALE_X
-    y = (mapa.lines-player.estado.y-1) * MAP_SCALE_Y
-    playerImgFinal = pygame.transform.scale(
-        playerImg, (MAP_SCALE_X, MAP_SCALE_Y))
-    screen.blit(playerImgFinal, (x, y))
+    
+    for player in players:
+        x = player.estado.x * MAP_SCALE_X
+        y = (mapa.lines-player.estado.y-1) * MAP_SCALE_Y
+        playerImgFinal = pygame.transform.scale(
+            playerImg, (MAP_SCALE_X, MAP_SCALE_Y))
+        screen.blit(playerImgFinal, (x, y))
 
 
 COLOR_BLACK = (0, 0, 0)
@@ -83,13 +84,23 @@ SPACE_BETWEEN = 60
 
 def createButton(text, number,color):
     
-    map1 = pygame.draw.rect(screen, color,
+    rect = pygame.draw.rect(screen, color,
                             pygame.Rect(MENU_BUTTON_X, MENU_BUTTON_Y + number * SPACE_BETWEEN , 400, 50))
 
     drawText(text, FONT,
              COLOR_WHITE, MENU_BUTTON_X + 10, MENU_BUTTON_Y + number * SPACE_BETWEEN + 10)
     
-    return map1
+    return rect
+
+def createButton2(text, number,color):
+    
+    rect = pygame.draw.rect(screen, color,
+                            pygame.Rect(MENU_BUTTON_X + 420, MENU_BUTTON_Y + number * SPACE_BETWEEN , 400, 50))
+
+    drawText(text, FONT,
+             COLOR_WHITE, MENU_BUTTON_X + 420 + 10, MENU_BUTTON_Y + number * SPACE_BETWEEN + 10)
+    
+    return rect
 
 def drawMapsMenu(selected):
     screen.fill((50, 50, 50))
@@ -114,15 +125,48 @@ def drawMapsMenu(selected):
         
     return map1, map2, map3, leave
 
-
-def drawAlgoritmosMenu(selected):
+def drawJogMenu(selected):
     screen.fill((50, 50, 50))
+    
+    one = createButton("Um jogador", 0,COLOR_BLACK)
+    two = createButton("Dois jogadores", 1,COLOR_BLACK)
+    leave = createButton("Leave", 2,COLOR_BLACK)
+    
+    
+    if selected == 0:                        
+        one = createButton("Um jogador", 0,COLOR_RED)
+    elif selected == 1:
+        two = createButton("Dois jogadores", 1,COLOR_RED)
+    elif selected == 2:
+        leave = createButton("Leave", 2,COLOR_RED)
+    else:
+        pass
+        
+        
+    return one,two, leave
+
+
+
+def drawAlgoritmosMenu(selected,players):
+    screen.fill((50, 50, 50))
+    
+    selected = players[0].alg_selected
+    selected2 = players[1].alg_selected
+    
     
     a_estrela = createButton("A*", 0,COLOR_BLACK)
     greedybf = createButton("GreedyBF", 1,COLOR_BLACK)
     greedy = createButton("Greedy", 2,COLOR_BLACK)
     bfs = createButton("BFS", 3,COLOR_BLACK)
     dfs = createButton("DFS", 4,COLOR_BLACK)
+    
+    a_estrela2 = createButton2("A*", 0,COLOR_BLACK)
+    greedybf2 = createButton2("GreedyBF", 1,COLOR_BLACK)
+    greedy2 = createButton2("Greedy", 2,COLOR_BLACK)
+    bfs2 = createButton2("BFS", 3,COLOR_BLACK)
+    dfs2 = createButton2("DFS", 4,COLOR_BLACK)
+    
+    
     leave_alg = createButton("Leave", 5,COLOR_BLACK)
 
     
@@ -137,13 +181,24 @@ def drawAlgoritmosMenu(selected):
         bfs = createButton("BFS", 3,COLOR_RED)
     elif selected == 4:
         dfs = createButton("DFS", 4,COLOR_RED)
-    elif selected == 5:
-        leave_alg = createButton("Leave", 5,COLOR_RED)
+    else:
+        pass
+    
+    if selected2 == 0:                        
+        a_estrela2 = createButton2("A*", 0,COLOR_RED)
+    elif selected2 == 1:
+        greedybf2 = createButton2("GreedyBF", 1,COLOR_RED)
+    elif selected2 == 2:
+         greedy2 = createButton2("Greedy", 2,COLOR_RED)
+    elif selected2 == 3:
+        bfs2 = createButton2("BFS", 3,COLOR_RED)
+    elif selected2 == 4:
+        dfs2 = createButton2("DFS", 4,COLOR_RED)
     else:
         pass
         
         
-    return a_estrela, greedybf, greedy, bfs, dfs, leave_alg
+    return a_estrela, greedybf, greedy, bfs, dfs,a_estrela2, greedybf2, greedy2, bfs2, dfs2, leave_alg
 
 # drawMap(screen, Mapa("tracks/track.txt"), Player(Vector(0,0)))
 
