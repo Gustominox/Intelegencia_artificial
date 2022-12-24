@@ -5,8 +5,8 @@ MAX_SPEED = 5
 
 class Player:
     
-    def __init__(self,estadoInicial):
-        self.estado = estadoInicial
+    def __init__(self):
+        self.estado = Vector(0,0)
         self.velocidade = Vector(0,0)
         self.alg_selected = 0        
     

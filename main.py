@@ -20,8 +20,8 @@ def main():
     map_selected = 0
     mapa = Mapa("tracks/track.txt")
 
-    jogador1 = Player(Vector(0, 0))
-    jogador2 = Player(Vector(0, 0))
+    jogador1 = Player()
+    jogador2 = Player()
 
     jogo.addPlayer(jogador1)
     jogo.addPlayer(jogador2)

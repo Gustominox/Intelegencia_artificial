@@ -45,7 +45,6 @@ class Jogo:
 
     def addPlayer(self, player):
         self.players.append(player)
-        self.n_players += 1
 
     def getPlayers(self):
         return [self.players[i] for i in range(self.n_players)]
