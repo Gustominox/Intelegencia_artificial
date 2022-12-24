@@ -90,11 +90,12 @@ class Resolver:
             # Verifica-se se o nodo em questão não havia sido visitado anteriormente
             elif node not in visited:
                 # Enumeram-se todos os adjacentes do nodo em análise, colocando todos os possíveis caminhos na queue
-                for (current_neighbour, peso) in grafo.m_graph[node]:
-                    if current_neighbour not in visited:
-                        new_path = list(path)
-                        new_path.append(current_neighbour)
-                        queue.append(new_path)
+                for (adjacente, peso) in grafo.m_graph[node]:
+                    if grafo.get_node_by_vector(adjacente).type != WALL:
+                        if adjacente not in visited:
+                            new_path = list(path)
+                            new_path.append(adjacente)
+                            queue.append(new_path)
 
                 # Marca-se o nodo analisado como visitado
                 visited.add(node)
