@@ -130,15 +130,13 @@ def drawJogMenu(selected):
     
     one = createButton("Um jogador", 0,COLOR_BLACK)
     two = createButton("Dois jogadores", 1,COLOR_BLACK)
-    leave = createButton("Leave", 2,COLOR_BLACK)
+    leave = createButton("Leave", 3,COLOR_BLACK)
     
     
     if selected == 0:                        
         one = createButton("Um jogador", 0,COLOR_RED)
     elif selected == 1:
         two = createButton("Dois jogadores", 1,COLOR_RED)
-    elif selected == 2:
-        leave = createButton("Leave", 2,COLOR_RED)
     else:
         pass
         
@@ -167,7 +165,7 @@ def drawAlgoritmosMenu(selected,players):
     dfs2 = createButton2("DFS", 4,COLOR_BLACK)
     
     
-    leave_alg = createButton("Leave", 5,COLOR_BLACK)
+    leave_alg = createButton("Leave", 6,COLOR_BLACK)
 
     
     
@@ -210,7 +208,7 @@ def drawPathMenu():
     bfs = createButton("BFS", 3,COLOR_BLACK)
     dfs = createButton("DFS", 4,COLOR_BLACK)
     
-    leave_alg = createButton("Leave", 5,COLOR_BLACK)
+    leave_alg = createButton("Leave", 6,COLOR_BLACK)
 
     
         
