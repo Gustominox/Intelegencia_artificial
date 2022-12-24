@@ -107,7 +107,8 @@ def drawMapsMenu(selected):
     map1 = createButton("Mapa Default", 0,COLOR_BLACK)
     map2 = createButton("Mapa Circle", 1,COLOR_BLACK)
     map3 = createButton("Mapa Simple", 2,COLOR_BLACK)
-    leave = createButton("Leave", 3,COLOR_BLACK)
+    map4 = createButton("Mapa Big", 3,COLOR_BLACK)
+    leave = createButton("Leave", 5,COLOR_BLACK)
     
     
     if selected == 0:                        
@@ -117,12 +118,12 @@ def drawMapsMenu(selected):
     elif selected == 2:
         map3 = createButton("Mapa Simple", 2,COLOR_RED)
     elif selected == 3:
-        leave = createButton("Leave", 3,COLOR_RED)
+        map3 = createButton("Mapa Big", 3,COLOR_RED)
     else:
         pass
         
         
-    return map1, map2, map3, leave
+    return map1, map2, map3,map4, leave
 
 def drawJogMenu(selected):
     screen.fill((50, 50, 50))

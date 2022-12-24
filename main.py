@@ -95,7 +95,7 @@ def main():
             if game_menu == "maps":
                 # event mouse
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    option = buttonIndex([map1, map2, map3], mousePos)
+                    option = buttonIndex([map1, map2, map3,map4], mousePos)
 
                     if option == 0:
                         mapa = Mapa("tracks/track.txt")
@@ -107,13 +107,16 @@ def main():
                     elif option == 2:
                         mapa = Mapa("tracks/trackSimple.txt")
                         map_selected = 2
+                    elif option == 3:
+                        mapa = Mapa("tracks/bigtrack.txt")
+                        map_selected = 3
 
                     elif leave.collidepoint(mousePos):
                         game_menu = 'main_menu'
                     else:
                         pass
 
-                    map1, map2, map3, leave = drawMapsMenu(
+                    map1, map2, map3,map4, leave = drawMapsMenu(
                         map_selected)
 
                     grafo = Graph()
@@ -237,7 +240,7 @@ def main():
                     if maps.collidepoint(mousePos):
                         game_menu = "maps"
 
-                        map1, map2, map3, leave = drawMapsMenu(
+                        map1, map2, map3,map4, leave = drawMapsMenu(
                             map_selected)
 
                     if algoritmos.collidepoint(mousePos):
