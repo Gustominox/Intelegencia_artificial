@@ -117,11 +117,12 @@ class Resolver:
             custoT = grafo.calcula_custo(path)
             return (path, custoT)
         for (adjacente, peso) in grafo.m_graph[start]:
-            if adjacente not in path:
-                for node in end:
-                    dist = adjacente.distance_to(node)
-                    if dist < max[0]:
-                        max = (dist, adjacente)
+            if grafo.get_node_by_vector(adjacente).type != WALL:
+                if adjacente not in path:
+                    for node in end:
+                        dist = adjacente.distance_to(node)
+                        if dist < max[0]:
+                            max = (dist, adjacente)
         # De seguida, repete-se o processo no adjacente escolhido até eventualmente chegar à meta
         self.greedy_search(max[1], end, grafo, path)
         return (path, 0)
@@ -358,7 +359,6 @@ class Resolver:
         estado = player.estado
         mincusto = (1000, estado)
         counter_validos = 0
-        print("Calculando caminho...")
         for jogada in JOGADAS:
             candidato = player.estado + player.velocidade + jogada
             if grafo.vector_exists(candidato):
@@ -369,7 +369,6 @@ class Resolver:
                     (path, custo) = self.a_estrela_search(candidato, end, grafo)
                     if custo < mincusto[0]:
                         mincusto = (custo, jogada)
-        print("Caminho calculado :)")
         if counter_validos != 0:
             return mincusto[1]
         return JOGADAS[3]
