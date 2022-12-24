@@ -1,6 +1,5 @@
 # Importar classes nodo e grafo
 from grafo import Graph
-from nodo import Node
 from mapa import *
 from resolver import Resolver
 from matplotlib import pyplot as plt
@@ -28,6 +27,7 @@ def main():
     jogo.addPlayer(jogador2)
 
     jogo.resetPlayers(mapa)
+    jogo.n_players = 1
 
     grafo.createGraphCartesian(mapa)
 
