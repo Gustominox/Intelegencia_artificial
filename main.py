@@ -95,7 +95,7 @@ def main():
             if game_menu == "maps":
                 # event mouse
                 if event.type == pygame.MOUSEBUTTONDOWN:
-                    option = buttonIndex([map1, map2, map3,map4], mousePos)
+                    option = buttonIndex([map1, map2, map3, map4], mousePos)
 
                     if option == 0:
                         mapa = Mapa("tracks/track.txt")
@@ -116,7 +116,7 @@ def main():
                     else:
                         pass
 
-                    map1, map2, map3,map4, leave = drawMapsMenu(
+                    map1, map2, map3, map4, leave = drawMapsMenu(
                         map_selected)
 
                     grafo = Graph()
@@ -153,10 +153,21 @@ def main():
                     fim = mapa.finish
 
                     if option == 0:
+                        (path, custoT) = resolver.a_estrela_search(
+                            inicio, fim, grafo)
+                        p = [(vector.x, vector.y)for vector in path]
 
-                        pass
+                        mapa.show()
+                        showPath(p)
+                        plt.show()
                     elif option == 1:
-                        pass
+                        (path, custoT) = resolver.greedy_bf_search(
+                            inicio, fim, grafo)
+                        p = [(vector.x, vector.y)for vector in path]
+
+                        mapa.show()
+                        showPath(p)
+                        plt.show()
                     elif option == 2:
 
                         (path, custoT) = resolver.greedy_search(
@@ -240,7 +251,7 @@ def main():
                     if maps.collidepoint(mousePos):
                         game_menu = "maps"
 
-                        map1, map2, map3,map4, leave = drawMapsMenu(
+                        map1, map2, map3, map4, leave = drawMapsMenu(
                             map_selected)
 
                     if algoritmos.collidepoint(mousePos):
