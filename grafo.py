@@ -261,7 +261,6 @@ class Graph:
 
     def checkPath(self, inicio, destino):
         custo = destino-inicio
-        #print(f"{inicio} -> {destino}")
         x = custo.x
         y = custo.y
         currentPosition = inicio
@@ -270,12 +269,9 @@ class Graph:
             lastPosition = currentPosition
             
             nodeType = self.get_node_by_vector(currentPosition).type
-            print(nodeType)
             if  nodeType == FINISH:
-                # print("FINISH")
                 return currentPosition, FINISH
             if  nodeType == WALL:
-                # print("WALL")
                 return lastPosition, WALL
             
             if x > 0:
@@ -292,17 +288,11 @@ class Graph:
                 currentPosition += Vector(0,-1)
             nodeType = self.get_node_by_vector(currentPosition).type
             
-            print(nodeType)
             
             if  nodeType == FINISH:
-                # print("FINISH")
                 return currentPosition, FINISH
             if  nodeType == WALL:
-                # print("WALL")
                 return lastPosition, WALL
-            
-            #print(f"CURRENT POSITION :{currentPosition} NODETYPE :{nodeType}")
 
         return currentPosition, TRACK
     
-        #print(f"{currentPosition} == {destino}")
