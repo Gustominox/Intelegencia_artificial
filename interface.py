@@ -1,5 +1,7 @@
 import pygame
 import pygame.locals
+from matplotlib import pyplot as plt
+from matplotlib import colors
 from mapa import Mapa
 from player import Player
 from vector import Vector
@@ -194,6 +196,23 @@ def drawAlgoritmosMenu(selected,players):
         
     return a_estrela, greedybf, greedy, bfs, dfs,a_estrela2, greedybf2, greedy2, bfs2, dfs2, leave_alg
 
+def drawPathMenu():
+    screen.fill((50, 50, 50))
+    
+    
+    a_estrela = createButton("A*", 0,COLOR_BLACK)
+    greedybf = createButton("GreedyBF", 1,COLOR_BLACK)
+    greedy = createButton("Greedy", 2,COLOR_BLACK)
+    bfs = createButton("BFS", 3,COLOR_BLACK)
+    dfs = createButton("DFS", 4,COLOR_BLACK)
+    
+    leave_alg = createButton("Leave", 5,COLOR_BLACK)
+
+    
+        
+    return a_estrela, greedybf, greedy, bfs, dfs,leave_alg
+
+
 def buttonIndex(buttonList,mousePos):
     i = 0
     for button in buttonList:
@@ -202,6 +221,35 @@ def buttonIndex(buttonList,mousePos):
         i += 1
     
     return -1
+
+def getPltXY( path):
+        """Retorna o caminho PLT
+
+        Args:
+            path (List): Lista com nodos do caminho
+
+        Returns:
+            Tuple: Tuplo de uma Lista de todos os x's e outra de todos os y's para serem desenhados
+        """
+        xpath = [x + 0.5 for (x, y) in path]
+        ypath = [y + 0.5 for (x, y) in path]
+        return (xpath, ypath)
+
+def showPath( path, final=False):
+        """Mostra o caminho PLT
+
+        Args:
+            path (List): Lista com todos os nodos do caminho
+            final (bool, optional): Quando é TRUE, demonstra o mapa. Quando é FALSE, guarda em cache e
+            mostra mais tarde com o plt.show()
+        """
+        x, y = getPltXY(path)
+        plt.plot(x, y, 'b.--', linewidth=2, markersize=20)
+
+        if final:
+            plt.show()
+
+
 
 # drawMap(screen, Mapa("tracks/track.txt"), Player(Vector(0,0)))
 

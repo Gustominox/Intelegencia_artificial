@@ -22,32 +22,9 @@ class Resolver:
     def __init__(self):
         self.path = []
 
-    def getPltXY(self, path):
-        """Retorna o caminho PLT
+    
 
-        Args:
-            path (List): Lista com nodos do caminho
-
-        Returns:
-            Tuple: Tuplo de uma Lista de todos os x's e outra de todos os y's para serem desenhados
-        """
-        xpath = [x + 0.5 for (x, y) in path]
-        ypath = [y + 0.5 for (x, y) in path]
-        return (xpath, ypath)
-
-    def showPath(self, path, final=False):
-        """Mostra o caminho PLT
-
-        Args:
-            path (List): Lista com todos os nodos do caminho
-            final (bool, optional): Quando é TRUE, demonstra o mapa. Quando é FALSE, guarda em cache e
-            mostra mais tarde com o plt.show()
-        """
-        x, y = self.getPltXY(path)
-        plt.plot(x, y, 'b.--', linewidth=2, markersize=20)
-
-        if final:
-            plt.show()
+    
 
     ################################################################################
     # Procura DFS

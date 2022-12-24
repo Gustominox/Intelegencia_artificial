@@ -6,6 +6,8 @@ from resolver import Resolver
 from grafo import Graph
 from interface import *
 
+
+
 import time
 
 JOGADAS = [
@@ -61,7 +63,7 @@ class Jogo:
         running = True
 
         jogo = Jogo()
-        res = Resolver()
+        resolver = Resolver()
         grafo = Graph()
 
         map_selected = 0
@@ -106,7 +108,8 @@ class Jogo:
                     "Choose Algorithm(s)", 2, COLOR_BLACK)
                 players = createButton(
                     "Choose Number of players", 3, COLOR_BLACK)
-                quit_game = createButton("Quit", 4, COLOR_BLACK)
+                calcPath = createButton("Calculate best path", 4, COLOR_BLACK)
+                quit_game = createButton("Quit", 6, COLOR_BLACK)
 
             if game_menu == 'pista':
 
@@ -116,7 +119,7 @@ class Jogo:
 
                         alg_selected = jogador.alg_selected
 
-                        jog = res.getJog(alg_selected,jogador, mapa.finish, grafo)
+                        jog = resolver.getJog(alg_selected,jogador, mapa.finish, grafo)
 
                         possivelPosicao = jogador.estado + jogador.velocidade + jog
 
@@ -197,9 +200,57 @@ class Jogo:
                             pass
                     a_estrela, greedybf, greedy, bfs, dfs, a_estrela2, greedybf2, greedy2, bfs2, dfs2, leave_alg = drawAlgoritmosMenu(
                         alg_selected, jogo.players)
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_ESCAPE:
+                    
+                elif game_menu == "calcPath":
+                    # event mouse
+                    if event.type == pygame.MOUSEBUTTONDOWN:
+                        option = buttonIndex([a_estrela, greedybf, greedy, bfs, dfs, leave], mousePos)
+                        
+                        inicio = mapa.start
+                        fim = mapa.finish 
+                    
+                        if option == 0 :
+                          
+                                            
+                            pass
+                        elif option == 1 :
+                            pass
+                        elif option == 2 :
+                        
+                            (path, custoT) = resolver.greedy_search(inicio, fim,grafo, path=[])
+                            p = [(vector.x,vector.y)for vector in path]
+                        
+                        
+                            mapa.show()   
+                            showPath(p)
+                            plt.show()
+                            
+                        elif option == 3 :
+                            
+                            (path, custo) = resolver.bfs(inicio, fim,grafo)
+                            p = [(vector.x,vector.y)for vector in path]
+                            
+                            mapa.show()   
+                            showPath(p)
+                            plt.show()
+                            
+                        elif option == 4 :
+                               
+                            (path, custoT) = resolver.dfs( inicio, fim,grafo, path=[], visited=set())
+                            p = [(vector.x,vector.y)for vector in path]
+                        
+                            mapa.show()   
+                            showPath(p)
+                            plt.show()
+
+
+                        elif leave.collidepoint(mousePos):
                             game_menu = 'main_menu'
+                        else:
+                            pass
+                        
+                    a_estrela, greedybf, greedy, bfs, dfs, leave = drawPathMenu()
+                        
                 elif game_menu == "players":
 
                     # event mouse
@@ -262,6 +313,11 @@ class Jogo:
 
                             one, two, leave = drawJogMenu(
                                 players_selected)
+                            
+                        if calcPath.collidepoint(mousePos):
+                            game_menu = "calcPath"
+
+                            a_estrela_path, greedybf_path, greedy_path, bfs_path, dfs_path,leave = drawPathMenu()
 
                         if quit_game.collidepoint(mousePos):
                             running = False
