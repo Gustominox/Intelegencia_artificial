@@ -104,7 +104,7 @@ class Resolver:
     # Greedy search
     ################################
 
-    def greedy_search(self, start, end, grafo, path=[]):
+    def greedy_search(self, start, end, grafo, depth, path=[]):
         """Algortimo Guloso de Procura
 
         Returns:
@@ -116,6 +116,9 @@ class Resolver:
         if start in end:
             custoT = grafo.calcula_custo(path)
             return (path, custoT)
+        if depth == 100:
+            custoT = grafo.calcula_custo(path)
+            return (path, custoT)
         for (adjacente, peso) in grafo.m_graph[start]:
             if grafo.get_node_by_vector(adjacente).type != WALL:
                 if adjacente not in path:
@@ -123,8 +126,9 @@ class Resolver:
                         dist = adjacente.distance_to(node)
                         if dist < max[0]:
                             max = (dist, adjacente)
+        depth = depth + 1
         # De seguida, repete-se o processo no adjacente escolhido até eventualmente chegar à meta
-        self.greedy_search(max[1], end, grafo, path)
+        self.greedy_search(max[1], end, grafo, depth, path)
         return (path, 0)
 
     ####################################

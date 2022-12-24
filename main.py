@@ -171,7 +171,7 @@ def main():
                     elif option == 2:
 
                         (path, custoT) = resolver.greedy_search(
-                            inicio, fim, grafo, path=[])
+                            inicio, fim, grafo, 0, path=[])
                         p = [(vector.x, vector.y)for vector in path]
 
                         mapa.show()
