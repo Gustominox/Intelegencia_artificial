@@ -101,7 +101,3 @@ class Mapa:
                 i += 1
             j -= 1
             i = 0
-
-
-if __name__ == "__main__":
-    main()
