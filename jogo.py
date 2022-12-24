@@ -58,8 +58,6 @@ class Jogo:
 
     def startPYGame(self):
 
-
-
         running = True
 
         jogo = Jogo()
@@ -84,10 +82,6 @@ class Jogo:
         players_selected = 0
 
         game_menu = "main_menu"
-
-
-        
-
 
         while running:
 

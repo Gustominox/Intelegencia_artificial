@@ -84,13 +84,10 @@ def main():
             
             #Efetuar pesquisa de caminho entre nodo Start e Finish's com BFS
             
-            inicio = Vector(1, 3)
-            fim = [Vector(9, 4), Vector(9, 3), Vector(9, 2)]
             
             (path, custo) = resolver.bfs(inicio, fim,g)
             p = [(vector.x,vector.y)for vector in path]
            
-            # print (f"{p}, custo: {custoT}")
            
             mapa.show()   
             resolver.showPath(p)
