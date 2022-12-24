@@ -62,6 +62,9 @@ def drawMap(screen, mapa, players):
         playerImgFinal = pygame.transform.scale(
             playerImg, (MAP_SCALE_X, MAP_SCALE_Y))
         screen.blit(playerImgFinal, (x, y))
+    
+    drawText("ESC to return", FONT, COLOR_WHITE, 50, 50)
+    
 
 
 COLOR_BLACK = (0, 0, 0)
