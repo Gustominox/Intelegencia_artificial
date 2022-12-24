@@ -194,6 +194,15 @@ def drawAlgoritmosMenu(selected,players):
         
     return a_estrela, greedybf, greedy, bfs, dfs,a_estrela2, greedybf2, greedy2, bfs2, dfs2, leave_alg
 
+def buttonIndex(buttonList,mousePos):
+    i = 0
+    for button in buttonList:
+        if button.collidepoint(mousePos):
+            return i
+        i += 1
+    
+    return -1
+
 # drawMap(screen, Mapa("tracks/track.txt"), Player(Vector(0,0)))
 
 

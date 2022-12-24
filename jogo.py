@@ -141,37 +141,34 @@ class Jogo:
                     jogo.run = False
 
             for event in pygame.event.get():
+                mousePos = pygame.mouse.get_pos()
 
                 if game_menu == "maps":
-
                     # event mouse
                     if event.type == pygame.MOUSEBUTTONDOWN:
+                        option = buttonIndex([map1, map2, map3],mousePos)
+                        
+                        print(f"OPTION {map_selected}")
 
-                        if map1.collidepoint(pygame.mouse.get_pos()):
+                        if option == 0:
                             mapa = Mapa("tracks/track.txt")
-
                             map_selected = 0
-                            map1, map2, map3, leave = drawMapsMenu(
-                                map_selected)
-
-                        elif map2.collidepoint(pygame.mouse.get_pos()):
+                            
+                        elif option == 1:
                             mapa = Mapa("tracks/trackCircle.txt")
-
                             map_selected = 1
-                            map1, map2, map3, leave = drawMapsMenu(
-                                map_selected)
-
-                        elif map3.collidepoint(pygame.mouse.get_pos()):
+                        elif option == 2:
                             mapa = Mapa("tracks/trackSimple.txt")
-
                             map_selected = 2
-                            map1, map2, map3, leave = drawMapsMenu(
-                                map_selected)
 
-                        elif leave.collidepoint(pygame.mouse.get_pos()):
+                        elif leave.collidepoint(mousePos):
                             game_menu = 'main_menu'
                         else:
                             pass
+                        
+                        map1, map2, map3, leave = drawMapsMenu(
+                                map_selected)
+                        
                         grafo = Graph()
                         grafo.createGraphCartesian(mapa)
 
@@ -180,51 +177,21 @@ class Jogo:
                     #         game_menu = 'main_menu'
 
                 elif game_menu == "algoritmos":
-
                     # event mouse
                     if event.type == pygame.MOUSEBUTTONDOWN:
+                        option = buttonIndex([a_estrela, greedybf, greedy, bfs, dfs, a_estrela2,
+                                          greedybf2, greedy2, bfs2, dfs2, leave_alg], mousePos)
+                    
+                    
+                        if option > 0 and option < 5:
 
-                        if a_estrela.collidepoint(pygame.mouse.get_pos()):
+                            jogo.players[0].alg_selected = option
 
-                            jogo.players[0].alg_selected = 0
+                        elif option > 4 and option < 10:
 
-                        elif greedybf.collidepoint(pygame.mouse.get_pos()):
+                            jogo.players[1].alg_selected = option-5
 
-                            jogo.players[0].alg_selected = 1
-
-                        elif greedy.collidepoint(pygame.mouse.get_pos()):
-
-                            jogo.players[0].alg_selected = 2
-
-                        elif bfs.collidepoint(pygame.mouse.get_pos()):
-
-                            jogo.players[0].alg_selected = 3
-
-                        elif dfs.collidepoint(pygame.mouse.get_pos()):
-
-                            jogo.players[0].alg_selected = 4
-
-                        elif a_estrela2.collidepoint(pygame.mouse.get_pos()):
-
-                            jogo.players[1].alg_selected = 0
-
-                        elif greedybf2.collidepoint(pygame.mouse.get_pos()):
-
-                            jogo.players[1].alg_selected = 1
-
-                        elif greedy2.collidepoint(pygame.mouse.get_pos()):
-
-                            jogo.players[1].alg_selected = 2
-
-                        elif bfs2.collidepoint(pygame.mouse.get_pos()):
-
-                            jogo.players[1].alg_selected = 3
-
-                        elif dfs2.collidepoint(pygame.mouse.get_pos()):
-
-                            jogo.players[1].alg_selected = 4
-
-                        elif leave_alg.collidepoint(pygame.mouse.get_pos()):
+                        elif leave_alg.collidepoint(mousePos):
                             game_menu = 'main_menu'
                         else:
                             pass
@@ -238,7 +205,7 @@ class Jogo:
                     # event mouse
                     if event.type == pygame.MOUSEBUTTONDOWN:
 
-                        if one.collidepoint(pygame.mouse.get_pos()):
+                        if one.collidepoint(mousePos):
 
                             jogo.resetPlayers(mapa)
 
@@ -247,7 +214,7 @@ class Jogo:
 
                             one, two, leave = drawJogMenu(
                                 players_selected)
-                        elif two.collidepoint(pygame.mouse.get_pos()):
+                        elif two.collidepoint(mousePos):
 
                             jogo.resetPlayers(mapa)
 
@@ -256,7 +223,7 @@ class Jogo:
 
                             one, two, leave = drawJogMenu(
                                 players_selected)
-                        elif leave.collidepoint(pygame.mouse.get_pos()):
+                        elif leave.collidepoint(mousePos):
                             game_menu = 'main_menu'
                         else:
                             pass
@@ -273,30 +240,30 @@ class Jogo:
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         screen.fill((50, 50, 50))
 
-                        if start.collidepoint(pygame.mouse.get_pos()):
+                        if start.collidepoint(mousePos):
                             game_menu = "pista"
                             drawMap(screen, mapa, jogo.getPlayers())
                             drawText("ESC to return", FONT, COLOR_WHITE, 50, 50)
 
-                        if maps.collidepoint(pygame.mouse.get_pos()):
+                        if maps.collidepoint(mousePos):
                             game_menu = "maps"
 
                             map1, map2, map3, leave = drawMapsMenu(
                                 map_selected)
 
-                        if algoritmos.collidepoint(pygame.mouse.get_pos()):
+                        if algoritmos.collidepoint(mousePos):
                             game_menu = "algoritmos"
 
                             a_estrela, greedybf, greedy, bfs, dfs, a_estrela2, greedybf2, greedy2, bfs2, dfs2, leave_alg = drawAlgoritmosMenu(
                                 alg_selected, jogo.players)
 
-                        if players.collidepoint(pygame.mouse.get_pos()):
+                        if players.collidepoint(mousePos):
                             game_menu = "players"
 
                             one, two, leave = drawJogMenu(
                                 players_selected)
 
-                        if quit_game.collidepoint(pygame.mouse.get_pos()):
+                        if quit_game.collidepoint(mousePos):
                             running = False
 
                 if event.type == pygame.QUIT:
