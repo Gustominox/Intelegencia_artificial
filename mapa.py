@@ -74,7 +74,7 @@ class Mapa:
                     if elem == 2:
                         self.start = Vector(x, self.lines-y-1)
                     if elem == 3:
-                        self.finish.append((x, self.lines-y-1))
+                        self.finish.append(Vector(x, self.lines-y-1))
 
                     x += 1
             y += 1

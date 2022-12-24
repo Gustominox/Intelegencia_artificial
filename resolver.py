@@ -30,7 +30,7 @@ class Resolver:
 
         Returns:
             Tuple: Tuplo de uma Lista de todos os x's e outra de todos os y's para serem desenhados
-        """        
+        """
         xpath = [x + 0.5 for (x, y) in path]
         ypath = [y + 0.5 for (x, y) in path]
         return (xpath, ypath)
@@ -40,9 +40,9 @@ class Resolver:
 
         Args:
             path (List): Lista com todos os nodos do caminho
-            final (bool, optional): Quando é TRUE, demonstra o mapa. Quando é FALSE, guarda em cache e 
+            final (bool, optional): Quando é TRUE, demonstra o mapa. Quando é FALSE, guarda em cache e
             mostra mais tarde com o plt.show()
-        """        
+        """
         x, y = self.getPltXY(path)
         plt.plot(x, y, 'b.--', linewidth=2, markersize=20)
 
@@ -59,13 +59,13 @@ class Resolver:
         Args:
             start (Vector): Vector (Ponto) onde começa a Procura
             end (List): Objetivo de Procura
-            grafo (Graph): Grafo onde é feita a Procura 
-            path (List, Vector): Lista de Vectores (Pontos). 
+            grafo (Graph): Grafo onde é feita a Procura
+            path (List, Vector): Lista de Vectores (Pontos).
             visited (List, Vector): Lista dos Vectores (pontos) já visitados.
 
         Returns:
             None
-        """        
+        """
 
         path.append(start)
         visited.add(start)
@@ -94,7 +94,7 @@ class Resolver:
             start (Vector): Vector (Ponto) onde começa a procura
             end (List): Objetivo de Procura
             grafo (Graph): Grafo onde é feita a Procura
-        """        
+        """
         # Inicialização da queue
         queue = [[start]]
         visited = set()
@@ -127,12 +127,11 @@ class Resolver:
     ################################
 
     def greedy_search(self, start, end, grafo, path=[]):
-
         """Algortimo Guloso de Procura
 
         Returns:
             List: Lista de Vectores (Pontos) de objetivo à Procura
-        """        
+        """
         # Perante o nodo em análise, é sempre escolhido o adjacente com melhor distância estimada à meta
         path.append(start)
         max = (1000, start)
@@ -145,14 +144,14 @@ class Resolver:
                     dist = adjacente.distance_to(node)
                     if dist < max[0]:
                         max = (dist, adjacente)
-        # De seguida, repete-se o processo no adjacente escolhido até eventualmente chegar à meta                
+        # De seguida, repete-se o processo no adjacente escolhido até eventualmente chegar à meta
         self.greedy_search(max[1], end, grafo, path)
         return (path, 0)
 
     ####################################
     # Greedy Best-First Search
     ####################################
-    
+
     def greedy_bf_search(self, start, end, grafo):
         """Algoritmo GUloso de Melhor Procura
 
@@ -163,8 +162,8 @@ class Resolver:
 
         Returns:
             List: Lista de Vectores (Pontos) de objetivo à Procura
-        """        
-        
+        """
+
         # Inicialização da Priority Queue
         q = PriorityQueue()
         q.put((0, [start]))
@@ -200,18 +199,17 @@ class Resolver:
 
                 # Marca-se o nodo analisado como visitado
                 visited.add(node)
-    
+
     ##################################
     # A* search
     ##################################
 
     def a_estrela_search(self, start, end, grafo):
-
         """Algortimo de Procura A*
 
         Returns:
             List: Lista de Vectores (Pontos) de objetivo à Procura
-        """        
+        """
         # Inicialização da Priority Queue
         q = PriorityQueue()
         q.put((0, [start]))
@@ -268,13 +266,12 @@ class Resolver:
 
         return proximasJogadas
 
-    def greedyJog(self,player, end):
-
+    def greedyJog(self, player, end):
         """Apenas uma Jogada Greedy
 
         Returns:
             Tuple: Tuplo onde está inserida a melhor
-        """        
+        """
         estado = player.estado
 
         max = (1000, estado)
@@ -289,14 +286,13 @@ class Resolver:
     ######################################
     # DFS Jogada
     ######################################
-    
-    def dfsJog(self, player, end, grafo):
 
+    def dfsJog(self, player, end, grafo):
         """Jogadas seguintes no "Depth First Search"
 
         Returns:
             List: Lista com  todas as possíveis proximas coordenadas a partir do estado e velocidade do jogador
-            """    
+            """
 
         estado = player.estado
         mincusto = (1000, estado)
@@ -308,24 +304,24 @@ class Resolver:
                 nodoType = nodo.type
                 if nodoType != WALL:
                     counter_validos = counter_validos + 1
-                    (path, custo) = self.dfs(candidato, end, grafo, path=[], visited=set())
+                    (path, custo) = self.dfs(candidato,
+                     end, grafo, path=[], visited=set())
                     if custo < mincusto[0]:
                         mincusto = (custo, jogada)
-        if counter_validos != 0:                
+        if counter_validos != 0:
             return mincusto[1]
         return JOGADAS[3]
-    
+
     ######################################
     # BFS Jogada
     ######################################
-    
-    def bfsJog(self, player, end, grafo):
 
+    def bfsJog(self, player, end, grafo):
         """Jogadas seguintes no "Breadth First Search"
 
         Returns:
             List: Lista com  todas as possíveis proximas coordenadas a partir do estado e velocidade do jogador
-            """  
+            """
         estado = player.estado
         mincusto = (1000, estado)
         counter_validos = 0
@@ -339,22 +335,20 @@ class Resolver:
                     (path, custo) = self.bfs(candidato, end, grafo)
                     if custo < mincusto[0]:
                         mincusto = (custo, jogada)
-        if counter_validos != 0:                
+        if counter_validos != 0:
             return mincusto[1]
         return JOGADAS[3]
-    
-    
+
     ######################################
     # Greedy Best-First Jogada
     ######################################
-    
-    def gbfJog(self, player, end, grafo):
 
+    def gbfJog(self, player, end, grafo):
         """Jogadas seguintes no "Greedy Best-First Search"
 
         Returns:
             List: Lista com  todas as possíveis proximas coordenadas a partir do estado e velocidade do jogador
-            """  
+            """
         estado = player.estado
         mincusto = (1000, estado)
         counter_validos = 0
@@ -368,16 +362,15 @@ class Resolver:
                     (path, custo) = self.greedy_bf_search(candidato, end, grafo)
                     if custo < mincusto[0]:
                         mincusto = (custo, jogada)
-        if counter_validos != 0:                
+        if counter_validos != 0:
             return mincusto[1]
         return JOGADAS[3]
-    
+
     ######################################
     # A* jogada
     ######################################
 
     def aestrelaJog(self, player, end, grafo):
-        
         """
         Jogadas seguintes no "A* Search"
 
@@ -399,9 +392,27 @@ class Resolver:
                     if custo < mincusto[0]:
                         mincusto = (custo, jogada)
         print("Caminho calculado :)")
-        if counter_validos != 0:                
+        if counter_validos != 0:
             return mincusto[1]
         return JOGADAS[3]
+
+    def getJog(self,alg_selected,jogador,finish,grafo):
+        if alg_selected == 0:
+            jog = self.aestrelaJog(jogador,  finish, grafo)
+
+        elif alg_selected == 1:
+            jog = self.gbfJog(jogador, finish, grafo)
+
+        elif alg_selected == 2:
+            jog = self.greedyJog(jogador,  finish)
+
+        elif alg_selected == 3:
+            jog = self.bfsJog(jogador, finish, grafo)
+
+        elif alg_selected == 4:
+            jog = self.dfsJog(jogador,  finish, grafo)
+        
+        return jog
 
 def main():
         return
